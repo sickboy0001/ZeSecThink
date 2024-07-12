@@ -3,6 +3,9 @@ import Step from "./Step";
 export default function ConnectSupabaseSteps() {
   return (
     <ol className="flex flex-col gap-6">
+      <Step title="deploy test">
+        <p>deploy test</p>
+      </Step>
       <Step title="Create Supabase project">
         <p>
           Head over to{" "}
