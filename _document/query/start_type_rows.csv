@@ -1,0 +1,7 @@
+id,disp_name,title_name,name,display_order
+1,動機,"動機（なぜ作ろうとおもったか）
+",incentive,1
+2,目的,目的（aim）狙い,aim,2
+3,"概要 ","概要（overview)
+",overview,3
+4,履歴,履歴（history）,history,4
