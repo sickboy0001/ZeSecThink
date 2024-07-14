@@ -51,7 +51,7 @@ export const getStartPagePostManyStartPage = async ()=>{
             console.log(item.title)
         });
         }
-
+// console.log("getStartPagePostManyStartPage:",res)
     return res||[];
 
 
@@ -115,9 +115,9 @@ const type_id = await getStartPageType(type);
 
 const supabase = createClient()
 
-console.log('id:', String(id))
-console.log('user_id:', String(user_id))
-console.log('type_id:', String(type_id))
+// console.log('id:', String(id))
+// console.log('user_id:', String(user_id))
+// console.log('type_id:', String(type_id))
 
 const {  error: putError } = await supabase
 .from('start_post')

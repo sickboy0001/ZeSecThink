@@ -34,7 +34,7 @@ const StartPagePreview = async () => {
   const data = await getData();
   return (
     <div>
-      {/* <StartTitle></StartTitle>
+      <StartTitle></StartTitle>
       <section>
         <div className="flex flex-col w-full max-w-3xl mx-auto prose text-left prose-blue">
           <div className="w-full mx-auto">
@@ -49,7 +49,7 @@ const StartPagePreview = async () => {
           </div>
         </div>
         ;
-      </section> */}
+      </section>
     </div>
   );
 };

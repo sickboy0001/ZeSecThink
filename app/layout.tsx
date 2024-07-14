@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className}>
+    <html lang="ja" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <div>
           <SupabaseListener />
@@ -26,6 +26,9 @@ export default function RootLayout({
         <main className="min-h-screen flex flex-col items-center">
           {children}
         </main>
+        <footer className="w-full border-t border-t-foreground/10 p-4 flex justify-center text-center text-xs">
+          <p>footer</p>
+        </footer>
       </body>
     </html>
   );

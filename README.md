@@ -1,8 +1,43 @@
 ## 参考
 
-https://note.com/libproc/n/n168e87864291
+### スタート！
 
-utils/supabase/supabase.ts　→ client.ts
+https://note.com/libproc/n/n168e87864291
+結果的には、複合になった・・・
+
+### useState 周り、オブジェクトで管理
+
+https://zenn.dev/yumix/articles/aad5753f1c9da6
+
+```
+// 初期値を設定
+const [formData, setFormData] = useState<TypeZstPost>({
+   ...defaultZstPost, // デフォルト値を展開
+   ...zstPost, // 既知の値を上書き
+});
+```
+
+## Supabase のテーブル追加したとき
+
+以下再度実行する必要がある。  
+テーブル一覧で、ロックが解除されたものが見れれば、OK
+
+```SQL
+grant usage on schema "public" to anon;
+grant usage on schema "public" to authenticated;
+
+GRANT SELECT, INSERT, UPDATE , DELETE ON ALL TABLES IN SCHEMA "public" TO authenticated;
+GRANT SELECT, INSERT, UPDATE , DELETE ON ALL TABLES IN SCHEMA "public" TO anon;
+```
+
+## todo
+
+- メアド →ID、UID→ID どちらから考える、それとも、テーブル構造自体、string 型にするか・・・汎用性考えると、id のほうが楽だと・・・
+  - メアド →ID のほうがいいかな。。　 id:number mail:string 迷いない。ログイン後の扱い
+    - todo20240714
+- 新規登録部分も整理
+  - todo20240714
+
 ## Features
 
 - Works across the entire [Next.js](https://nextjs.org) stack

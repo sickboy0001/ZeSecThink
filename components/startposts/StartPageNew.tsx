@@ -125,6 +125,7 @@ const StartPageNew: React.FC<StartPageNewProps> = ({ startPageType }) => {
             placeholder="サイインし、ログイン後、日々のゼロ秒思考を「入力」 入力時のデフォルトはPrivateのフラグが付与されています。..."
             required
             value={content}
+            rows={7}
             onChange={(e) => setContent(e.target.value)}
           />
         </div>
