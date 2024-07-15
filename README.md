@@ -40,6 +40,10 @@ GRANT SELECT, INSERT, UPDATE , DELETE ON ALL TABLES IN SCHEMA "public" TO anon;
 
 ## memo
 
+## deploy
+
+https://ze-sec-think.vercel.app/
+
 ### async
 
 不要な「const ZstDayTitles = async () 」「 async」は想定外のエラーがでる・・・「Error: async/await is not yet supported 」

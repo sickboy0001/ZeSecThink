@@ -10,14 +10,14 @@ import {
 import { cn } from "@/lib/utils";
 import { CalendarIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
-import ZstTitle from "./zstTitles";
+import ZstTitles from "./zstTitles";
 import { ja } from "date-fns/locale/ja";
 import { format as formatTz } from "date-fns-tz";
 
 import { TypeZstPost } from "@/app/types/zstTypes";
 import ZstModalNew from "./zstModalNew";
 import Link from "next/link";
-import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 
 interface propTypes {
   className: string;
@@ -25,7 +25,7 @@ interface propTypes {
   zstPosts: TypeZstPost[];
 }
 
-const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
+const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
   const [showEdit, setShowEdit] = useState(false);
 
   const isSunday = date.getDay() === 0;
@@ -42,30 +42,13 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
     <>
       <div>
         <Card className={cn(className)} {...props}>
-          <CardHeader>
-            <CardTitle>
-              <div className="flex items-center justify-between">
-                <div
-                  className={` ${isSunday ? "text-red-500" : ""} ${
-                    isSatday ? "text-blue-500" : ""
-                  }`}
-                >
-                  {formatTz(date, "yyyy/MM/dd", {
-                    timeZone: "Asia/Tokyo",
-                    locale: ja,
-                  })}
-                </div>
-                <Button className="" variant="outline" size="icon">
-                  <Link href={`/zstPosts/view/day/?date=${datestr}`}>
-                    <CalendarIcon className="h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
-            </CardTitle>
-          </CardHeader>
           <CardContent className="grid gap-1">
             <div>
-              <ZstTitle date={date} zstPosts={zstPosts}></ZstTitle>
+              <ZstTitles
+                date={date}
+                zstPosts={zstPosts}
+                isDispDetail={true}
+              ></ZstTitles>
             </div>
           </CardContent>
           <CardFooter>
@@ -122,4 +105,4 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
   );
 };
 
-export default ZstDayTitles;
+export default ZstDDayTitles;

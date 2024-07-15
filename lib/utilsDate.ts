@@ -21,3 +21,13 @@ export const getJpTimeZoneFromUtc = (datetime: Date) => {
     timeZone,
   });
 };
+
+export const GetFormatTz = (date: Date, formatstring?: string) => {
+  const thisformatestring = "yyyy/MM/dd HH:mm:ss";
+
+  const execformatstring = !formatstring ? thisformatestring : formatstring;
+  return formatTz(date, execformatstring, {
+    timeZone: "Asia/Tokyo",
+    locale: ja,
+  });
+};

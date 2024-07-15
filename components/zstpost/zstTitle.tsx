@@ -1,5 +1,4 @@
 "use client";
-import { Pencil2Icon } from "@radix-ui/react-icons";
 import { TypeZstContent, TypeZstPost } from "@/app/types/zstTypes";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
@@ -11,33 +10,40 @@ import {
 } from "../ui/accordion";
 import ZstModalEdit from "./zstModalEdit";
 import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { GetFormatTz, getJpTimeZoneFromUtc } from "@/lib/utilsDate";
 
 interface propTypes {
   zstPost: TypeZstPost;
+  isDispDetail?: boolean;
 }
 
 const ZstTitle = (props: propTypes) => {
-  const { zstPost } = props;
+  const { zstPost, isDispDetail } = props;
   const itemkey = 0;
   const [showEdit, setShowEdit] = useState(false);
 
   const formElement = (
     <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
   );
-
+  // isDispDetail;
   // console.log(zstContent);
+  const dispword = isDispDetail ? "" : "1";
+
   return (
     <div className="py-1">
       <div className="">
         <Accordion
           type="single"
           collapsible
-          defaultValue={`item-key-${String(itemkey)}}`}
+          defaultValue={`item-key-${String(itemkey)}}${dispword}`}
         >
-          <AccordionItem value={`item-key-${String(itemkey)}}1`}>
+          <AccordionItem value={`item-key-${String(itemkey)}}`}>
             <div className="flex">
               <AccordionTrigger className="py-2">
-                <div className="font-medium leading-none">{zstPost.title}</div>
+                <div className="font-medium leading-none underline">
+                  {zstPost.title}
+                </div>
               </AccordionTrigger>
               <Button
                 type="button"
@@ -45,10 +51,23 @@ const ZstTitle = (props: propTypes) => {
                 variant="outline"
                 size="icon"
               >
-                <Pencil2Icon className="h-4 w-4" />
+                <Pencil1Icon className="h-5 w-5" />
               </Button>
             </div>
-            <AccordionContent>{zstPost.content}</AccordionContent>
+            <AccordionContent>
+              <Label className="text-black whitespace-pre-wrap">
+                {zstPost.content}
+              </Label>
+              {isDispDetail && (
+                <div className="text-gray-600/70">
+                  [{String(zstPost.second)}sec] [writing start-end{" "}
+                  {GetFormatTz(zstPost.write_start_at)}-
+                  {GetFormatTz(zstPost.write_end_at)}] [create{" "}
+                  {GetFormatTz(zstPost.create_at)}/update
+                  {GetFormatTz(zstPost.update_at)}]
+                </div>
+              )}
+            </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>

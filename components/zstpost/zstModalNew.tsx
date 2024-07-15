@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { User } from "@/app/types/user";
 import { createZstPost } from "@/app/actions/zstPosts/posts";
+import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 
 interface propTypes {
   date: Date;
@@ -72,6 +73,7 @@ const ZstModalNew = (props: propTypes) => {
   };
 
   const propsstring = JSON.stringify({ formData }, null, 2);
+  const datebase = GetyyyyMMddJpFromDate(date);
 
   async function handleSubmit(event: any) {
     event.preventDefault();
@@ -82,13 +84,27 @@ const ZstModalNew = (props: propTypes) => {
       formData.create_at = new Date();
       formData.update_at = new Date();
 
+      const writeStartAt =
+        formData.write_start_at instanceof Date
+          ? formData.write_start_at
+          : new Date();
+      const writeEndAt =
+        formData.write_end_at instanceof Date
+          ? formData.write_end_at
+          : new Date();
+
+      var diffMilliSec = writeEndAt.getTime() - writeStartAt.getTime();
+      var diffsec = Math.floor(diffMilliSec / 1000); // Math.floor を使用して整数に切り捨て
+
+      console.log(diffsec);
+      formData.second = diffsec;
       createZstPost({
         params: {
           ZstPost: formData,
         },
       });
     }
-    router.push("/zstPosts/view/grid");
+    router.push(`/zstPosts/view/day/?date=${datebase}`);
     showModal(false);
   }
 

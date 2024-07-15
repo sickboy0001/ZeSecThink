@@ -21,7 +21,7 @@ export const getUtilUser = async (): Promise<User | null> => {
 
   return user;
 };
-export const getUserName = async (email: string) => {
+const getUserName = async (email: string) => {
   console.log("getUserName:start");
   if (email.split("@").length > 0) {
     return email.split("@")[0];
@@ -30,7 +30,7 @@ export const getUserName = async (email: string) => {
   }
 };
 
-export const getUserId = async (email: string) => {
+const getUserId = async (email: string) => {
   console.log("getUserId:start");
   const supabase = createClient();
   const { data: res, error } = await supabase

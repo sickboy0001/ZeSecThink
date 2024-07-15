@@ -8,6 +8,8 @@ import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
+  BoxIcon,
+  LayoutIcon,
 } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import { isSuperUser } from "@/lib/user";
@@ -43,10 +45,7 @@ const ZstPageViewGrid = (props: propTypes) => {
 
   return (
     <div className="px-3 py-3">
-      <div>
-        user.userid:{nowUser?.id}:{nowUser?.userid}:{nowUser?.username}
-      </div>
-      <div className="flex">
+      <div className="flex flex-row py-2">
         <div className="text-gray-900 text-lg px-2 py-2 font-bold underline">
           {dates[0].toLocaleDateString()}
         </div>
@@ -99,7 +98,31 @@ const ZstPageViewGrid = (props: propTypes) => {
             5x5
           </Link>
         </Button>
+        <div className="flex flex-row-reverse w-full">
+          <div className="flex flex-row">
+            <div>
+              <Button className="" variant="outline" size="icon">
+                <Link
+                  href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
+                >
+                  <LayoutIcon className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <div>
+              <Button className="" variant="outline" size="icon">
+                <Link
+                  href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
+                >
+                  <BoxIcon className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
+      <div className="flex"></div>
+      <div className="flex"></div>
       <ZstViewGrid
         rows={rows}
         cols={cols}
@@ -108,7 +131,9 @@ const ZstPageViewGrid = (props: propTypes) => {
         dates={dates}
         zstPosts={zstPosts}
       ></ZstViewGrid>{" "}
-      *
+      <div>
+        user.userid:{nowUser?.id}:{nowUser?.userid}:{nowUser?.username}
+      </div>
     </div>
   );
 };

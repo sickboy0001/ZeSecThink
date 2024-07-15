@@ -7,10 +7,11 @@ import ZstTitle from "./zstTitle";
 interface propTypes {
   date: Date;
   zstPosts: TypeZstPost[];
+  isDispDetail?: boolean;
 }
 
 const ZstTitles = (props: propTypes) => {
-  const { date, zstPosts } = props;
+  const { date, zstPosts, isDispDetail } = props;
   const newdate = new Date();
   // console.log("ZstTitles", newdate.toDateString());
   // console.log("ZstTitles:zstPosts:", zstPosts);
@@ -22,7 +23,7 @@ const ZstTitles = (props: propTypes) => {
       {filteredPosts.length > 0 &&
         filteredPosts.map((zstPost, index) => (
           <div key={index}>
-            <ZstTitle zstPost={zstPost}></ZstTitle>
+            <ZstTitle zstPost={zstPost} isDispDetail={isDispDetail}></ZstTitle>
           </div>
         ))}
     </>

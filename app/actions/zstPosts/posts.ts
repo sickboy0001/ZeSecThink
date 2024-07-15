@@ -3,15 +3,23 @@
 import { createClient } from "@/utils/supabase/server";
 import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
 import { getJpTimeZoneFromUtc } from "@/lib/utilsDate";
+import { Identifier } from "typescript";
 
-export const getPosts = async (user_id: number, from_at: Date, to_at: Date) => {
+export const getPosts = async (
+  user_id: number | undefined,
+  from_at: Date,
+  to_at: Date
+) => {
   const supabase = createClient();
   const { data: res, error } = await supabase
     .from("zst_post")
     .select("*")
     .eq("user_id", user_id)
-    .gte("current_at", from_at.toISOString())
-    .lte("current_at", to_at.toISOString());
+    .gte("current_at", getJpTimeZoneFromUtc(from_at))
+    .lte("current_at", getJpTimeZoneFromUtc(to_at))
+    .order("current_at", { ascending: true }) // 最初のソート条件: 昇順
+    .order("write_start_at", { ascending: true }) // 次のソート条件: 降順;
+    .order("update_at", { ascending: true }); // 次のソート条件: 降順;
 
   if (error) {
     console.log(error);

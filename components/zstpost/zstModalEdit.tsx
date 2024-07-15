@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateZstPost } from "@/app/actions/zstPosts/posts";
 
 import { useRouter } from "next/navigation";
+import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 
 interface propTypes {
   zstPost: TypeZstPost;
@@ -45,7 +46,8 @@ const ZstModalEdit = (props: propTypes) => {
         ZstPost: formData,
       },
     });
-    router.push("/zstPosts/view/grid");
+    const datebase = GetyyyyMMddJpFromDate(formData.current_at);
+    router.push(`/zstPosts/view/day/?date=${datebase}`);
     showModal(false);
   }
 
