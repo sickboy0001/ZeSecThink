@@ -13,19 +13,18 @@ const ZstTitles = (props: propTypes) => {
   const { date, zstPosts } = props;
   const newdate = new Date();
   // console.log("ZstTitles", newdate.toDateString());
-  console.log("ZstTitles:zstPosts:", zstPosts);
+  // console.log("ZstTitles:zstPosts:", zstPosts);
   const filteredPosts = zstPosts.filter(
     (f) => f.current_at.toDateString() === date.toDateString()
   );
   return (
     <>
-      {filteredPosts.length > 0 && (
-        <div>
-          {filteredPosts.map((zstPost, key) => (
-            <ZstTitle zstPost={zstPost} key={key}></ZstTitle>
-          ))}
-        </div>
-      )}
+      {filteredPosts.length > 0 &&
+        filteredPosts.map((zstPost, index) => (
+          <div key={index}>
+            <ZstTitle zstPost={zstPost}></ZstTitle>
+          </div>
+        ))}
     </>
   );
 };

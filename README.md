@@ -38,6 +38,26 @@ GRANT SELECT, INSERT, UPDATE , DELETE ON ALL TABLES IN SCHEMA "public" TO anon;
 - 新規登録部分も整理
   - todo20240714
 
+## memo
+
+### async
+
+不要な「const ZstDayTitles = async () 」「 async」は想定外のエラーがでる・・・「Error: async/await is not yet supported 」
+
+### supabase 採番用サロゲートキー用の権限
+
+「permission denied for sequence 」が出た時の対応
+
+```SQL
+-- 構文
+GRANT USAGE ON SEQUENCE [tablename]_[columnname] TO anon;
+GRANT USAGE ON SEQUENCE [tablename]_[columnname] TO authenticated;
+
+-- 例
+GRANT USAGE ON SEQUENCE zst_post_id_seq TO anon;
+GRANT USAGE ON SEQUENCE zst_post_id_seq TO authenticated;
+```
+
 ## Features
 
 - Works across the entire [Next.js](https://nextjs.org) stack

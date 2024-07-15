@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,44 +14,30 @@ import ZstTitle from "./zstTitles";
 import { ja } from "date-fns/locale/ja";
 import { format as formatTz } from "date-fns-tz";
 
-import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
+import { TypeZstPost } from "@/app/types/zstTypes";
 import ZstModalNew from "./zstModalNew";
-import { createClient } from "@/utils/supabase/client";
 
 interface propTypes {
   className: string;
   date: Date;
-  key: number;
   zstPosts: TypeZstPost[];
 }
 
-const ZstDayTitles = async ({ className, ...props }: propTypes) => {
-  const { zstPosts, date, key } = props;
+const ZstDayTitles = ({ className, ...props }: propTypes) => {
+  const { zstPosts, date } = props;
   const [showEdit, setShowEdit] = useState(false);
 
   const isSunday = date.getDay() === 0;
   const isSatday = date.getDay() === 6;
 
-  const user_id = 1;
-
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  console.log(user);
-
+  // console.log("zstDayTItle:start:");
   const formElement = (
-    <ZstModalNew
-      showModal={setShowEdit}
-      date={date}
-      user_id={user_id}
-      key={Number(key)}
-    ></ZstModalNew>
+    <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
   );
 
   return (
     <>
-      <div key={String(key)}>
+      <div>
         <Card className={cn(className)} {...props}>
           <CardHeader>
             <CardTitle

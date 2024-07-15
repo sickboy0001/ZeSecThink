@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import ZstViewGrid from "./zstViewGrid";
 import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
 import Link from "next/link";
@@ -9,6 +10,9 @@ import {
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
+import { isSuperUser } from "@/lib/user";
+import { getUtilUser } from "@/app/actions/user/utilUser";
+import { User } from "@/app/types/user";
 
 interface propTypes {
   rows: number;
@@ -19,14 +23,29 @@ interface propTypes {
 }
 const ZstPageViewGrid = (props: propTypes) => {
   const { rows, cols, basedate, dates, zstPosts } = props;
+  // console.log("ZstPageViewGrid:start");
 
   const basedateafter = GetyyyyMMddJpFromDate(addDays(basedate, rows * cols));
   const basedatebefore = GetyyyyMMddJpFromDate(addDays(basedate, -rows * cols));
   const basedatestr = GetyyyyMMddJpFromDate(basedate);
   const basedatetoday = GetyyyyMMddJpFromDate(new Date());
 
+  const [nowUser, setNowUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getUtilUser();
+      console.log("ZstPageViewGrid", user);
+      setNowUser(user);
+    };
+    fetchUser();
+  }, []);
+
   return (
     <div className="px-3 py-3">
+      <div>
+        user.userid:{nowUser?.id}:{nowUser?.userid}:{nowUser?.username}
+      </div>
       <div className="flex">
         <div className="text-gray-900 text-lg px-2 py-2 font-bold underline">
           {dates[0].toLocaleDateString()}
@@ -81,7 +100,6 @@ const ZstPageViewGrid = (props: propTypes) => {
           </Link>
         </Button>
       </div>
-
       <ZstViewGrid
         rows={rows}
         cols={cols}
@@ -89,7 +107,8 @@ const ZstPageViewGrid = (props: propTypes) => {
         className={""}
         dates={dates}
         zstPosts={zstPosts}
-      ></ZstViewGrid>
+      ></ZstViewGrid>{" "}
+      *
     </div>
   );
 };

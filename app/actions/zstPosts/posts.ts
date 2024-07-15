@@ -2,13 +2,13 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
+import { getJpTimeZoneFromUtc } from "@/lib/utilsDate";
 
 export const getPosts = async (user_id: number, from_at: Date, to_at: Date) => {
   const supabase = createClient();
   const { data: res, error } = await supabase
     .from("zst_post")
     .select("*")
-    .eq("public_flg", true)
     .eq("user_id", user_id)
     .gte("current_at", from_at.toISOString())
     .lte("current_at", to_at.toISOString());
@@ -41,12 +41,14 @@ export const updateZstPost = async ({
 
   const supabase = createClient();
 
+  const update_at = getJpTimeZoneFromUtc(new Date());
+
   const { error: putError } = await supabase
     .from("zst_post")
     .update({
       title: ZstPost.title,
       content: ZstPost.content,
-      update_at: new Date(),
+      update_at: update_at,
     })
     .eq("id", ZstPost.id.toString());
   if (putError) {
@@ -61,23 +63,29 @@ export const createZstPost = async ({
   params: { ZstPost: TypeZstPost };
 }) => {
   const { ZstPost } = params;
-
+  // console.log("createZstPost", ZstPost);
+  // 日本時間に変換
+  const current_at = getJpTimeZoneFromUtc(ZstPost.current_at);
+  const write_start_at = getJpTimeZoneFromUtc(ZstPost.write_start_at);
+  const write_end_at = getJpTimeZoneFromUtc(ZstPost.write_end_at);
+  const create_at = getJpTimeZoneFromUtc(ZstPost.create_at);
+  const update_at = getJpTimeZoneFromUtc(ZstPost.update_at);
   const supabase = createClient();
   try {
-    const { data: res, error } = await supabase.from("start_post").insert([
+    const { data: res, error } = await supabase.from("zst_post").insert([
       {
         user_id: ZstPost.user_id,
-        current_at: ZstPost.current_at,
+        current_at: current_at,
         title: ZstPost.title,
         content: ZstPost.content,
         second: ZstPost.second,
         public_flg: ZstPost.public_flg,
         public_content_flg: ZstPost.public_content_flg,
         delete_flg: ZstPost.delete_flg,
-        write_start_at: ZstPost.write_start_at,
-        write_end_at: ZstPost.write_end_at,
-        create_at: ZstPost.create_at,
-        update_at: ZstPost.update_at,
+        write_start_at: write_start_at,
+        write_end_at: write_end_at,
+        create_at: create_at,
+        update_at: update_at,
       },
     ]);
     if (error) {

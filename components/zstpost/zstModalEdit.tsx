@@ -10,12 +10,11 @@ import { useRouter } from "next/navigation";
 
 interface propTypes {
   zstPost: TypeZstPost;
-  key: Number;
   showModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const ZstModalEdit = (props: propTypes) => {
-  const { showModal, zstPost, key } = props;
+  const { showModal, zstPost } = props;
   const [showEdit, setShowEdit] = useState(false);
   const router = useRouter();
 
@@ -51,12 +50,7 @@ const ZstModalEdit = (props: propTypes) => {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      method="post"
-      className="space-y-4"
-      key={Number(key)}
-    >
+    <form onSubmit={handleSubmit} method="post" className="space-y-4">
       <div>
         <Label
           // htmlFor="email"

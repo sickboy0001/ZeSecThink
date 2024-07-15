@@ -61,7 +61,8 @@ const ViewGrid = async ({ searchParams }: propsType) => {
   // const zstPosts = await getPostsDummy();
 
   const from_at = generateDatesbase;
-  const to_at = basedate;
+  const to_at = addDays(basedate, 2);
+  console.log("ViewGrid", from_at, to_at);
   const zstPosts = await getPosts(1, from_at, to_at);
 
   // const nowdate = new Date();

@@ -1,29 +1,21 @@
 "use client";
-import { User } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { isSuperUser } from "@/lib/user";
+import { getUtilUser } from "../actions/user/utilUser";
+import { User } from "../types/user";
 
 /**
  * ログイン後のマイページ
  */
 const MyPage = () => {
   const [nowUser, setNowUser] = useState<User | null>(null);
-  const [superUser, setSuperUser] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const supabaseclient = createClient();
-      const {
-        data: { user },
-      } = await supabaseclient.auth.getUser();
-      console.log(user);
+      const user = await getUtilUser();
       setNowUser(user);
-      if (user && user.email) {
-        setSuperUser(isSuperUser(user.email));
-      }
     };
-
     fetchUser();
   }, []);
 
@@ -33,7 +25,7 @@ const MyPage = () => {
       {nowUser ? (
         <div>
           <p>ユーザー: {nowUser.email}</p>
-          <p>管理者: {String(superUser)}</p>
+          <p>管理者: {String(nowUser.isSuperUser)}</p>
 
           {/* 他のユーザー情報 */}
         </div>

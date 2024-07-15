@@ -14,31 +14,27 @@ import { Button } from "../ui/button";
 
 interface propTypes {
   zstPost: TypeZstPost;
-  key: Number;
 }
 
 const ZstTitle = (props: propTypes) => {
-  const { zstPost, key } = props;
+  const { zstPost } = props;
+  const itemkey = 0;
   const [showEdit, setShowEdit] = useState(false);
 
   const formElement = (
-    <ZstModalEdit
-      showModal={setShowEdit}
-      zstPost={zstPost}
-      key={Number(key)}
-    ></ZstModalEdit>
+    <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
   );
 
   // console.log(zstContent);
   return (
-    <div key={String(key)} className="py-1">
+    <div className="py-1">
       <div className="">
         <Accordion
           type="single"
           collapsible
-          defaultValue={`item-key-${String(key)}}`}
+          defaultValue={`item-key-${String(itemkey)}}`}
         >
-          <AccordionItem value={`item-key-${String(key)}}1`}>
+          <AccordionItem value={`item-key-${String(itemkey)}}1`}>
             <div className="flex">
               <AccordionTrigger className="py-2">
                 <div className="font-medium leading-none">{zstPost.title}</div>
@@ -52,14 +48,7 @@ const ZstTitle = (props: propTypes) => {
                 <Pencil2Icon className="h-4 w-4" />
               </Button>
             </div>
-            <AccordionContent>
-              {/* {zstContent.content.map((item, mapkey) => (
-                <p key={mapkey} className="text-sm ">
-                  {item}
-                </p>
-              ))} */}
-              {zstPost.content}
-            </AccordionContent>
+            <AccordionContent>{zstPost.content}</AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
