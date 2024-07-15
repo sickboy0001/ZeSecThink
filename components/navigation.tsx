@@ -88,7 +88,15 @@ const Navigation = ({ user }: { user: any | null }) => {
                       ◇Keyboard shortcuts
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem disabled>◇GitHub</DropdownMenuItem>
+
+                    <DropdownMenuItem>
+                      <Link
+                        className="font-medium text-gray-600 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                        href="/importdata/selectfile"
+                      >
+                        CSV-import
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem disabled>◇Support</DropdownMenuItem>
                     <DropdownMenuItem disabled>API</DropdownMenuItem>
                     <DropdownMenuSeparator />

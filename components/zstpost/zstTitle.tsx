@@ -1,7 +1,7 @@
 "use client";
 import { TypeZstContent, TypeZstPost } from "@/app/types/zstTypes";
 import { Pencil1Icon } from "@radix-ui/react-icons";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -9,9 +9,10 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import ZstModalEdit from "./zstModalEdit";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { GetFormatTz, getJpTimeZoneFromUtc } from "@/lib/utilsDate";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { GetFormatTz } from "@/lib/utilsDate";
 
 interface propTypes {
   zstPost: TypeZstPost;
@@ -20,8 +21,56 @@ interface propTypes {
 
 const ZstTitle = (props: propTypes) => {
   const { zstPost, isDispDetail } = props;
+
   const itemkey = 0;
   const [showEdit, setShowEdit] = useState(false);
+  const [isCheckedDelete, setIsCheckedDelete] = useState(zstPost.delete_flg);
+  const [isCheckedPublic, setIsCheckedPublic] = useState(zstPost.public_flg);
+  const switchPublicRef = useRef<HTMLButtonElement>(null);
+  const switchDeleteRef = useRef<HTMLButtonElement>(null);
+  const [isChecked, setIsChecked] = useState(false);
+  // const handleSwitchChange = (checked: boolean) => {
+  //   // console.log(checked);
+  //   const switchID = switchRef.current?.id;
+  //   console.log(`Switch with ID "${switchID}" was checked: ${checked}`);
+  //   if (switchID?.startsWith("public")) {
+  //     setIsCheckedPublic(checked);
+  //   } else {
+  //     setIsCheckedDelete(checked);
+  //   }
+  // };
+  // const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const checked = event.target.checked;
+  //   const switchID = event.target.id;
+  //   console.log(`Switch with ID "${switchID}" was checked: ${checked}`);
+  //   // 処理
+  // };
+
+  // const handleSwitchChange = (e: React.FormEvent<HTMLButtonElement>) => {
+  //   console.log(`Switch with ID "${e.target}" was checked: ${e.target.value}`);
+  //   // setSwitchStates((prevStates) => ({
+  //   //   ...prevStates,
+  //   //   [id]: checked,
+  //   // }));
+  // };
+
+  const handleSwitchPublicChange = (checked: boolean) => {
+    const id = switchPublicRef.current?.id;
+    console.log(id, checked);
+    setIsCheckedPublic(!checked);
+  };
+
+  const handleSwitchDeleteChange = (checked: boolean) => {
+    const id = switchDeleteRef.current?.id;
+    console.log(id, checked);
+    setIsCheckedDelete(!checked);
+  };
+
+  const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setIsChecked(checked);
+    console.log(`Switch is now: ${checked}`);
+  };
 
   const formElement = (
     <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
@@ -59,12 +108,40 @@ const ZstTitle = (props: propTypes) => {
                 {zstPost.content}
               </Label>
               {isDispDetail && (
-                <div className="text-gray-600/70">
-                  [{String(zstPost.second)}sec] [writing start-end{" "}
-                  {GetFormatTz(zstPost.write_start_at)}-
-                  {GetFormatTz(zstPost.write_end_at)}] [create{" "}
-                  {GetFormatTz(zstPost.create_at)}/update
-                  {GetFormatTz(zstPost.update_at)}]
+                <div>
+                  <div className="text-gray-600/70">
+                    [{String(zstPost.second)}sec] [writing start-end{" "}
+                    {GetFormatTz(zstPost.write_start_at)}-
+                    {GetFormatTz(zstPost.write_end_at)}] [create{" "}
+                    {GetFormatTz(zstPost.create_at)}/update
+                    {GetFormatTz(zstPost.update_at)}]
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id={`delete_flg_${zstPost.id}`}
+                        checked={isCheckedDelete}
+                        ref={switchDeleteRef}
+                        onCheckedChange={(value) => {
+                          handleSwitchDeleteChange(value);
+                        }}
+                      />
+                      <Label htmlFor={`delete_flg_${zstPost.id}`}>delete</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id={`public_flg_${zstPost.id}`}
+                        // checked={isCheckedPublic}
+                        checked={isChecked}
+                        ref={switchPublicRef}
+                        onCheckedChange={(value) => {
+                          handleSwitchPublicChange(value);
+                        }}
+                        // onChange={handleSwitchChange}
+                      />
+                      <Label htmlFor={`public_flg_${zstPost.id}`}>public</Label>
+                    </div>
+                  </div>
                 </div>
               )}
             </AccordionContent>
