@@ -48,7 +48,6 @@ const StartPagePreview = async () => {
             ))}
           </div>
         </div>
-        ;
       </section>
     </div>
   );

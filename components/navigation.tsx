@@ -78,9 +78,9 @@ const Navigation = ({ user }: { user: any | null }) => {
                     <DropdownMenuItem>
                       <Link
                         className="font-medium text-gray-600 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
-                        href="/profile"
+                        href="/profile/edit"
                       >
-                        Profile
+                        Edit
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem disabled>◇Settings</DropdownMenuItem>
@@ -116,6 +116,7 @@ const Navigation = ({ user }: { user: any | null }) => {
                 <div className="font-medium text-gray-600 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500">
                   <ModalCore modalType={ModalType.SignUp}></ModalCore>
                 </div>
+                <ModalCore modalType={ModalType.UserEdit}></ModalCore>
               </>
             )}
           </div>

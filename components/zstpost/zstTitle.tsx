@@ -54,22 +54,27 @@ const ZstTitle = (props: propTypes) => {
   //   // }));
   // };
 
+  function update_deletepublic_flg(
+    columnname: string,
+    id: number,
+    checked: boolean
+  ) {
+    console.log("todo:Update", columnname, id, checked);
+  }
+
   const handleSwitchPublicChange = (checked: boolean) => {
-    const id = switchPublicRef.current?.id;
-    console.log(id, checked);
-    setIsCheckedPublic(!checked);
+    const fullid = switchPublicRef.current?.id;
+    const columnname = fullid?.split("_")[0] + "_" + fullid?.split("_")[1];
+    const id = parseInt(fullid?.split("_")[2] ?? "0");
+    setIsCheckedPublic(checked);
   };
 
   const handleSwitchDeleteChange = (checked: boolean) => {
-    const id = switchDeleteRef.current?.id;
-    console.log(id, checked);
-    setIsCheckedDelete(!checked);
-  };
-
-  const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
-    setIsChecked(checked);
-    console.log(`Switch is now: ${checked}`);
+    const fullid = switchDeleteRef.current?.id;
+    const columnname = fullid?.split("_")[0] + "_" + fullid?.split("_")[1];
+    const id = parseInt(fullid?.split("_")[2] ?? "0");
+    update_deletepublic_flg(columnname, id, checked);
+    setIsCheckedDelete(checked);
   };
 
   const formElement = (
@@ -132,7 +137,7 @@ const ZstTitle = (props: propTypes) => {
                       <Switch
                         id={`public_flg_${zstPost.id}`}
                         // checked={isCheckedPublic}
-                        checked={isChecked}
+                        checked={isCheckedPublic}
                         ref={switchPublicRef}
                         onCheckedChange={(value) => {
                           handleSwitchPublicChange(value);

@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/client";
 import { isSuperUser } from "@/lib/user";
 import { getUtilUser } from "../actions/user/utilUser";
 import { User } from "../types/user";
+import UserEditForm from "@/components/user/UserEditForm";
 
 /**
  * ログイン後のマイページ
@@ -24,10 +25,11 @@ const MyPage = () => {
       <h1 className="text-2xl font-bold">ログインに成功しました</h1>
       {nowUser ? (
         <div>
+          {/* 他のユーザー情報 */}
           <p>ユーザー: {nowUser.email}</p>
           <p>管理者: {String(nowUser.isSuperUser)}</p>
-
-          {/* 他のユーザー情報 */}
+          <p>名前: {nowUser.username}</p>
+          <UserEditForm />
         </div>
       ) : (
         <p>ユーザー情報を取得中...</p>

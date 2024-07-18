@@ -1,5 +1,6 @@
 import React from "react";
 import { getUtilUser } from "@/app/actions/user/utilUser";
+import ICsvPageUpdateConfirm from "@/components/importcsv/ICsvPageUpdateConfirm";
 
 interface propsType {
   searchParams:
@@ -18,7 +19,9 @@ const SelectFile = async ({ searchParams }: propsType) => {
 
   return (
     <>
-      <div>selectfile</div>
+      <div>
+        <ICsvPageUpdateConfirm></ICsvPageUpdateConfirm>
+      </div>
       <div>
         user.userid:{user?.id}:{user?.userid}:{user?.username}
       </div>

@@ -1,10 +1,6 @@
 import React from "react";
-import { getPosts, getPostsDummy } from "@/app/actions/zstPosts/posts";
-import {
-  GetDateFromyyyyMMdd,
-  getJpTimeZoneFromUtc,
-  GetyyyyMMddJpFromDate,
-} from "@/lib/utilsDate";
+import { getPosts } from "@/app/actions/zstPosts/posts";
+import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { addDays } from "date-fns";
 import ZstPageViewDay from "@/components/zstpost/ZstPageViewDay";
 import { getUtilUser } from "@/app/actions/user/utilUser";

@@ -11,6 +11,7 @@ export const getUtilUser = async (): Promise<User | null> => {
     console.error("Error fetching user:", error.message);
     return null;
   }
+  console.log("getUtilUser:", data);
 
   const user: User = data.user; // Supabase の User オブジェクトを自分の定義した User インターフェースにキャスト
   if (user.email != undefined) {
@@ -30,7 +31,20 @@ const getUserName = async (email: string) => {
   }
 };
 
-const getUserId = async (email: string) => {
+const InsertMailToId = async (email: string) => {
+  console.log("updateUserId:start");
+  const supabase = createClient();
+  const { data: res, error } = await supabase.from("mail_to_id").insert([
+    {
+      mail: email,
+    },
+  ]);
+  if (error) {
+    console.log("■■■■データの登録失敗", error);
+  }
+};
+
+const getUserIdInserted = async (email: string) => {
   console.log("getUserId:start");
   const supabase = createClient();
   const { data: res, error } = await supabase
@@ -47,4 +61,17 @@ const getUserId = async (email: string) => {
   } else {
     return res[0].id;
   }
+};
+const getUserId = async (email: string) => {
+  let user_id = getUserIdInserted(email);
+  if (!user_id) {
+    InsertMailToId(email);
+    const insertUserId = getUserIdInserted(email);
+    if (insertUserId == null) {
+      console.log("");
+    } else {
+      user_id = insertUserId;
+    }
+  }
+  return user_id;
 };

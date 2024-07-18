@@ -32,17 +32,21 @@ GRANT SELECT, INSERT, UPDATE , DELETE ON ALL TABLES IN SCHEMA "public" TO anon;
 
 ## todo
 
-- メアド →ID、UID→ID どちらから考える、それとも、テーブル構造自体、string 型にするか・・・汎用性考えると、id のほうが楽だと・・・
-  - メアド →ID のほうがいいかな。。　 id:number mail:string 迷いない。ログイン後の扱い
-    - todo20240714
-- 新規登録部分も整理
-  - todo20240714
+- [x] getUserId use mail_to_id tables
 
-## memo
+- [ ] regist mail_to_id tables
+
+- [ ] console.log("todo:Update", columnname, id, checked) // フラグの更新
+
+- [ ] ニックネームの編集　テーブル作成 UI 周り profile\edit\page.tsx
+
+- [ ] CSV からのデータのインポート \components\importcsv\iCsvPage.tsx
 
 ## deploy
 
 https://ze-sec-think.vercel.app/
+
+## memo
 
 ### async
 
@@ -50,7 +54,7 @@ https://ze-sec-think.vercel.app/
 
 ### supabase 採番用サロゲートキー用の権限
 
-「permission denied for sequence 」が出た時の対応
+クエリの実行時に「permission denied for sequence 」が出た時の対応
 
 ```SQL
 -- 構文
@@ -61,6 +65,11 @@ GRANT USAGE ON SEQUENCE [tablename]_[columnname] TO authenticated;
 GRANT USAGE ON SEQUENCE zst_post_id_seq TO anon;
 GRANT USAGE ON SEQUENCE zst_post_id_seq TO authenticated;
 ```
+
+### 大量データの CSV を高速でテーブル表示する
+
+CSSModel 利用
+https://www.sukerou.com/2023/04/csv.html
 
 ## Features
 

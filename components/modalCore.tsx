@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ModalType } from "./modal/modalType";
 import SignUpForm from "./modal/signupForm";
 import SignInForm from "./modal/signinForm";
+import UserEditForm from "./user/UserEditForm";
 
 interface Props {
   modalType: ModalType;
