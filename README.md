@@ -36,7 +36,7 @@ GRANT SELECT, INSERT, UPDATE , DELETE ON ALL TABLES IN SCHEMA "public" TO anon;
 
 - [ ] regist mail_to_id tables
 
-- [ ] console.log("todo:Update", columnname, id, checked) // フラグの更新
+- [x] console.log("todo:Update", columnname, id, checked) // フラグの更新
 
 - [ ] ニックネームの編集　テーブル作成 UI 周り profile\edit\page.tsx
 

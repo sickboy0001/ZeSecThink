@@ -3,6 +3,7 @@ import { TypeZstPost } from "@/app/types/zstTypes";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import React from "react";
 import ZstTitle from "./zstTitle";
+import ZstTitleAction from "./zstTitleAction";
 
 interface propTypes {
   date: Date;
@@ -13,8 +14,6 @@ interface propTypes {
 const ZstTitles = (props: propTypes) => {
   const { date, zstPosts, isDispDetail } = props;
   const newdate = new Date();
-  // console.log("ZstTitles", newdate.toDateString());
-  // console.log("ZstTitles:zstPosts:", zstPosts);
   const filteredPosts = zstPosts.filter(
     (f) => f.current_at.toDateString() === date.toDateString()
   );
@@ -23,7 +22,11 @@ const ZstTitles = (props: propTypes) => {
       {filteredPosts.length > 0 &&
         filteredPosts.map((zstPost, index) => (
           <div key={index}>
-            <ZstTitle zstPost={zstPost} isDispDetail={isDispDetail}></ZstTitle>
+            {isDispDetail ? (
+              <ZstTitleAction zstPost={zstPost}></ZstTitleAction>
+            ) : (
+              <ZstTitle zstPost={zstPost} isDispDetail={false} />
+            )}
           </div>
         ))}
     </>
