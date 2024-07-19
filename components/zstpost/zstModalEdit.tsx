@@ -96,7 +96,7 @@ const ZstModalEdit = (props: propTypes) => {
           更新
         </button>
       </div>
-      <pre>{propsstring}</pre>
+      {/* <pre>{propsstring}</pre> */}
     </form>
   );
 };

@@ -40,17 +40,39 @@ export const getPosts = async (
   return posts;
 };
 
+export const updateFlgZstPost = async (
+  id: number,
+  columnname: string,
+  checked: boolean
+) => {
+  console.log("updateFlgZstPost start ");
+  const update_at = getJpTimeZoneFromUtc(new Date());
+
+  const supabase = createClient();
+  const { data: res, error: putError } = await supabase
+    .from("zst_post")
+    .update({
+      [columnname]: checked,
+      update_at: update_at,
+    })
+    .eq("id", id.toString())
+    .select()
+    .single();
+  if (putError) {
+    console.log("■■■■データの登録失敗", putError);
+  }
+  // console.log("updateFlgZstPost", res);
+  return res;
+};
+
 export const updateZstPost = async ({
   params,
 }: {
   params: { ZstPost: TypeZstPost };
 }) => {
   const { ZstPost } = params;
-
   const supabase = createClient();
-
   const update_at = getJpTimeZoneFromUtc(new Date());
-
   const { error: putError } = await supabase
     .from("zst_post")
     .update({
