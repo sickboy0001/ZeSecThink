@@ -1,6 +1,6 @@
 import React from "react";
 import { getUtilUser } from "@/app/actions/user/utilUser";
-import ICsvPageUpdateConfirm from "@/components/importcsv/ICsvPageUpdateConfirm";
+import ICsvPageUpdateConfirm from "@/components/importcsv/ICsvPage";
 
 interface propsType {
   searchParams:

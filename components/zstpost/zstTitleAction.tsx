@@ -4,9 +4,33 @@ import { TypeZstPost } from "@/app/types/zstTypes";
 import React, { useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { GetFormatTz } from "@/lib/utilsDate";
-import { updateFlgZstPost } from "@/app/actions/zstPosts/posts";
+import { GetFormatTz, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import { deleteZstPost, updateFlgZstPost } from "@/app/actions/zstPosts/posts";
 import ZstTitle from "./zstTitle";
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { TrashIcon } from "@radix-ui/react-icons";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { useRouter } from "next/navigation";
 interface propTypes {
   zstPost: TypeZstPost;
   isDispDetail?: boolean;
@@ -19,6 +43,8 @@ const zstTitleAction = (props: propTypes) => {
   const [isCheckedPublic, setIsCheckedPublic] = useState(nowZstPost.public_flg);
   const switchPublicRef = useRef<HTMLButtonElement>(null);
   const switchDeleteRef = useRef<HTMLButtonElement>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   async function update_deletepublic_flg(
     fullid: string | undefined,
@@ -42,6 +68,15 @@ const zstTitleAction = (props: propTypes) => {
     const fullid = switchDeleteRef.current?.id;
     update_deletepublic_flg(fullid, checked);
     setIsCheckedDelete(checked);
+  };
+  const actionFormPhysicalDeletion = () => {
+    console.log("actionFormPhysicalDeletion:id:" + String(zstPost.id));
+    const date = zstPost.current_at;
+    //delete
+    deleteZstPost(zstPost.id);
+
+    const datestr = GetyyyyMMddJpFromDate(date);
+    router.push(`/zstPosts/view/day/?date=${datestr}`);
   };
 
   return (
@@ -77,6 +112,30 @@ const zstTitleAction = (props: propTypes) => {
                 }}
               />
               <Label htmlFor={`public_flg_${nowZstPost.id}`}>public</Label>
+              <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline">
+                    <TrashIcon className="h-4 w-4" />
+                    Physical deletion
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle></AlertDialogTitle>
+                    <AlertDialogDescription asChild>
+                      <div className="flex items-center space-x-2">
+                        削除します。よろしいですか？
+                      </div>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={actionFormPhysicalDeletion}>
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </div>

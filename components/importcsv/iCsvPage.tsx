@@ -1,78 +1,106 @@
 "use client";
-import React, { useState } from "react";
-import { Textarea } from "../ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import ICsvTextInput from "./ICsvTextInput";
 import Papa from "papaparse";
-import ICsvConfirm from "./ICsvConfirm";
+import {
+  ChangeEvent,
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import ICsvRawTable from "./ICsvRawTable";
+import { Column } from "./TypeTable";
+import ICsvFormatTable from "./ICsvFormatTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import ICsvConverter from "./ICsvConverter";
+import { getUtilUser } from "@/app/actions/user/utilUser";
+import { User } from "@/app/types/user";
+import UserContext from "../user/UserContext";
 
-export const formSchema = z.object({
-  rawcsvlocal: z.string(),
-});
+function ICsvPageUpdateConfirm() {
+  //CSVから読み込んだデータ
+  const [csvData, setCsvData] = useState<Papa.ParseResult<unknown> | null>(
+    null
+  );
 
-const ICsvPage = () => {
-  const [mode, setMode] = useState(0);
-  const [rawcsv, setRowcsv] = useState("");
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      rawcsvlocal: "",
-    },
-  });
+  const [nowUser, setNowUser] = useState<User | null>(null);
 
-  function onInputPlanTextSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    setRowcsv(values.rawcsvlocal);
-    setMode(1);
-  }
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getUtilUser();
+      setNowUser(user);
+    };
+    fetchUser();
+  }, []);
 
-  function onRegistSubmit() {
-    console.log("onRegistSubmit");
-    setMode(2);
-  }
+  //CSVの１行目をヘッダ行とするか
+  //   const [headerFirst, setHeaderFirst] = useState<boolean>(true);
+
+  const headerFirst = true;
+  //ファイルを選択
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files as FileList;
+    if (files.length == 0) return;
+
+    //CSVをパース
+    Papa.parse(files[0], {
+      complete: function (results) {
+        // パースが完了したら、結果を表示する
+        console.log(results);
+        setCsvData(results);
+      },
+    });
+  };
+
+  //テーブルに表示する列の定義（CSVの１行目から作成）
+  const columns = useMemo(() => {
+    if (csvData == null || csvData.data.length == 0) {
+      return [{ Header: "No Data" }];
+    }
+    //１行目のデータで列の定義を作成
+    const row = csvData.data[0] as Array<any>;
+    return row.map((cellData, columnIndex) => {
+      return {
+        Header: headerFirst ? cellData : `Column${columnIndex + 1}`,
+        accessor: (row: any, i: number) => row[columnIndex],
+      };
+    });
+  }, [csvData, headerFirst]);
 
   return (
-    <>
-      {mode == 0 && (
-        <>
-          <div>ICsvPageInputText</div>
-          <div>
-            <ICsvTextInput
-              form={form}
-              onSubmit={onInputPlanTextSubmit}
-            ></ICsvTextInput>
-          </div>
-        </>
-      )}
-      {mode == 1 && (
-        <>
-          <div>confirem</div>
-          <div>
-            <ICsvConfirm onSubmit={onRegistSubmit} rawcsv={rawcsv} />
-          </div>
-          <div>
-            <div className="whitespace-pre-wrap">{rawcsv}</div>
+    <UserContext.Provider value={nowUser}>
+      <div>
+        <div>
+          <input type="file" onChange={handleChange} />
+        </div>
 
-            {/* <ICsvTextInput form={form} onSubmit={onSubmit}></ICsvTextInput> */}
-          </div>
-          <div>{rawcsv}</div>
-          {/* <pre>{propsstring}</pre> */}
-        </>
-      )}
-    </>
+        <Tabs defaultValue="FormatTable">
+          <TabsList>
+            <TabsTrigger value="RawTable">RawTable</TabsTrigger>
+            <TabsTrigger value="FormatTable">FormatTable</TabsTrigger>
+            <TabsTrigger value="Converter">Converter</TabsTrigger>
+          </TabsList>
+          <TabsContent value="RawTable">
+            <ICsvRawTable
+              columns={columns as Column[]}
+              data={csvData?.data.slice(1) ?? []}
+            />
+          </TabsContent>
+          <TabsContent value="FormatTable">
+            <ICsvFormatTable
+              columns={columns as Column[]}
+              data={csvData?.data.slice(1) ?? []}
+            />
+          </TabsContent>
+          <TabsContent value="Converter">
+            <ICsvConverter
+              columns={columns as Column[]}
+              data={csvData?.data.slice(1) ?? []}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </UserContext.Provider>
   );
-};
+}
 
-export default ICsvPage;
+export default ICsvPageUpdateConfirm;

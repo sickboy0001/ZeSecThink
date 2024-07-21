@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
-import { isSuperUser } from "@/lib/user";
 import { getUtilUser } from "../actions/user/utilUser";
 import { User } from "../types/user";
-import UserEditForm from "@/components/user/UserEditForm";
+// import UserEditForm from "@/components/user/UserEditForm";
 
 /**
  * ログイン後のマイページ
@@ -29,7 +27,6 @@ const MyPage = () => {
           <p>ユーザー: {nowUser.email}</p>
           <p>管理者: {String(nowUser.isSuperUser)}</p>
           <p>名前: {nowUser.username}</p>
-          <UserEditForm />
         </div>
       ) : (
         <p>ユーザー情報を取得中...</p>

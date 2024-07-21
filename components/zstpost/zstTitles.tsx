@@ -14,9 +14,15 @@ interface propTypes {
 const ZstTitles = (props: propTypes) => {
   const { date, zstPosts, isDispDetail } = props;
   const newdate = new Date();
-  const filteredPosts = zstPosts.filter(
-    (f) => f.current_at.toDateString() === date.toDateString()
-  );
+
+  const getDatePosts = () => {
+    const res = zstPosts.filter(
+      (f) => f.current_at.toDateString() === date.toDateString()
+    );
+    return res;
+  };
+  const filteredPosts = getDatePosts();
+
   return (
     <>
       {filteredPosts.length > 0 &&

@@ -41,7 +41,7 @@ const ZstTitle = (props: propTypes) => {
           <AccordionItem value={`item-key-${String(itemkey)}}`}>
             <div className="flex">
               <AccordionTrigger className="py-2">
-                <div className="font-medium leading-none underline">
+                <div className="font-medium leading-none underline text-left">
                   {zstPost.title}
                 </div>
               </AccordionTrigger>

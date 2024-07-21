@@ -65,6 +65,21 @@ export const updateFlgZstPost = async (
   return res;
 };
 
+export const deleteZstPost = async (id: number) => {
+  console.log("updateFlgZstPost start ");
+
+  const supabase = createClient();
+  const { data: res, error: putError } = await supabase
+    .from("zst_post")
+    .delete()
+    .eq("id", id.toString());
+  if (putError) {
+    console.log("■■■■データの登録失敗", putError);
+  }
+  // console.log("updateFlgZstPost", res);
+  return res;
+};
+
 export const updateZstPost = async ({
   params,
 }: {

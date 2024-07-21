@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ZstViewGrid from "./zstViewGrid";
-import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
+import { TypeZstPost } from "@/app/types/zstTypes";
 import Link from "next/link";
 import { addDays } from "date-fns";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
@@ -12,9 +11,6 @@ import {
   LayoutIcon,
 } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
-import { getUtilUser } from "@/app/actions/user/utilUser";
-import { User } from "@/app/types/user";
-import ZstDayTitles from "./zstDayTitles";
 import ZstDDayTitles from "./zstDDayTitles";
 
 interface propTypes {

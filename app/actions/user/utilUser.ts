@@ -11,24 +11,39 @@ export const getUtilUser = async (): Promise<User | null> => {
     console.error("Error fetching user:", error.message);
     return null;
   }
-  console.log("getUtilUser:", data);
+  // console.log("getUtilUser:", data);
 
   const user: User = data.user; // Supabase の User オブジェクトを自分の定義した User インターフェースにキャスト
   if (user.email != undefined) {
     user.userid = await getUserId(user.email);
-    user.username = await getUserName(user.email);
+    const parsedUserId = user.userid || 0; //parseInt( || 0);
+    [user.username, user.comment] = await getUserNameComment(parsedUserId);
     user.isSuperUser = isSuperUser(user.email);
   }
 
   return user;
 };
-const getUserName = async (email: string) => {
-  console.log("getUserName:start");
-  if (email.split("@").length > 0) {
-    return email.split("@")[0];
-  } else {
-    return email;
+const getUserNameComment = async (user_id: number) => {
+  console.log(`getUserNameComment:start:${String(user_id)}`);
+  const supabase = createClient();
+  const { data: res, error } = await supabase
+    .from("user_info")
+    .select("name , comment")
+    .eq("user_id", user_id)
+    .eq("delete_flg", false)
+    .single();
+
+  if (error) {
   }
+  console.log(res);
+  return [res?.name, res?.comment];
+  // return ["12", "12"];
+
+  // if (email.split("@").length > 0) {
+  //   return email.split("@")[0];
+  // } else {
+  //   return email;
+  // }
 };
 
 const InsertMailToId = async (email: string) => {

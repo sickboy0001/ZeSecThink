@@ -45,28 +45,41 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
           <CardHeader>
             <CardTitle>
               <div className="flex items-center justify-between">
-                <div
-                  className={` ${isSunday ? "text-red-500" : ""} ${
-                    isSatday ? "text-blue-500" : ""
-                  }`}
-                >
-                  {formatTz(date, "yyyy/MM/dd", {
-                    timeZone: "Asia/Tokyo",
-                    locale: ja,
-                  })}
+                <div className="flex">
+                  <div
+                    className={` ${isSunday ? "text-red-500" : ""} ${
+                      isSatday ? "text-blue-500" : ""
+                    }`}
+                  >
+                    {formatTz(date, "yyyy/MM/dd", {
+                      timeZone: "Asia/Tokyo",
+                      locale: ja,
+                    })}
+                  </div>
                 </div>
-                <Button className="" variant="outline" size="icon">
-                  <Link href={`/zstPosts/view/day/?date=${datestr}`}>
-                    <CalendarIcon className="h-5 w-5" />
-                  </Link>
-                </Button>
+                <div className="flex items-center">
+                  <div className="px-3 text-gray-500 font-semibold ">
+                    [
+                    {String(
+                      zstPosts.filter(
+                        (f) =>
+                          String(f.current_at.toDateString()) ===
+                          String(date.toDateString())
+                      ).length
+                    )}
+                    /10]
+                  </div>
+                  <Button className="" variant="outline" size="icon">
+                    <Link href={`/zstPosts/view/day/?date=${datestr}`}>
+                      <CalendarIcon className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="grid gap-1">
-            <div>
-              <ZstTitle date={date} zstPosts={zstPosts}></ZstTitle>
-            </div>
+            <ZstTitle date={date} zstPosts={zstPosts}></ZstTitle>
           </CardContent>
           <CardFooter>
             <Button
