@@ -16,7 +16,7 @@ import { getUtilUser } from "@/app/actions/user/utilUser";
 import { User } from "@/app/types/user";
 import UserContext from "../user/UserContext";
 
-function ICsvPageUpdateConfirm() {
+async function ICsvPageUpdateConfirm() {
   //CSVから読み込んだデータ
   const [csvData, setCsvData] = useState<Papa.ParseResult<unknown> | null>(
     null
