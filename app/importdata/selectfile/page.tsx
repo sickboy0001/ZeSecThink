@@ -1,30 +1,24 @@
 import React from "react";
 import { getUtilUser } from "@/app/actions/user/utilUser";
-import ICsvPageUpdateConfirm from "@/components/importcsv/ICsvPage";
+import ICsvPage from "@/components/importcsv/ICsvPage";
+import UserContext from "@/components/user/UserContext";
 
-interface propsType {
-  searchParams:
-    | {
-        [key: string]: string | string[] | undefined | any;
-      }
-    | any;
-}
-
-const SelectFile = async ({ searchParams }: propsType) => {
-  console.log(searchParams);
+const SelectFile = async () => {
+  // console.log(searchParams);
   // searchParams.basedateの取得
-  let date = String(searchParams.date || "");
   // const [nowUser, setNowUser] = useState<User | null>(null);
   const user = await getUtilUser();
 
   return (
     <>
+      {/* <UserContext.Provider value={user}> */}
       <div>
-        <ICsvPageUpdateConfirm></ICsvPageUpdateConfirm>
+        <ICsvPage></ICsvPage>
       </div>
       <div>
         user.userid:{user?.id}:{user?.userid}:{user?.username}
       </div>
+      {/* </UserContext.Provider> */}
     </>
   );
 };

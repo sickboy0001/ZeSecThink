@@ -1,3 +1,4 @@
+"use client";
 // UserContext.tsx
 import { User } from "@/app/types/user";
 import React, { createContext } from "react";

@@ -18,6 +18,15 @@ import { TypeZstPost } from "@/app/types/zstTypes";
 import ZstModalNew from "./zstModalNew";
 import Link from "next/link";
 import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 interface propTypes {
   className: string;
@@ -52,18 +61,27 @@ const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button
-              className="w-full"
-              variant="outline"
-              onClick={() => setShowEdit(true)}
-            >
-              <Pencil2Icon className="h-5 w-5" /> add
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="w-full" variant="outline">
+                  <Pencil2Icon className="h-5 w-5" /> add
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Edit</DialogTitle>
+                  <DialogDescription>
+                    <div className="p-4 md:p-5">{formElement}</div>
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="sm:justify-start"></DialogFooter>
+              </DialogContent>
+            </Dialog>
           </CardFooter>
         </Card>
         {showEdit ? (
           <>
-            <div className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full bg-black-rgba">
+            {/* <div className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full bg-black-rgba">
               <div className="m-auto relative p-4 w-full max-w-md max-h-full">
                 <div className="relative bg-white rounded-lg shadow">
                   <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
@@ -97,7 +115,7 @@ const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
                   <div className="p-4 md:p-5">{formElement}</div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </>
         ) : null}
       </div>

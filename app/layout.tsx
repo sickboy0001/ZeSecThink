@@ -8,8 +8,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Zsc",
+  description: "ZeroSecondThinking",
 };
 
 export default function RootLayout({
@@ -19,16 +19,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
+      <body className="">
         <div>
           <SupabaseListener />
         </div>
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
+        <main className="container mx-auto px-5 py-5  min-h-screen flex flex-col items-center">
+          <div>
+            {/* <article className="bg-gray-200 sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200">
+              test
+              {children}
+            </article> */}
+            {children}
+          </div>
         </main>
-        <footer className="w-full border-t border-t-foreground/10 p-4 flex justify-center text-center text-xs">
+        {/* <footer className="w-full border-t border-t-foreground/10 p-4 flex justify-center text-center text-xs">
           <p>footer</p>
-        </footer>
+        </footer> */}
       </body>
     </html>
   );

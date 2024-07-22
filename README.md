@@ -48,6 +48,39 @@ https://ze-sec-think.vercel.app/
 
 ## memo
 
+### Supabase,CustomSMTP
+
+#### SendGrid,Supabase つなぎ方
+
+https://qiita.com/masakinihirota/items/23b128504d6c561e4525
+SendGrid とは
+
+#### 「Resend」も有効
+
+https://zenn.dev/daimyo404/articles/3fefe4ef2d9500
+
+#### 「Resend」も有効　こっちのほうが具体的
+
+https://ritaiz.com/articles/setup-supabase-email-configuring-to-send-email-through-resendhttps://zenn.dev/hayato94087/articles/53c0c759a23a19
+
+## 2024 年 7 月 22 日
+
+- 中；優先度高タスク
+  - 残：メールでの認証周り。
+    - SendGrid との紐づけ、sendgrid が相性悪い？
+  - 中：レスポンシブル UI の件
+    - 済：メニュー
+      - スマホでも見れるようにする
+      - バーガーメニューへの展開必要
+    - 中：ビュー
+      - ５ｘ５、４ｘ４などでのエラー
+      - 画面全体サイズなど固定している？
+      - モーダル画面にも差異が出る。
+    - モーダル画面の Shadcn 化
+- 未：優先度中タスク
+  - 権限毎の View
+  - サマリ画面
+
 ### async
 
 不要な「const ZstDayTitles = async () 」「 async」は想定外のエラーがでる・・・「Error: async/await is not yet supported 」
