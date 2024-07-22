@@ -10,14 +10,12 @@ const SelectFile = async () => {
 
   return (
     <>
-      {/* <UserContext.Provider value={user}> */}
       <div>
         <ICsvPage></ICsvPage>
       </div>
       <div>
         user.userid:{user?.id}:{user?.userid}:{user?.username}
       </div>
-      {/* </UserContext.Provider> */}
     </>
   );
 };
