@@ -1,6 +1,6 @@
 import React from "react";
 import { getUtilUser } from "@/app/actions/user/utilUser";
-import ICsvPage from "@/components/importcsv/ICsvPage2";
+import ICsvPage from "@/components/importcsv/ICsvPage";
 
 const SelectFile = async () => {
   // console.log(searchParams);
