@@ -11,7 +11,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { getUtilUser } from "@/app/actions/user/utilUser";
 import { User } from "@/app/types/user";
 import { createZstPost } from "@/app/actions/zstPosts/posts";
 import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
@@ -52,9 +51,9 @@ const ZstModalNew = (props: propTypes) => {
         update_at: new Date(),
       });
     }
-  }, [user, date]);
+  }, [user]);
   if (!formData) {
-    return null; // or a loading spinner or some placeholder
+    return <div>now loading...</div>; // or a loading spinner or some placeholder
   }
 
   const handleChange = (
@@ -70,7 +69,6 @@ const ZstModalNew = (props: propTypes) => {
     });
   };
 
-  const propsstring = JSON.stringify({ formData }, null, 2);
   const datebase = GetyyyyMMddJpFromDate(date);
 
   async function handleSubmit(event: any) {

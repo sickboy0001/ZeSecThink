@@ -116,7 +116,9 @@ const zstTitleAction = (props: propTypes) => {
                 <AlertDialogTrigger asChild>
                   <Button variant="outline">
                     <TrashIcon className="h-4 w-4" />
-                    Physical deletion
+                    <div className="hidden md:inline-block">
+                      Physical deletion
+                    </div>
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>

@@ -53,7 +53,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
         <Card className={cn(className)} {...props}>
           <CardHeader>
             <CardTitle>
-              <div className="flex items-center justify-between">
+              <div className="flex  flex-wrap items-center justify-between">
                 <div className="flex">
                   <div
                     className={` ${isSunday ? "text-red-500" : ""} ${
