@@ -23,7 +23,7 @@ export default function RootLayout({
         <div>
           <SupabaseListener />
         </div>
-        <main className="container mx-auto px-5 py-5  min-h-screen flex flex-col items-center">
+        <main className="container mx-auto px-2 py-2min-h-screen flex flex-col items-center ">
           <div>
             {/* <article className="bg-gray-200 sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200">
               test

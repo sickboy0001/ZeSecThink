@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { isSuperUser } from "@/lib/user";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { User } from "@/app/types/user";
+import UserContext from "../user/UserContext";
 
 interface propTypes {
   rows: number;
@@ -37,104 +38,106 @@ const ZstPageViewGrid = (props: propTypes) => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await getUtilUser();
-      console.log("ZstPageViewGrid", user);
+      // console.log("ZstPageViewGrid", user);
       setNowUser(user);
     };
     fetchUser();
   }, []);
 
   return (
-    <div className="px-3 py-3">
-      <div className="flex flex-row py-2">
-        <div className="text-gray-900 text-lg px-2 py-2 font-bold underline">
-          {dates[0].toLocaleDateString()}
-        </div>
-        <Button className="underline" variant="outline">
-          <Link
-            href={`/zstPosts/view/grid/?basedate=${basedatetoday}&cols=${cols}&rows=${rows}`}
-          >
-            today
-          </Link>
-        </Button>
-        <Button className="" variant="outline" size="icon">
-          <Link
-            href={`/zstPosts/view/grid/?basedate=${basedatebefore}&cols=${cols}&rows=${rows}`}
-          >
-            <DoubleArrowLeftIcon className="h-4 w-4" />
-          </Link>
-        </Button>
-        <Button className="" variant="outline" size="icon">
-          <Link
-            href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
-          >
-            <DoubleArrowRightIcon className="h-4 w-4" />
-          </Link>
-        </Button>
-        <Button className="underline" variant="outline">
-          <Link
-            href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${1}&rows=${3}`}
-          >
-            1x3
-          </Link>
-        </Button>
-        <Button className="underline" variant="outline">
-          <Link
-            href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${3}&rows=${3}`}
-          >
-            3x3
-          </Link>
-        </Button>
-        <Button className="underline" variant="outline">
-          <Link
-            href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${4}&rows=${4}`}
-          >
-            4x4
-          </Link>
-        </Button>
-        <Button className="underline" variant="outline">
-          <Link
-            href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${5}&rows=${5}`}
-          >
-            5x5
-          </Link>
-        </Button>
-        <div className="flex flex-row-reverse w-full">
-          <div className="flex flex-row">
-            <div>
-              <Button className="" variant="outline" size="icon">
-                <Link
-                  href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
-                >
-                  <LayoutIcon className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <div>
-              <Button className="" variant="outline" size="icon">
-                <Link
-                  href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
-                >
-                  <BoxIcon className="h-4 w-4" />
-                </Link>
-              </Button>
+    <UserContext.Provider value={nowUser}>
+      <div className="px-3 py-3">
+        <div className="flex flex-row py-3  flex-wrap">
+          <div className="text-gray-900 text-lg px-2 py-2 font-bold underline">
+            {dates[0].toLocaleDateString()}
+          </div>
+          <Button className="underline" variant="outline">
+            <Link
+              href={`/zstPosts/view/grid/?basedate=${basedatetoday}&cols=${cols}&rows=${rows}`}
+            >
+              today
+            </Link>
+          </Button>
+          <Button className="" variant="outline" size="icon">
+            <Link
+              href={`/zstPosts/view/grid/?basedate=${basedatebefore}&cols=${cols}&rows=${rows}`}
+            >
+              <DoubleArrowLeftIcon className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button className="" variant="outline" size="icon">
+            <Link
+              href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
+            >
+              <DoubleArrowRightIcon className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button className="underline" variant="outline">
+            <Link
+              href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${1}&rows=${3}`}
+            >
+              1x3
+            </Link>
+          </Button>
+          <Button className="underline" variant="outline">
+            <Link
+              href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${3}&rows=${3}`}
+            >
+              3x3
+            </Link>
+          </Button>
+          <Button className="underline" variant="outline">
+            <Link
+              href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${4}&rows=${4}`}
+            >
+              4x4
+            </Link>
+          </Button>
+          <Button className="underline" variant="outline">
+            <Link
+              href={`/zstPosts/view/grid/?basedate=${basedatestr}&cols=${5}&rows=${5}`}
+            >
+              5x5
+            </Link>
+          </Button>
+          <div className="flex flex-row-reverse w-full">
+            <div className="flex flex-row">
+              <div>
+                <Button className="" variant="outline" size="icon">
+                  <Link
+                    href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
+                  >
+                    <LayoutIcon className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+              <div>
+                <Button className="" variant="outline" size="icon">
+                  <Link
+                    href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
+                  >
+                    <BoxIcon className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
+        <div className="flex"></div>
+        <div className="flex"></div>
+        <ZstViewGrid
+          rows={rows}
+          cols={cols}
+          basedate={basedate}
+          className={""}
+          dates={dates}
+          zstPosts={zstPosts}
+        ></ZstViewGrid>{" "}
+        <div>
+          user.userid:{nowUser?.id}:{nowUser?.userid}:{nowUser?.username}
+        </div>
       </div>
-      <div className="flex"></div>
-      <div className="flex"></div>
-      <ZstViewGrid
-        rows={rows}
-        cols={cols}
-        basedate={basedate}
-        className={""}
-        dates={dates}
-        zstPosts={zstPosts}
-      ></ZstViewGrid>{" "}
-      <div>
-        user.userid:{nowUser?.id}:{nowUser?.userid}:{nowUser?.username}
-      </div>
-    </div>
+    </UserContext.Provider>
   );
 };
 

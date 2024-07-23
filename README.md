@@ -65,6 +65,18 @@ https://ritaiz.com/articles/setup-supabase-email-configuring-to-send-email-throu
 
 ## 2024 年 7 月 22 日
 
+NextJS デプロイ失敗について
+https://qiita.com/tarian/items/f666bf5e8daf5e31a0de
+
+Github の設定変更
+https://qiita.com/sawadashota/items/aa312a3b7e2403448efe
+
+「Module not found: Can't resolve '@/components/importcsv/ICsvPage'」NextJS、GitHub→Deploy 時のエラー
+一度別名でファイル作成（名前の変更）その後 GitHub に一度上げる、
+その後ファイル名をもとに戻すことで、github 上のファイル期待通りになる
+
+## 2024 年 7 月 22 日
+
 - 中；優先度高タスク
   - 残：メールでの認証周り。
     - SendGrid との紐づけ、sendgrid が相性悪い？

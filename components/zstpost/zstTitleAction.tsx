@@ -90,7 +90,7 @@ const zstTitleAction = (props: propTypes) => {
             {GetFormatTz(nowZstPost.create_at)}/update
             {GetFormatTz(nowZstPost.update_at)}]
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap  items-center space-x-2">
             <div className="flex ml-2 items-center space-x-2">
               <Switch
                 id={`delete_flg_${nowZstPost.id}`}

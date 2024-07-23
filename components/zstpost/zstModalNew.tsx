@@ -1,6 +1,12 @@
 "use client";
 import { TypeZstPost } from "@/app/types/zstTypes";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +16,7 @@ import { User } from "@/app/types/user";
 import { createZstPost } from "@/app/actions/zstPosts/posts";
 import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { Button } from "../ui/button";
+import UserContext from "../user/UserContext";
 
 interface propTypes {
   date: Date;
@@ -18,30 +25,20 @@ interface propTypes {
 
 const ZstModalNew = (props: propTypes) => {
   const { showModal, date } = props;
-  const [showEdit, setShowEdit] = useState(false);
   const router = useRouter();
 
-  const [nowUser, setNowUser] = useState<User | null>(null);
+  // const [nowUser, setNowUser] = useState<User | null>(null);
   const [formData, setFormData] = useState<TypeZstPost | null>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getUtilUser();
-      if (user) {
-        setNowUser({
-          ...user,
-          userid: user.userid || 0, // userid が undefined の場合は 0 にする
-        });
-      }
-    };
-    fetchUser();
-  }, []);
+  const user = useContext(UserContext);
+
+  // console.log("const ZstModalNew = (props: propTypes) start", user);
 
   useEffect(() => {
-    if (nowUser) {
+    if (user) {
       setFormData({
         id: 0,
-        user_id: nowUser.userid || 0, // nowUserがnullでないことを確認
+        user_id: user.userid || 0, // nowUserがnullでないことを確認
         current_at: date,
         title: "",
         content: "",
@@ -55,7 +52,7 @@ const ZstModalNew = (props: propTypes) => {
         update_at: new Date(),
       });
     }
-  }, [nowUser, date]);
+  }, [user, date]);
   if (!formData) {
     return null; // or a loading spinner or some placeholder
   }
@@ -110,50 +107,52 @@ const ZstModalNew = (props: propTypes) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} method="post" className="space-y-4">
-      <div>
-        <Label
-          // htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          タイトル
-        </Label>
-        <Input
-          type="title"
-          name="title"
-          id="title"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="タイトル"
-          value={formData.title}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <Label
-          // htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900"
-        >
-          内容
-        </Label>
-        <Textarea
-          name="content"
-          id="content"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="内容"
-          value={formData.content}
-          onChange={handleChange}
-          rows={7}
-          required
-        />
-      </div>
-      <div>
-        <Button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-          更新
-        </Button>
-      </div>
-      {/* <pre>{propsstring}</pre> */}
-    </form>
+    <div>
+      <form onSubmit={handleSubmit} method="post" className="space-y-4">
+        <div>
+          <Label
+            // htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            タイトル
+          </Label>
+          <Input
+            type="title"
+            name="title"
+            id="title"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="タイトル"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <Label
+            // htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            内容
+          </Label>
+          <Textarea
+            name="content"
+            id="content"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="内容"
+            value={formData.content}
+            onChange={handleChange}
+            rows={7}
+            required
+          />
+        </div>
+        <div>
+          <Button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            更新
+          </Button>
+        </div>
+        {/* <pre>{propsstring}</pre> */}
+      </form>
+    </div>
   );
 };
 
