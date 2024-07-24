@@ -4,6 +4,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import React from "react";
 import ZstTitle from "./zstTitle";
 import ZstTitleAction from "./zstTitleAction";
+import { GetFormatTz } from "@/lib/utilsDate";
 
 interface propTypes {
   date: Date;
@@ -15,9 +16,12 @@ const ZstTitles = (props: propTypes) => {
   const { date, zstPosts, isDispDetail } = props;
   const newdate = new Date();
 
+  console.log("const ZstTitles", GetFormatTz(date, "yyyy-MM-dd"));
   const getDatePosts = () => {
     const res = zstPosts.filter(
-      (f) => f.current_at.toDateString() === date.toDateString()
+      (f) =>
+        GetFormatTz(f.current_at, "yyyy-MM-dd") ===
+        GetFormatTz(date, "yyyy-MM-dd")
     );
     return res;
   };

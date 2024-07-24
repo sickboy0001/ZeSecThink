@@ -27,14 +27,13 @@ interface propTypes {
 }
 const ZstPageViewGrid = (props: propTypes) => {
   const { rows, cols, basedate, dates, zstPosts } = props;
+  const [nowUser, setNowUser] = useState<User | null>(null);
   // console.log("ZstPageViewGrid:start");
 
   const basedateafter = GetyyyyMMddJpFromDate(addDays(basedate, rows * cols));
   const basedatebefore = GetyyyyMMddJpFromDate(addDays(basedate, -rows * cols));
   const basedatestr = GetyyyyMMddJpFromDate(basedate);
   const basedatetoday = GetyyyyMMddJpFromDate(new Date());
-
-  const [nowUser, setNowUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {

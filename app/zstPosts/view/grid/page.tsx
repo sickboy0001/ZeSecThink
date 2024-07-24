@@ -3,6 +3,8 @@ import { getPosts, getPostsDummy } from "@/app/actions/zstPosts/posts";
 import ZstPageViewGrid from "@/components/zstpost/zstPageViewGrid";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { addDays } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
+import { SystemConst } from "@/config/const";
 
 export const dynamic = "force-dynamic";
 
@@ -41,7 +43,9 @@ const ViewGrid = async ({ searchParams }: propsType) => {
   }
 
   // 今日の日付をyyyyMMdd形式で取得
-  const nowstring = GetyyyyMMddJpFromDate(new Date());
+  const nowstring = GetyyyyMMddJpFromDate(
+    toZonedTime(new Date(), "Asia/Tokyo")
+  );
 
   // paramdateがundefinedまたはnullまたは空文字列の場合にnowstringを代入
   if (!paramdate) {
