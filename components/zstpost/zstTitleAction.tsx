@@ -46,7 +46,7 @@ const zstTitleAction = (props: propTypes) => {
     const id = parseInt(fullid?.split("_")[2] ?? "0");
     // console.log("--------------handleSubmit");
     const data = await updateFlgZstPost(id, columnname, checked);
-    data.delete_flg = checked;
+    data[columnname] = checked;
     setNowZstPost(data);
     // console.log("todo:Update", columnname, id, checked);
   }
