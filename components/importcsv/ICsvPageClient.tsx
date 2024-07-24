@@ -71,7 +71,7 @@ function ICsvPageUpdateConfirm() {
           <input type="file" onChange={handleChange} />
         </div>
 
-        <Tabs defaultValue="FormatTable">
+        <Tabs defaultValue="Converter">
           <TabsList>
             <TabsTrigger value="RawTable">RawTable</TabsTrigger>
             <TabsTrigger value="FormatTable">FormatTable</TabsTrigger>

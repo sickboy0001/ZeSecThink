@@ -16,7 +16,7 @@ interface propsType {
 }
 
 const ViewDay = async ({ searchParams }: propsType) => {
-  console.log(searchParams);
+  // console.log(searchParams);
 
   // searchParams.basedateの取得
   let date = String(searchParams.date || "");

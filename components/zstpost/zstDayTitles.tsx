@@ -73,7 +73,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
                       zstPosts.filter(
                         (f) =>
                           String(f.current_at.toDateString()) ===
-                          String(date.toDateString())
+                            String(date.toDateString()) && !f.delete_flg
                       ).length
                     )}
                     /10]
@@ -93,19 +93,25 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
           <CardFooter>
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="w-full" variant="outline">
+                <Button
+                  className="w-full"
+                  variant="outline"
+                  onClick={() => setShowEdit(true)}
+                >
                   <Pencil2Icon className="h-5 w-5" /> add
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Edit</DialogTitle>
-                  <DialogDescription>
-                    <div className="p-4 md:p-5">{formElement}</div>
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter className="sm:justify-start"></DialogFooter>
-              </DialogContent>
+              {showEdit ? (
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Edit</DialogTitle>
+                    <DialogDescription>
+                      <div className="p-4 md:p-5">{formElement}</div>
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="sm:justify-start"></DialogFooter>
+                </DialogContent>
+              ) : null}
             </Dialog>
           </CardFooter>
         </Card>

@@ -73,8 +73,6 @@ const ZstModalNew = (props: propTypes) => {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-    console.log("--------------handleSubmit/new");
-    // todo20240714;
     if (formData != null) {
       formData.write_end_at = new Date();
       formData.create_at = new Date();
@@ -92,7 +90,7 @@ const ZstModalNew = (props: propTypes) => {
       var diffMilliSec = writeEndAt.getTime() - writeStartAt.getTime();
       var diffsec = Math.floor(diffMilliSec / 1000); // Math.floor を使用して整数に切り捨て
 
-      console.log(diffsec);
+      // console.log(diffsec);
       formData.second = diffsec;
       createZstPost({
         params: {

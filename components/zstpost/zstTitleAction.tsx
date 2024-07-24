@@ -8,17 +8,7 @@ import { GetFormatTz, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { deleteZstPost, updateFlgZstPost } from "@/app/actions/zstPosts/posts";
 import ZstTitle from "./zstTitle";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { LockClosedIcon, TrashIcon } from "@radix-ui/react-icons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -46,6 +36,8 @@ const zstTitleAction = (props: propTypes) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const router = useRouter();
 
+  // console.log(zstPost.title, zstPost.delete_flg);
+
   async function update_deletepublic_flg(
     fullid: string | undefined,
     checked: boolean
@@ -54,6 +46,7 @@ const zstTitleAction = (props: propTypes) => {
     const id = parseInt(fullid?.split("_")[2] ?? "0");
     // console.log("--------------handleSubmit");
     const data = await updateFlgZstPost(id, columnname, checked);
+    data.delete_flg = checked;
     setNowZstPost(data);
     // console.log("todo:Update", columnname, id, checked);
   }
@@ -81,7 +74,7 @@ const zstTitleAction = (props: propTypes) => {
 
   return (
     <>
-      <ZstTitle zstPost={zstPost} isDispDetail={true}>
+      <ZstTitle zstPost={nowZstPost} isDispDetail={true}>
         <div>
           <div className="text-gray-600/70">
             [{String(nowZstPost.second)}sec] [writing start-end{" "}

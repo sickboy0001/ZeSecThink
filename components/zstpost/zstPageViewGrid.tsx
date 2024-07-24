@@ -48,8 +48,8 @@ const ZstPageViewGrid = (props: propTypes) => {
   return (
     <UserContext.Provider value={nowUser}>
       <div className="px-3 py-3">
-        <div className="flex flex-row py-3  ">
-          <div className="flex  flex-wrap w-full">
+        <div className="flex flex-row py-3 items-center ">
+          <div className="flex  flex-wrap  items-center w-full">
             <div className="text-gray-900 text-lg px-2 py-2 font-bold underline">
               {dates[0].toLocaleDateString()}
             </div>

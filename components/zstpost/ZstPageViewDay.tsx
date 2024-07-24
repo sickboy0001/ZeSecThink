@@ -48,26 +48,41 @@ const zstPageViewDay = (props: propTypes) => {
   return (
     <UserContext.Provider value={nowUser}>
       <div className="px-3 py-3">
-        <div className="flex py-3  ">
-          <div className="flex  flex-wrap w-full">
+        <div className="flex py-3  w-full">
+          <div className="flex  flex-wrap w-full items-center ">
             <div className="text-gray-900 text-lg px-2 py-2 font-bold underline">
               {date.toLocaleDateString()}
             </div>
-            <Button className="underline" variant="outline">
-              <Link href={`/zstPosts/view/day/?date=${nowstring}`}>today</Link>
-            </Button>
-            <Button className="" variant="outline" size="icon">
-              <Link href={`/zstPosts/view/day/?date=${datebefore}`}>
-                <DoubleArrowLeftIcon className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button className="" variant="outline" size="icon">
-              <Link href={`/zstPosts/view/day/?date=${dateafter}`}>
-                <DoubleArrowRightIcon className="h-4 w-4" />
-              </Link>
-            </Button>
+            <div className="px-3 text-gray-500 font-semibold ">
+              [
+              {String(
+                zstPosts.filter(
+                  (f) =>
+                    String(f.current_at.toDateString()) ===
+                      String(date.toDateString()) && !f.delete_flg
+                ).length
+              )}
+              /10]
+            </div>
+            <div className="flex ">
+              <Button className="underline" variant="outline">
+                <Link href={`/zstPosts/view/day/?date=${nowstring}`}>
+                  today
+                </Link>
+              </Button>
+              <Button className="" variant="outline" size="icon">
+                <Link href={`/zstPosts/view/day/?date=${datebefore}`}>
+                  <DoubleArrowLeftIcon className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button className="" variant="outline" size="icon">
+                <Link href={`/zstPosts/view/day/?date=${dateafter}`}>
+                  <DoubleArrowRightIcon className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
-          <div className="flex flex-row-reverse w-full">
+          <div className="flex flex-row-reverse ">
             <div>
               <Button className="" variant="outline" size="icon">
                 <Link href={`/zstPosts/view/grid/?date=${nowstring}`}>

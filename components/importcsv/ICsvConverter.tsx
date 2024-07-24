@@ -36,7 +36,7 @@ function ICsvConverter({ columns, data }: TableProp) {
       }
     };
     fetch();
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -67,6 +67,10 @@ function ICsvConverter({ columns, data }: TableProp) {
   return (
     <div>
       <div className="whitespace-pre-wrap">{fileSummary}</div>
+      <div>
+        「コンバート」押下で以下のデータを取り込みます。日付とタイトルが同じものは取り込みません。
+      </div>
+
       <form action={formAction}>
         <div>
           <button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">

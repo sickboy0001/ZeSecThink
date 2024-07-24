@@ -25,7 +25,7 @@ interface propsType {
 }
 
 const ViewGrid = async ({ searchParams }: propsType) => {
-  console.log(searchParams);
+  // console.log(searchParams);
 
   // searchParams.basedateの取得
   let paramdate = String(searchParams.basedate || "");
@@ -62,7 +62,7 @@ const ViewGrid = async ({ searchParams }: propsType) => {
 
   const from_at = generateDatesbase;
   const to_at = addDays(basedate, 2);
-  console.log("ViewGrid", from_at, to_at);
+  // console.log("ViewGrid", from_at, to_at);
   const zstPosts = await getPosts(1, from_at, to_at);
 
   // const nowdate = new Date();

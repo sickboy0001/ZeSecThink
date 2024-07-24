@@ -1,7 +1,12 @@
 "use client";
 
 import { TypeZstPost } from "@/app/types/zstTypes";
-import { Pencil1Icon, Cross1Icon, CopyIcon } from "@radix-ui/react-icons";
+import {
+  Pencil1Icon,
+  Cross1Icon,
+  CopyIcon,
+  LockClosedIcon,
+} from "@radix-ui/react-icons";
 import React, { useState } from "react";
 import {
   Accordion,
@@ -42,7 +47,9 @@ const ZstTitle = (props: propTypes) => {
   const dispword = isDispDetail ? "" : "1";
 
   return (
-    <div className="py-1">
+    <div
+      className={`py-1 ${zstPost.delete_flg && !isDispDetail ? "hidden" : ""}`}
+    >
       <Accordion
         type="single"
         collapsible
@@ -51,25 +58,34 @@ const ZstTitle = (props: propTypes) => {
         <AccordionItem value={`item-key-${String(itemkey)}}`}>
           <div className="flex">
             <AccordionTrigger className="py-2">
-              <div className="font-medium leading-none underline text-left">
-                {zstPost.title}
+              <div className="flex items-center font-medium leading-none underline text-left ">
+                <LockClosedIcon
+                  className={`h-5 w-5 text-red-900 ${
+                    zstPost.public_flg ? "hidden" : ""
+                  }`}
+                />
+                <p className={`${zstPost.delete_flg ? "line-through" : ""}`}>
+                  {zstPost.title}
+                </p>
               </div>
             </AccordionTrigger>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => setShowEdit(true)}>
                   <Pencil1Icon className="h-5 w-5" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Edit</DialogTitle>
-                  <DialogDescription>
-                    <div className="p-4 md:p-5">{formElement}</div>
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter className="sm:justify-start"></DialogFooter>
-              </DialogContent>
+              {showEdit ? (
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Edit</DialogTitle>
+                    <DialogDescription>
+                      <div className="p-4 md:p-5">{formElement}</div>
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter className="sm:justify-start"></DialogFooter>
+                </DialogContent>
+              ) : null}
             </Dialog>
           </div>
           <AccordionContent>
