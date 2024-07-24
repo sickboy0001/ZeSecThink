@@ -69,14 +69,18 @@ export const convertFormAction = async (
   );
   for (const each of data) {
     const datestr = each[dateIndex] as string;
-    const date = parse(datestr, "yyyy年M月d日", new Date());
+    const thidate = parse(
+      datestr,
+      "yyyy年M月d日",
+      getJpTimeZoneFromUtc(new Date())
+    );
     const title = each[titleIndex] as string;
     const content = each[contentIndex] as string;
 
     log.push("info[sub]:" + datestr + ":" + title);
 
-    if (!isNaN(date.getTime())) {
-      const id = await getPostIdFromDateTitle(user.userid, date, title);
+    if (!isNaN(thidate.getTime())) {
+      const id = await getPostIdFromDateTitle(user.userid, thidate, title);
       console.log("await getPostIdFromDateTitle:", id);
       if (id == 0) {
         //insert
@@ -94,7 +98,7 @@ export const convertFormAction = async (
         const zstPost: TypeZstPost = {
           id: 0, //未使用
           user_id: user?.userid ?? 0,
-          current_at: date,
+          current_at: thidate,
           title: title,
           content: content,
           second: second,
