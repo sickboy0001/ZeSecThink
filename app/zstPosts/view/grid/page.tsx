@@ -4,7 +4,6 @@ import ZstPageViewGrid from "@/components/zstpost/zstPageViewGrid";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { addDays } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-import { SystemConst } from "@/config/const";
 
 export const dynamic = "force-dynamic";
 
