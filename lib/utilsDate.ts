@@ -18,7 +18,7 @@ export function GetyyyyMMddJpFromDate(thisdate: Date) {
 export const getJpTimeZoneFromUtc = (datetime: Date) => {
   // console.log(datetime);
   const timeZone = "Asia/Tokyo";
-  return format(toZonedTime(datetime, timeZone), "yyyy-MM-dd HH:mm:ssXXX", {
+  return formatTz(toZonedTime(datetime, timeZone), "yyyy-MM-dd HH:mm:ssXXX", {
     timeZone,
   });
 };
