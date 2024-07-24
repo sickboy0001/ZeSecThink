@@ -65,6 +65,8 @@ https://ritaiz.com/articles/setup-supabase-email-configuring-to-send-email-throu
 
 ## 2024 年 7 月 22 日
 
+### Cant_resolve_github_vercel
+
 NextJS デプロイ失敗について
 https://qiita.com/tarian/items/f666bf5e8daf5e31a0de
 
