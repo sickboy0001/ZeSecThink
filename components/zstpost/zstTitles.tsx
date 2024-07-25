@@ -14,9 +14,8 @@ interface propTypes {
 
 const ZstTitles = (props: propTypes) => {
   const { date, zstPosts, isDispDetail } = props;
-  const newdate = new Date();
 
-  console.log("const ZstTitles", GetFormatTz(date, "yyyy-MM-dd"));
+  // console.log("const ZstTitles", GetFormatTz(date, "yyyy-MM-dd"));
   const getDatePosts = () => {
     const res = zstPosts.filter(
       (f) =>

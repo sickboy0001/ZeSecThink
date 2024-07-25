@@ -23,6 +23,10 @@ export const getJpTimeZoneFromUtc = (datetime: Date) => {
   });
 };
 
+export const GetStringPosgreDateTime = (date: Date) => {
+  return GetFormatTz(date, "yyyy-MM-dd HH:mm:ss");
+};
+
 export const GetFormatTz = (date: Date, formatstring?: string) => {
   const thisformatestring = "yyyy/MM/dd HH:mm:ss";
 

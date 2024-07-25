@@ -2,7 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
-import { GetFormatTz, getJpTimeZoneFromUtc } from "@/lib/utilsDate";
+import {
+  GetFormatTz,
+  getJpTimeZoneFromUtc,
+  GetStringPosgreDateTime,
+} from "@/lib/utilsDate";
 import { Identifier } from "typescript";
 
 export const getPosts = async (
@@ -10,13 +14,20 @@ export const getPosts = async (
   from_at: Date,
   to_at: Date
 ) => {
+  // console.log(
+  //   "from_at from_to ",
+  //   GetFormatTz(from_at, "yyyy-MM-dd HH:mm:ss"),
+  //   GetFormatTz(to_at, "yyyy-MM-dd HH:mm:ss")
+  // );
   const supabase = createClient();
   const { data: res, error } = await supabase
     .from("zst_post")
     .select("*")
     .eq("user_id", user_id)
-    .gte("current_at", getJpTimeZoneFromUtc(from_at))
-    .lte("current_at", getJpTimeZoneFromUtc(to_at))
+    // .gte("current_at", getJpTimeZoneFromUtc(from_at))
+    .gte("current_at", GetStringPosgreDateTime(from_at))
+    // .lte("current_at", getJpTimeZoneFromUtc(to_at))
+    .lte("current_at", GetStringPosgreDateTime(to_at))
     .order("current_at", { ascending: true }) // 最初のソート条件: 昇順
     .order("write_start_at", { ascending: true }) // 次のソート条件: 降順;
     .order("update_at", { ascending: true }); // 次のソート条件: 降順;
@@ -110,7 +121,7 @@ export const createZstPost = async ({
   const { ZstPost } = params;
   // console.log("createZstPost", ZstPost);
   // 日本時間に変換
-  const current_at = GetFormatTz(ZstPost.current_at, "yyyy-MM-dd HH:mm:ss");
+  const current_at = GetStringPosgreDateTime(ZstPost.current_at);
   //GetFormatTz
   // 無理やり０９を省く
   //getJpTimeZoneFromUtc(ZstPost.current_at);
