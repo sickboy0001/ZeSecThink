@@ -34,24 +34,23 @@ const ZstModalNew = (props: propTypes) => {
   // console.log("const ZstModalNew = (props: propTypes) start", user);
 
   useEffect(() => {
-    if (user) {
-      setFormData({
-        id: 0,
-        user_id: user.userid || 0, // nowUserがnullでないことを確認
-        current_at: date,
-        title: "",
-        content: "",
-        second: 120,
-        public_flg: false,
-        public_content_flg: false,
-        delete_flg: false,
-        write_start_at: new Date(),
-        write_end_at: new Date(),
-        create_at: new Date(),
-        update_at: new Date(),
-      });
-    }
-  }, [user]);
+    setFormData({
+      id: 0,
+      user_id: user?.userid || 0, // nowUserがnullでないことを確認 nullでも０で作ること
+      current_at: date,
+      title: "",
+      content: "",
+      second: 120,
+      public_flg: false,
+      public_content_flg: false,
+      delete_flg: false,
+      write_start_at: new Date(),
+      write_end_at: new Date(),
+      create_at: new Date(),
+      update_at: new Date(),
+    });
+  }, []);
+
   if (!formData) {
     return <div>now loading...</div>; // or a loading spinner or some placeholder
   }
@@ -146,7 +145,6 @@ const ZstModalNew = (props: propTypes) => {
             更新
           </Button>
         </div>
-        {/* <pre>{propsstring}</pre> */}
       </form>
     </div>
   );

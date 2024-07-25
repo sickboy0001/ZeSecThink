@@ -14,6 +14,9 @@ export const getPosts = async (
   from_at: Date,
   to_at: Date
 ) => {
+  if (user_id === undefined) {
+    user_id = 0;
+  }
   // console.log(
   //   "from_at from_to ",
   //   GetFormatTz(from_at, "yyyy-MM-dd HH:mm:ss"),

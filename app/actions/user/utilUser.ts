@@ -8,11 +8,10 @@ export const getUtilUser = async (): Promise<User | null> => {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
   if (error) {
-    console.error("Error fetching user:", error.message);
+    console.log("Error fetching user:", error.message);
     return null;
   }
   // console.log("getUtilUser:", data);
-
   const user: User = data.user; // Supabase の User オブジェクトを自分の定義した User インターフェースにキャスト
   if (user.email != undefined) {
     user.userid = await getUserId(user.email);
