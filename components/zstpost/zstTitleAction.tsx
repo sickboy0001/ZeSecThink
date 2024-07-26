@@ -42,6 +42,11 @@ const zstTitleAction = (props: propTypes) => {
 
   // console.log(zstPost.title, zstPost.delete_flg);
 
+  console.log(
+    "GetDateTimeFormat(nowZstPost.create_at)",
+    nowZstPost.create_at,
+    GetDateTimeFormat(nowZstPost.create_at)
+  );
   async function update_deletepublic_flg(
     fullid: string | undefined,
     checked: boolean
