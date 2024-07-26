@@ -58,7 +58,7 @@ const zstPageViewDay = (props: propTypes) => {
               {String(
                 zstPosts.filter(
                   (f) =>
-                    String(f.current_at.toDateString()) ===
+                    String(new Date(f.current_at).toDateString()) ===
                       String(date.toDateString()) && !f.delete_flg
                 ).length
               )}

@@ -35,11 +35,11 @@ export const getPosts = async (
   // 日時フィールドをDateオブジェクトに変換
   const posts = res.map((item: any) => ({
     ...item,
-    current_at: new Date(item.current_at),
-    write_start_at: new Date(item.write_start_at),
-    write_end_at: new Date(item.write_end_at),
-    create_at: new Date(item.create_at),
-    update_at: new Date(item.update_at),
+    current_at: item.current_at,
+    write_start_at: item.write_start_at,
+    write_end_at: item.write_end_at,
+    create_at: item.create_at,
+    update_at: item.update_at,
   }));
 
   // console.log("zstposts/posts/getPosts:", res);
