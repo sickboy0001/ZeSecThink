@@ -4,7 +4,11 @@ import { TypeZstPost } from "@/app/types/zstTypes";
 import React, { useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { GetFormatTz, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import {
+  GetDateTimeFormat,
+  GetFormatTz,
+  GetyyyyMMddJpFromDate,
+} from "@/lib/utilsDate";
 import { deleteZstPost, updateFlgZstPost } from "@/app/actions/zstPosts/posts";
 import ZstTitle from "./zstTitle";
 import { Button } from "../ui/button";
@@ -78,10 +82,10 @@ const zstTitleAction = (props: propTypes) => {
         <div>
           <div className="text-gray-600/70">
             [{String(nowZstPost.second)}sec] [writing start-end{" "}
-            {GetFormatTz(nowZstPost.write_start_at)}-
-            {GetFormatTz(nowZstPost.write_end_at)}] [create{" "}
-            {GetFormatTz(nowZstPost.create_at)}/update
-            {GetFormatTz(nowZstPost.update_at)}]
+            {GetDateTimeFormat(nowZstPost.write_start_at)}-
+            {GetDateTimeFormat(nowZstPost.write_end_at)}] [create{" "}
+            {GetDateTimeFormat(nowZstPost.create_at)}/update
+            {GetDateTimeFormat(nowZstPost.update_at)}]
           </div>
           <div className="flex flex-wrap  items-center space-x-2">
             <div className="flex ml-2 items-center space-x-2">

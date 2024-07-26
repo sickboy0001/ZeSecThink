@@ -2,11 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
-import {
-  GetFormatTz,
-  getJpTimeZoneFromUtc,
-  GetStringPosgreDateTime,
-} from "@/lib/utilsDate";
+import { getJpTimeZoneFromUtc, GetStringPosgreDateTime } from "@/lib/utilsDate";
 import { Identifier } from "typescript";
 
 export const getPosts = async (
@@ -17,11 +13,7 @@ export const getPosts = async (
   if (user_id === undefined) {
     user_id = 0;
   }
-  // console.log(
-  //   "from_at from_to ",
-  //   GetFormatTz(from_at, "yyyy-MM-dd HH:mm:ss"),
-  //   GetFormatTz(to_at, "yyyy-MM-dd HH:mm:ss")
-  // );
+
   const supabase = createClient();
   const { data: res, error } = await supabase
     .from("zst_post")

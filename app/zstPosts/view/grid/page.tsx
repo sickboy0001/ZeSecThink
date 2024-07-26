@@ -74,6 +74,7 @@ const ViewGrid = async ({ searchParams }: propsType) => {
   // console.log("nowdate2", nowdate2.toLocaleDateString());
   // console.log(String(dates));
   const user = await getUtilUser();
+
   // console.log(UserContext);
 
   const from_at = generateDatesbase;

@@ -36,3 +36,12 @@ export const GetFormatTz = (date: Date, formatstring?: string) => {
     locale: ja,
   });
 };
+
+export const GetDateTimeFormat = (date: Date, formatstring?: string) => {
+  const thisformatestring = "yyyy/MM/dd HH:mm:ss";
+
+  const execformatstring = !formatstring ? thisformatestring : formatstring;
+  return formatTz(date, execformatstring, {
+    locale: ja,
+  });
+};
