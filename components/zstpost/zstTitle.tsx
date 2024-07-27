@@ -71,7 +71,11 @@ const ZstTitle = (props: propTypes) => {
             </AccordionTrigger>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline" onClick={() => setShowEdit(true)}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowEdit(true)}
+                >
                   <Pencil1Icon className="h-5 w-5" />
                 </Button>
               </DialogTrigger>

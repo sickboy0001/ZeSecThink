@@ -4,6 +4,8 @@ import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { addDays } from "date-fns";
 import ZstPageViewDay from "@/components/zstpost/ZstPageViewDay";
 import { getUtilUser } from "@/app/actions/user/utilUser";
+import { UserProvider } from "@/components/user/UserContext";
+import { User } from "@/app/types/user";
 
 export const dynamic = "force-dynamic";
 
@@ -35,14 +37,13 @@ const ViewDay = async ({ searchParams }: propsType) => {
 
   return (
     <>
-      <ZstPageViewDay
-        className={""}
-        date={basedate}
-        zstPosts={zstPosts}
-      ></ZstPageViewDay>
-      <div>
-        user.userid:{user?.id}:{user?.userid}:{user?.username}
-      </div>
+      <UserProvider user={user as User}>
+        <ZstPageViewDay
+          className={""}
+          date={basedate}
+          zstPosts={zstPosts}
+        ></ZstPageViewDay>
+      </UserProvider>
     </>
   );
 };

@@ -3,7 +3,6 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  FilterFn,
   SortingState,
   flexRender,
   getCoreRowModel,
@@ -27,7 +26,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function ListDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -54,13 +53,18 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <div className="flex items-center py-4">
-        <Input
+        {/* <Input
           placeholder="Filter Title..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
+        /> */}
+        <Input
+          placeholder="Filter all..."
+          // value={(table.globalfilter() as string) ?? ""}
+          onChange={(e) => table.setGlobalFilter(e.target.value)}
         />
       </div>
       <div className="rounded-md border">
@@ -113,7 +117,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {/* <pre>
+      <pre>
         {JSON.stringify(
           {
             columnFilters: table.getState().columnFilters,
@@ -122,7 +126,7 @@ export function DataTable<TData, TValue>({
           null,
           2
         )}
-      </pre> */}
+      </pre>
     </>
   );
 }

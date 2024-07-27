@@ -113,10 +113,15 @@ GRANT USAGE ON SEQUENCE zst_post_id_seq TO anon;
 GRANT USAGE ON SEQUENCE zst_post_id_seq TO authenticated;
 ```
 
-### 大量データの CSV を高速でテーブル表示する
+### CSV ファイルの取り込み回り
 
 CSSModel 利用
-https://www.sukerou.com/2023/04/csv.html
+[大量データの CSV を高速でテーブル表示する](https://www.sukerou.com/2023/04/csv.html)
+
+### DataTable/Tanstack Table
+
+実体は「Tanstack Table」なので、こちらのサイト参考:GlobalFilter 実装について
+[DevelopersIO/React で Tanstack Table 使っていろいろテーブルを操作してみる](https://dev.classmethod.jp/articles/introduce-tanstack-table/)
 
 ## Features
 

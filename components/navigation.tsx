@@ -61,20 +61,20 @@ const Navigation = ({ user }: { user: User | null }) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
+                <a
                   className="px-3 py-2 flex items-center text-xs  font-bold leading-snug hover:opacity-75"
                   href="/startPosts/list"
                 >
                   Setting
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
-                <Link
+                <a
                   className="px-3 py-2 flex items-center text-xs  font-bold leading-snug  hover:opacity-75"
                   href="/zstPosts/view/grid"
                 >
                   post/view
-                </Link>
+                </a>
               </li>
               {user ? (
                 <li className="nav-item">
@@ -91,12 +91,12 @@ const Navigation = ({ user }: { user: User | null }) => {
                       <DropdownMenuLabel> {user.email}</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>
-                        <Link
+                        <a
                           className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
                           href="/profile/edit"
                         >
                           Edit
-                        </Link>
+                        </a>
                       </DropdownMenuItem>
                       <DropdownMenuItem disabled>◇Settings</DropdownMenuItem>
                       <DropdownMenuItem disabled>
@@ -112,7 +112,14 @@ const Navigation = ({ user }: { user: User | null }) => {
                           CSV-import
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem disabled>◇Support</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <a
+                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                          href="/zstPosts/summary/list"
+                        >
+                          Summary
+                        </a>
+                      </DropdownMenuItem>
                       <DropdownMenuItem disabled>API</DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>

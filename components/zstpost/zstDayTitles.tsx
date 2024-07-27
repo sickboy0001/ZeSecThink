@@ -49,9 +49,9 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
 
   return (
     <>
-      <div>
+      <div className="">
         <Card className={cn(className)} {...props}>
-          <CardHeader>
+          <CardHeader className="py-1 px-2">
             <CardTitle>
               <div className="flex  flex-wrap items-center justify-between">
                 <div className="flex">
@@ -67,7 +67,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <div className="px-3 text-gray-500 font-semibold ">
+                  <div className="px-2 text-gray-500 font-semibold ">
                     [
                     {String(
                       zstPosts.filter(
@@ -87,7 +87,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
               </div>
             </CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-1">
+          <CardContent className="grid py-1 md:px-4 px-2">
             <ZstTitle date={date} zstPosts={zstPosts}></ZstTitle>
           </CardContent>
           <CardFooter>
@@ -98,7 +98,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
                   variant="outline"
                   onClick={() => setShowEdit(true)}
                 >
-                  <Pencil2Icon className="h-5 w-5" /> add
+                  <Pencil2Icon className="h-5 w-5 hidden md:block" /> add
                 </Button>
               </DialogTrigger>
               {showEdit ? (

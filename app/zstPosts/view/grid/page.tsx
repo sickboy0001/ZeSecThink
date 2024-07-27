@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getPosts, getPostsDummy } from "@/app/actions/zstPosts/posts";
 import ZstPageViewGrid from "@/components/zstpost/zstPageViewGrid";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
@@ -7,6 +7,8 @@ import { toZonedTime } from "date-fns-tz";
 import { UserProvider } from "@/components/user/UserContext";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { User } from "@/app/types/user";
+import getWindowSize from "@/lib/GetWindowSize";
+import { TypeZstPost } from "@/app/types/zstTypes";
 
 export const dynamic = "force-dynamic";
 
@@ -35,14 +37,8 @@ const ViewGrid = async ({ searchParams }: propsType) => {
   let paramdate = String(searchParams.basedate || "");
   // console.log("paramdate", paramdate);
 
-  let cols = parseInt(String(searchParams.cols || ""));
-  if (!cols) {
-    cols = 4;
-  }
-  let rows = parseInt(String(searchParams.rows || ""));
-  if (!rows) {
-    rows = 3;
-  }
+  let cols = parseInt(String(searchParams.cols || "")) || 1;
+  let rows = parseInt(String(searchParams.rows || "")) || 3;
 
   // 今日の日付をyyyyMMdd形式で取得
   const nowstring = GetyyyyMMddJpFromDate(

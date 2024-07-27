@@ -17,7 +17,7 @@ const ZstViewGrid = ({ className, ...props }: propTypes) => {
   const { rows, cols, dates, zstPosts } = props;
   // grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 grid-cols-5
   const grdicolsnumber = `grid-cols-${String(cols)}`;
-  const divclassNameValue = `grid grid-cols-${String(cols)} gap-4`;
+  const divclassNameValue = `grid grid-cols-${String(cols)} gap-2 px-2`;
   return (
     <>
       <div className={divclassNameValue}>

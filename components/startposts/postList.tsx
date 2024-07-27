@@ -1,10 +1,10 @@
 import React from "react";
-import { DataTable } from "./dataTable";
 import Link from "next/link";
 import { columns, StartPost } from "@/components/startposts/postListColumn";
 import { getStartPagePostMany } from "@/app/actions/startPage";
 import { ja } from "date-fns/locale/ja";
 import { format as formatTz } from "date-fns-tz";
+import { DataTable } from "./dataTable";
 
 async function getData(): Promise<StartPost[]> {
   // Fetch data from your API here.
