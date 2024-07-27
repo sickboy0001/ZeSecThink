@@ -84,7 +84,7 @@ const zstTitleAction = (props: propTypes) => {
     <>
       <ZstTitle zstPost={nowZstPost} isDispDetail={true}>
         <div>
-          <div className="text-gray-600/70">
+          <div className="text-gray-600/70 text-sm">
             [{String(nowZstPost.second)}sec] [writing start-end{" "}
             {GetDateTimeFormat(nowZstPost.write_start_at)}-
             {GetDateTimeFormat(nowZstPost.write_end_at)}] [create{" "}

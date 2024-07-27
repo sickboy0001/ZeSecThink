@@ -59,7 +59,11 @@ const ZstTitle = (props: propTypes) => {
                     zstPost.public_flg ? "hidden" : ""
                   }`}
                 />
-                <p className={`${zstPost.delete_flg ? "line-through" : ""}`}>
+                <p
+                  className={`text-lg ${
+                    zstPost.delete_flg ? "line-through" : ""
+                  }`}
+                >
                   {zstPost.title}
                 </p>
               </div>
@@ -88,7 +92,7 @@ const ZstTitle = (props: propTypes) => {
             </Dialog>
           </div>
           <AccordionContent>
-            <Label className="text-black whitespace-pre-wrap break-words">
+            <Label className="text-black text-lg whitespace-pre-wrap break-words">
               {zstPost.content}
             </Label>
             {children}
