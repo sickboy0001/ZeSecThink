@@ -24,8 +24,8 @@ export const getPosts = async (
     // .lte("current_at", getJpTimeZoneFromUtc(to_at))
     .lte("current_at", GetStringPosgreDateTime(to_at))
     .order("current_at", { ascending: false }) // 最初のソート条件: true 昇順
-    .order("write_start_at", { ascending: true }) // 次のソート条件: false 降順;
-    .order("update_at", { ascending: true }); // 次のソート条件: 降順;
+    .order("write_start_at", { ascending: false }) // 次のソート条件: false 降順;
+    .order("update_at", { ascending: false }); // 次のソート条件: 降順;
 
   if (error) {
     console.log(error);
