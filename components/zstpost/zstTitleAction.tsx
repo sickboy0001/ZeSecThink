@@ -41,7 +41,6 @@ const zstTitleAction = (props: propTypes) => {
   const router = useRouter();
 
   // console.log(zstPost.title, zstPost.delete_flg);
-
   // console.log(
   //   "GetDateTimeFormat(nowZstPost.create_at)",
   //   nowZstPost.create_at,

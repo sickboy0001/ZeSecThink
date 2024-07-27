@@ -1,12 +1,7 @@
 "use client";
 
 import { TypeZstPost } from "@/app/types/zstTypes";
-import {
-  Pencil1Icon,
-  Cross1Icon,
-  CopyIcon,
-  LockClosedIcon,
-} from "@radix-ui/react-icons";
+import { Pencil1Icon, LockClosedIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
 import {
   Accordion,

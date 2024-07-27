@@ -7,8 +7,6 @@ import { toZonedTime } from "date-fns-tz";
 import { UserProvider } from "@/components/user/UserContext";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { User } from "@/app/types/user";
-import getWindowSize from "@/lib/GetWindowSize";
-import { TypeZstPost } from "@/app/types/zstTypes";
 
 export const dynamic = "force-dynamic";
 
