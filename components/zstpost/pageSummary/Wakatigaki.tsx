@@ -5,8 +5,11 @@ import { ListDataTable } from "./ListDataTable";
 import { columns } from "./ListColumnDef";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { getTokens } from "@/app/actions/kuromoji/tokenizer";
+import { TypeToken } from "@/app/types/kuromoji";
+// var kuromoji = require("kuromoji");
 
-var kuromoji = require("kuromoji");
+// Token型の定義
 
 interface propType {
   data: TypeZstPost[];
@@ -15,36 +18,17 @@ const Wakatigaki = (prop: propType) => {
   const data = prop.data;
 
   const [userInputText, setUserInputText] = useState("");
-  const [tokens, setTokens] = useState<any[]>([]);
-  const [tokenizer, setTokenizer] = useState<any | null>(null);
+  const [tokens, setTokens] = useState<TypeToken[]>([]);
 
-  useEffect(() => {
-    //アプリのマウント時にkuromojiトークナイザを初期化
-    kuromoji
-      .builder({ dicPath: "/kuromoji/dic/" })
-      .build(function (err: any, buildTokenizer: any) {
-        //dicPathで辞書のディレクトリを指定
-        if (err) {
-          console.log(err);
-        } else {
-          setTokenizer(buildTokenizer);
-        }
-      });
-  }, []);
-
-  function analyze(event: any) {
+  async function analyze(event: any) {
     event.preventDefault(); // デフォルトのフォーム送信を阻止
-    if (!tokenizer) {
-      console.error("トークナイザが利用できません");
-      return;
-    }
 
     const formData = new FormData(event.target);
     const text = formData.get("text") as string;
     setUserInputText(text); // 入力されたテキストをステートにセット
 
     // kuromojiを使ってテキストをトークナイズ
-    const path = tokenizer.tokenize(text);
+    const path = await getTokens(text);
     setTokens(path); // トークナイズ結果をステートにセット
   }
 
@@ -90,7 +74,7 @@ const Wakatigaki = (prop: propType) => {
           </table>
         </div>
       </div>
-      <ListDataTable columns={columns} data={data} />
+      <ListDataTable columns={columns} data={data.slice(0, 10)} />
     </div>
   );
 };
