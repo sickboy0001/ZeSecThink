@@ -1,21 +1,17 @@
 "use client";
+import { TypeZstPost } from "@/app/types/zstTypes";
 import React, { useContext, useEffect, useState } from "react";
-import { addDays, subDays, subWeeks } from "date-fns";
+import { getPosts } from "@/app/actions/zstPosts/posts";
+import { addDays } from "date-fns";
+import UserContext from "@/components/user/UserContext";
+import ZstPageSummaryList from "./List";
+import { GetDateTimeFormat } from "@/lib/utilsDate";
+import ConditionInput from "./conditionInput";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { TypeZstPost } from "@/app/types/zstTypes";
-import { getPosts } from "@/app/actions/zstPosts/posts";
-import UserContext from "@/components/user/UserContext";
-import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
-
-import ConditionInput from "./conditionInput";
 import Wakatigaki from "./Wakatigaki";
-import ZstPageSummaryList from "./List";
-import ScoreChart from "./scoreChart";
 import PostsWakatigaki from "./PostsWakatigaki";
-
-const startSunday = 0; //0:sunday 1:monday
+import ScoreChart from "./scoreChart";
 
 async function getDataLocal(
   userid: number,
@@ -26,35 +22,21 @@ async function getDataLocal(
   return result;
 }
 
-const ZstPageSummaryPageWeek = () => {
+const ZstPageSummaryListPage = () => {
   const user = useContext(UserContext);
-  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
   const [fromAt, setFromAt] = useState<Date>(addDays(new Date(), -7));
   const [toAt, setToAt] = useState<Date>(new Date());
-  const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
 
-  //日付の整形//今の日曜日をゲット
-  useEffect(() => {
-    const fetch = () => {
-      let nowDate = new Date();
-      nowDate.setHours(0, 0, 0, 0);
-      const newStartDate = subDays(nowDate, nowDate.getDay() - startSunday + 7);
-      setFromAt(newStartDate);
-      setToAt(subDays(newStartDate, -6));
-      setStartDate(newStartDate);
-    };
-
-    fetch();
-  }, []);
-  //endDateの取得
-  //結果の表示
+  // // const fromAt = addDays(new Date(), -7);
+  // const toAt = new Date();
 
   useEffect(() => {
     const fetch = async () => {
-      console.log(fromAt, toAt);
       const nowZstPosts = await getDataLocal(user?.userid || 0, fromAt, toAt);
 
       setZstPosts(nowZstPosts);
+      // console.log("ZstPageSummaryList:", nowZstPosts);
     };
     fetch();
   }, [fromAt, toAt]);
@@ -62,12 +44,7 @@ const ZstPageSummaryPageWeek = () => {
   return (
     <div>
       <div>
-        {GetDateTimeFormat(startDate, "M月d日(EEE)") +
-          "-" +
-          GetDateTimeFormat(subDays(subWeeks(startDate, -1), 1), "M月d日(EEE)")}
-      </div>
-      <div>
-        {/* <div className="grid max-w-lg gap-5 mx-auto lg:grid-cols-1 lg:max-w-none py-1">
+        <div className="grid max-w-lg gap-5 mx-auto lg:grid-cols-1 lg:max-w-none py-1">
           <div className="flex flex-col overflow-hidden rounded-lg shadow-md">
             <div className="flex flex-col justify-between flex-1 p-4 bg-white">
               <div className="flex items-center mt-3">
@@ -80,19 +57,17 @@ const ZstPageSummaryPageWeek = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <div>
         <div className="grid max-w-lg gap-5 mx-auto lg:grid-cols-1 lg:max-w-none py-1">
           <div className="flex flex-col overflow-hidden rounded-lg shadow-md">
             <div className="flex flex-col justify-between flex-1 p-4 bg-white">
-              <div>
-                <ZstPageSummaryList data={zstPosts}></ZstPageSummaryList>
+              <div className="flex items-center mt-3">
+                <Label className="px-2 font-extrabold">Display:</Label>
+                {GetDateTimeFormat(fromAt, "yyyy/MM/dd")} ～
+                {GetDateTimeFormat(toAt, "yyyy/MM/dd")}
               </div>
-              <div>
-                <Wakatigaki data={zstPosts}></Wakatigaki>
-              </div>
-
               <div>
                 <Tabs defaultValue="List" className="">
                   <TabsList className="grid w-full grid-cols-4">
@@ -108,7 +83,7 @@ const ZstPageSummaryPageWeek = () => {
                       <ZstPageSummaryList data={zstPosts}></ZstPageSummaryList>
                     </div>
                   </TabsContent>
-                  {/* <TabsContent value="wakati">
+                  <TabsContent value="wakati">
                     <div>
                       <Wakatigaki data={zstPosts}></Wakatigaki>
                     </div>
@@ -118,7 +93,7 @@ const ZstPageSummaryPageWeek = () => {
                   </TabsContent>
                   <TabsContent value="ScoreChart">
                     <ScoreChart data={zstPosts}></ScoreChart>
-                  </TabsContent> */}
+                  </TabsContent>
                 </Tabs>
               </div>
             </div>
@@ -129,4 +104,4 @@ const ZstPageSummaryPageWeek = () => {
   );
 };
 
-export default ZstPageSummaryPageWeek;
+export default ZstPageSummaryListPage;

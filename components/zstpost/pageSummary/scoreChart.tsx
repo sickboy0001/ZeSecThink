@@ -15,21 +15,13 @@ import { Box } from "lucide-react";
 
 // Token型の定義
 
-const clouddata = [
-  { text: "Hey", value: 1000 },
-  { text: "lol", value: 200 },
-  { text: "first impression", value: 800 },
-  { text: "very cool", value: 1000000 },
-  { text: "duck", value: 10 },
-];
-
 interface propType {
   data: TypeZstPost[];
 }
 
 interface TypeContentLength {
   date: Date;
-  value: number;
+  avg_chars: number;
   postcount: number;
 }
 
@@ -38,8 +30,8 @@ const chartConfig = {
     label: "length",
     color: "#2563eb",
   },
-  value: {
-    label: "value",
+  avg_chars: {
+    label: "avg_chars",
     color: "#34d399",
   },
   postcount: {
@@ -53,7 +45,7 @@ const ScoreChart = (prop: propType) => {
   const analysedata = data;
   const [contentLength, setContentLength] = useState<TypeContentLength[]>([]);
   const [averageContentLength, setAverageContentLength] = useState<
-    { date: string; value: number }[]
+    { date: string; avg_chars: number; postcount: number }[]
   >([]);
 
   async function analyse(event: any) {
@@ -80,10 +72,10 @@ const ScoreChart = (prop: propType) => {
     // 各グループの平均値を計算
     const averages = Object.keys(groupedByDate).map((date) => {
       const values = groupedByDate[date];
-      const value =
+      const avg_chars =
         values.reduce((sum, value) => sum + value, 0) / values.length;
       const postcount = values.reduce((sum, value) => sum + 1, 0);
-      return { date, value, postcount };
+      return { date, avg_chars, postcount };
     });
 
     const sortedAverages = averages.sort((a, b) => {
@@ -119,7 +111,7 @@ const ScoreChart = (prop: propType) => {
             <ChartTooltip content={<ChartTooltipContent />} />
             <Line
               yAxisId="left"
-              dataKey="value"
+              dataKey="avg_chars"
               dot={false}
               type="monotone"
               stroke="#8884d8"
@@ -133,33 +125,8 @@ const ScoreChart = (prop: propType) => {
               stroke="#f87171"
               activeDot={{ r: 8 }}
             />
-            {/* <Line
-              type="monotone"
-              dataKey="pv"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            /> */}
           </LineChart>
         </ChartContainer>
-        {/* <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-          <BarChart accessibilityLayer data={averageContentLength}>
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => GetDateTimeFormat(value, "MM-dd")}
-            />
-            <Bar dataKey="value" fill="var(--color-value)" radius={4} />
-          </BarChart>
-        </ChartContainer> */}
-        <div>
-          {contentLength.map((each) => (
-            <p>
-              [{GetDateTimeFormat(each.date)} - {each.value}]{" "}
-            </p>
-          ))}
-        </div>
       </div>
     </div>
   );

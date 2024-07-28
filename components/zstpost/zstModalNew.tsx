@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { User } from "@/app/types/user";
 import { createZstPost } from "@/app/actions/zstPosts/posts";
-import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { Button } from "../ui/button";
 import UserContext from "../user/UserContext";
 
@@ -103,12 +103,17 @@ const ZstModalNew = (props: propTypes) => {
 
   return (
     <div>
+      {GetDateTimeFormat(new Date(), "M月d日") !==
+      GetDateTimeFormat(date, "M月d日") ? (
+        <div>
+          <Label className="block mb-1 text-sm  text-red-800 font-extrabold">
+            今日以外（{GetDateTimeFormat(date, "M月d日")}）への追加です。
+          </Label>
+        </div>
+      ) : null}
       <form onSubmit={handleSubmit} method="post" className="space-y-1">
         <div>
-          <Label
-            // htmlFor="email"
-            className="block mb-1 text-sm font-medium text-gray-900"
-          >
+          <Label className="block mb-1 text-sm font-medium text-gray-900">
             タイトル
           </Label>
           <Input

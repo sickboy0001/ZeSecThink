@@ -18,14 +18,6 @@ import WordCloud from "react-d3-cloud";
 
 // Token型の定義
 
-const clouddata = [
-  { text: "Hey", value: 1000 },
-  { text: "lol", value: 200 },
-  { text: "first impression", value: 800 },
-  { text: "very cool", value: 1000000 },
-  { text: "duck", value: 10 },
-];
-
 interface TypeWordCount {
   surface_form: string;
   count: number;
@@ -40,10 +32,6 @@ interface TypeWord {
 }
 
 const fontSizeMapper = (word: TypeWord) => Math.pow(word.value, 0.8) * 10;
-// const fontSizeMapper = (word: TypeWord) => Math.pow(word.value, 0.8) * 10;
-// フォントの回転位置
-// const rotate = (word) => (word.value % 2 === 1 ? 0 : 90);
-// フォントの種類
 const fontFamily = "meiryo";
 
 const PostsWakatigaki = (prop: propType) => {
