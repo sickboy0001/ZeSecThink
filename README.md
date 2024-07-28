@@ -133,6 +133,21 @@ NextJS public の扱い
 
 [【Next.js】静的な画像ファイルの取り扱い](https://qiita.com/P-man_Brown/items/ed564ae4ea3c8eacfd4f)
 
+おおむねやりたかったこと説明してくれている
+[React + kuromoji.js + D3-Cloud で WordCloud をブラウザに描画](https://takumon.com/wordcloud-with-kuromoji-d3cloud-react/)
+
+```diff_javascript
+- fontSizeMapper={fontSizeMapper}
++ fontSize={fontSizeMapper}
+```
+
+---
+
+Kuromoji だとしっくりこない説あり。Yahoo 乗り換えも検討
+Yahoo! JAPAN テキスト解析 Web API
+HTTP リクエストでアクセスし、リクエストパラメータは xml で返されます。HTTP メソッドは GET でも POST でも可能です。
+制限は 24 時間で 5 万件まで。1 リクエストの最大サイズ 10KB までとなっています。
+
 ## Features
 
 - Works across the entire [Next.js](https://nextjs.org) stack

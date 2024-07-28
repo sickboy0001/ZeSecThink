@@ -10,6 +10,8 @@ import ConditionInput from "./conditionInput";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Wakatigaki from "./Wakatigaki";
+import PostsWakatigaki from "./PostsWakatigaki";
+import ScoreChart from "./scoreChart";
 
 async function getDataLocal(
   userid: number,
@@ -68,10 +70,13 @@ const ZstPageSummaryListPage = () => {
               </div>
               <div>
                 <Tabs defaultValue="List" className="">
-                  <TabsList className="grid w-full grid-cols-3">
+                  <TabsList className="grid w-full grid-cols-4">
                     <TabsTrigger value="List">List</TabsTrigger>
                     <TabsTrigger value="wakati">wakati</TabsTrigger>
-                    <TabsTrigger value="d3cloud">d3cloud</TabsTrigger>
+                    <TabsTrigger value="PostsWakatigaki">
+                      PostsWakatigaki
+                    </TabsTrigger>
+                    <TabsTrigger value="ScoreChart">ScoreChart</TabsTrigger>
                   </TabsList>
                   <TabsContent value="List">
                     <div>
@@ -83,8 +88,11 @@ const ZstPageSummaryListPage = () => {
                       <Wakatigaki data={zstPosts}></Wakatigaki>
                     </div>
                   </TabsContent>
-                  <TabsContent value="d3cloud">
-                    <div>d3cloud</div>
+                  <TabsContent value="PostsWakatigaki">
+                    <PostsWakatigaki data={zstPosts}></PostsWakatigaki>
+                  </TabsContent>
+                  <TabsContent value="ScoreChart">
+                    <ScoreChart data={zstPosts}></ScoreChart>
                   </TabsContent>
                 </Tabs>
               </div>
