@@ -5,8 +5,8 @@ import { ListDataTable } from "./ListDataTable";
 import { columns } from "./ListColumnDef";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getTokens } from "@/app/actions/kuromoji/tokenizer";
 import { TypeToken } from "@/app/types/kuromoji";
+import { getTokens } from "@/lib/token";
 // var kuromoji = require("kuromoji");
 
 // Token型の定義
