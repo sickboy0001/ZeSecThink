@@ -103,11 +103,11 @@ const ZstModalNew = (props: propTypes) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} method="post" className="space-y-4">
+      <form onSubmit={handleSubmit} method="post" className="space-y-1">
         <div>
           <Label
             // htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900"
+            className="block mb-1 text-sm font-medium text-gray-900"
           >
             タイトル
           </Label>
@@ -125,7 +125,7 @@ const ZstModalNew = (props: propTypes) => {
         <div>
           <Label
             // htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900"
+            className="block mb-1 text-sm font-medium text-gray-900"
           >
             内容
           </Label>

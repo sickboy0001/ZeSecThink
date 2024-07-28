@@ -52,11 +52,11 @@ const ZstModalEdit = (props: propTypes) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} method="post" className="space-y-4">
-      <div>
+    <form onSubmit={handleSubmit} method="post" className="space-y-1">
+      <div className="py-1">
         <Label
           // htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block mb-1 text-sm font-medium text-gray-900"
         >
           タイトル
         </Label>
@@ -74,7 +74,7 @@ const ZstModalEdit = (props: propTypes) => {
       <div>
         <Label
           // htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block mb-1 text-sm font-medium text-gray-900"
         >
           内容
         </Label>

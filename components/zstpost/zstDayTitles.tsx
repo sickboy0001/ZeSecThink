@@ -104,11 +104,9 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
               {showEdit ? (
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
-                    <DialogTitle>Edit</DialogTitle>
-                    <DialogDescription>
-                      <div className="p-4 md:p-5">{formElement}</div>
-                    </DialogDescription>
+                    <DialogTitle className="text-left">Add</DialogTitle>
                   </DialogHeader>
+                  <div className="">{formElement}</div>
                   <DialogFooter className="sm:justify-start"></DialogFooter>
                 </DialogContent>
               ) : null}
