@@ -47,7 +47,7 @@ const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
   return (
     <>
       <Card className={cn(className)} {...props}>
-        <CardContent className="grid gap-1">
+        <CardContent className="grid gap-1 px-2 md:px-4 ">
           <ZstTitles
             date={date}
             zstPosts={zstPosts}

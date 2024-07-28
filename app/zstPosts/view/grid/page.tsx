@@ -73,7 +73,14 @@ const ViewGrid = async ({ searchParams }: propsType) => {
 
   const from_at = generateDatesbase;
   const to_at = addDays(basedate, 2);
+  const starttime = new Date();
   const zstPosts = await getPosts(user?.userid, from_at, to_at);
+  const endtime = new Date();
+
+  console.log(
+    "const ViewDay getPostsTime msec :",
+    endtime.getTime() - starttime.getTime()
+  );
 
   return (
     <>

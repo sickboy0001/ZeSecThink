@@ -32,8 +32,16 @@ const ViewDay = async ({ searchParams }: propsType) => {
   // const [nowUser, setNowUser] = useState<User | null>(null);
   const user = await getUtilUser();
   // console.log("const ViewDay = async:", user);
+  const starttime = new Date();
 
   const zstPosts = await getPosts(user?.userid, basedate, basedate);
+
+  const endtime = new Date();
+
+  console.log(
+    "const ViewDay getPostsTime msec :",
+    endtime.getTime() - starttime.getTime()
+  );
 
   return (
     <>

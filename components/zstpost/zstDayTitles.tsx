@@ -51,7 +51,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
     <>
       <div className="">
         <Card className={cn(className)} {...props}>
-          <CardHeader className="py-1 px-2">
+          <CardHeader className="py-1 px-2 md:px-4 ">
             <CardTitle>
               <div className="flex  flex-wrap items-center justify-between">
                 <div className="flex">

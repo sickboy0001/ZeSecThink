@@ -123,6 +123,16 @@ CSSModel 利用
 実体は「Tanstack Table」なので、こちらのサイト参考:GlobalFilter 実装について
 [DevelopersIO/React で Tanstack Table 使っていろいろテーブルを操作してみる](https://dev.classmethod.jp/articles/introduce-tanstack-table/)
 
+### 形態素解析
+
+Kuromoji、形態素解析の利用
+
+React + Kuromoji.js で形態素解析（Webpack の設定と辞書ファイルの配置）(https://qiita.com/piijey/items/a7ff20da2f7d7315abb0)
+
+NextJS public の扱い
+
+[【Next.js】静的な画像ファイルの取り扱い](https://qiita.com/P-man_Brown/items/ed564ae4ea3c8eacfd4f)
+
 ## Features
 
 - Works across the entire [Next.js](https://nextjs.org) stack

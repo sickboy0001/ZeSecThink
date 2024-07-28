@@ -8,6 +8,8 @@ import ZstPageSummaryList from "./List";
 import { GetDateTimeFormat } from "@/lib/utilsDate";
 import ConditionInput from "./conditionInput";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Wakatigaki from "./Wakatigaki";
 
 async function getDataLocal(
   userid: number,
@@ -32,7 +34,7 @@ const ZstPageSummaryListPage = () => {
       const nowZstPosts = await getDataLocal(user?.userid || 0, fromAt, toAt);
 
       setZstPosts(nowZstPosts);
-      console.log("ZstPageSummaryList:", nowZstPosts);
+      // console.log("ZstPageSummaryList:", nowZstPosts);
     };
     fetch();
   }, [fromAt, toAt]);
@@ -65,7 +67,26 @@ const ZstPageSummaryListPage = () => {
                 {GetDateTimeFormat(toAt, "yyyy/MM/dd")}
               </div>
               <div>
-                <ZstPageSummaryList data={zstPosts}></ZstPageSummaryList>
+                <Tabs defaultValue="List" className="">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="List">List</TabsTrigger>
+                    <TabsTrigger value="wakati">wakati</TabsTrigger>
+                    <TabsTrigger value="d3cloud">d3cloud</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="List">
+                    <div>
+                      <ZstPageSummaryList data={zstPosts}></ZstPageSummaryList>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="wakati">
+                    <div>
+                      <Wakatigaki data={zstPosts}></Wakatigaki>
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="d3cloud">
+                    <div>d3cloud</div>
+                  </TabsContent>
+                </Tabs>
               </div>
             </div>
           </div>

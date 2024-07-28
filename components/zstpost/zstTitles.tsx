@@ -26,6 +26,10 @@ const ZstTitles = (props: propTypes) => {
   };
   const filteredPosts = getDatePosts();
 
+  if (filteredPosts.length === 0) {
+    return <div>この日に投稿はありません。</div>;
+  }
+
   return (
     <>
       {filteredPosts.length > 0 &&
