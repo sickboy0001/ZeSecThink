@@ -46,7 +46,30 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
   const formElement = (
     <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
   );
-
+  const dialogFormElement = (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={() => setShowEdit(true)}
+        >
+          <Pencil2Icon className="h-5 w-5" /> add
+        </Button>
+      </DialogTrigger>
+      {showEdit ? (
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add</DialogTitle>
+            <DialogDescription>
+              <div className="p-4 md:p-5">{formElement}</div>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-start"></DialogFooter>
+        </DialogContent>
+      ) : null}
+    </Dialog>
+  );
   return (
     <>
       <div className="">
@@ -90,28 +113,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
           <CardContent className="grid py-1 md:px-4 px-2">
             <ZstTitle date={date} zstPosts={zstPosts}></ZstTitle>
           </CardContent>
-          <CardFooter>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  className="w-full"
-                  variant="outline"
-                  onClick={() => setShowEdit(true)}
-                >
-                  <Pencil2Icon className="h-5 w-5 hidden md:block" /> add
-                </Button>
-              </DialogTrigger>
-              {showEdit ? (
-                <DialogContent className="sm:max-w-md">
-                  <DialogHeader>
-                    <DialogTitle className="text-left">Add</DialogTitle>
-                  </DialogHeader>
-                  <div className="">{formElement}</div>
-                  <DialogFooter className="sm:justify-start"></DialogFooter>
-                </DialogContent>
-              ) : null}
-            </Dialog>
-          </CardFooter>
+          <CardFooter>{dialogFormElement}</CardFooter>
         </Card>
       </div>
     </>

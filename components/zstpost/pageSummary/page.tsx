@@ -87,15 +87,20 @@ const ZstPageSummaryPageWeek = () => {
           <div className="flex flex-col overflow-hidden rounded-lg shadow-md">
             <div className="flex flex-col justify-between flex-1 p-4 bg-white">
               <div>
-                <ZstPageSummaryList data={zstPosts}></ZstPageSummaryList>
+                <ZstPageSummaryList
+                  data={zstPosts.slice(0, 10)}
+                ></ZstPageSummaryList>
               </div>
               <div>
-                <Wakatigaki data={zstPosts}></Wakatigaki>
+                <ZstPageSummaryList
+                  data={zstPosts.slice(0, 10)}
+                ></ZstPageSummaryList>
               </div>
+              <div>{/* <Wakatigaki data={zstPosts}></Wakatigaki> */}</div>
 
               <div>
                 <Tabs defaultValue="List" className="">
-                  <TabsList className="grid w-full grid-cols-4">
+                  {/* <TabsList className="grid w-full grid-cols-4">
                     <TabsTrigger value="List">List</TabsTrigger>
                     <TabsTrigger value="wakati">wakati</TabsTrigger>
                     <TabsTrigger value="PostsWakatigaki">
@@ -107,7 +112,7 @@ const ZstPageSummaryPageWeek = () => {
                     <div>
                       <ZstPageSummaryList data={zstPosts}></ZstPageSummaryList>
                     </div>
-                  </TabsContent>
+                  </TabsContent> */}
                   {/* <TabsContent value="wakati">
                     <div>
                       <Wakatigaki data={zstPosts}></Wakatigaki>

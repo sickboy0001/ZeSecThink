@@ -2,7 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
-import { getJpTimeZoneFromUtc, GetStringPosgreDateTime } from "@/lib/utilsDate";
+import {
+  GetDateTimeFormat,
+  getJpTimeZoneFromUtc,
+  GetStringPosgreDateTime,
+} from "@/lib/utilsDate";
 import { Identifier } from "typescript";
 
 export const getPosts = async (
@@ -10,6 +14,8 @@ export const getPosts = async (
   from_at: Date,
   to_at: Date
 ) => {
+  const startTime = new Date();
+
   if (user_id === undefined) {
     user_id = 0;
   }
@@ -42,7 +48,22 @@ export const getPosts = async (
     update_at: item.update_at,
   }));
 
-  // console.log("zstposts/posts/getPosts:", res);
+  const endTime = new Date();
+
+  const infostring = `[${
+    (endTime.getTime() - startTime.getTime()) / 1000
+  } sec ]start ${GetDateTimeFormat(
+    startTime,
+    "HH:mm:ss"
+  )} end ${GetDateTimeFormat(endTime, "HH:mm:ss")}`;
+
+  console.log("zstposts/posts/getPosts infostring:", infostring);
+  console.log(
+    "zstposts/posts/getPosts:",
+    GetStringPosgreDateTime(from_at),
+    GetStringPosgreDateTime(to_at)
+  );
+
   return posts;
 };
 

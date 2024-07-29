@@ -115,7 +115,7 @@ const Navigation = ({ user }: { user: User | null }) => {
                       <DropdownMenuItem>
                         <a
                           className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
-                          href="/zstPosts/summary/list"
+                          href="/zstPosts/summary/week"
                         >
                           Summary
                         </a>

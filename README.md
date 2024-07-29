@@ -149,6 +149,11 @@ HTTP リクエストでアクセスし、リクエストパラメータは xml �
 制限は 24 時間で 5 万件まで。1 リクエストの最大サイズ 10KB までとなっています。
 サイズ４ K になっている模様（追記 7 月 28 日）
 
+### UI collapsibleTrigger
+
+コンポーネント化するべきか悩む・・・(todo:20240729)
+[【React】文章が長くなる時に collapse が必要か判定する方法](https://zenn.dev/someone7140/articles/a9e9190f29db06)
+
 ## Features
 
 - Works across the entire [Next.js](https://nextjs.org) stack

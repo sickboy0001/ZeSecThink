@@ -25,6 +25,7 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { useRouter } from "next/navigation";
+import { QuoteCollapseible } from "../ui/QuoteCollapseible";
 interface propTypes {
   zstPost: TypeZstPost;
   isDispDetail?: boolean;
@@ -35,9 +36,12 @@ const zstTitleAction = (props: propTypes) => {
   const [nowZstPost, setNowZstPost] = useState<TypeZstPost>(zstPost);
   const [isCheckedDelete, setIsCheckedDelete] = useState(nowZstPost.delete_flg);
   const [isCheckedPublic, setIsCheckedPublic] = useState(nowZstPost.public_flg);
+
   const switchPublicRef = useRef<HTMLButtonElement>(null);
   const switchDeleteRef = useRef<HTMLButtonElement>(null);
+
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
   const router = useRouter();
 
   // console.log(zstPost.title, zstPost.delete_flg);
@@ -70,27 +74,37 @@ const zstTitleAction = (props: propTypes) => {
     update_deletepublic_flg(fullid, checked);
     setIsCheckedDelete(checked);
   };
-  const actionFormPhysicalDeletion = () => {
+  const actionFormPhysicalDeletion = async () => {
     console.log("actionFormPhysicalDeletion:id:" + String(zstPost.id));
     const date = zstPost.current_at;
     //delete
-    deleteZstPost(zstPost.id);
+    await deleteZstPost(zstPost.id);
 
     const datestr = GetyyyyMMddJpFromDate(date);
     router.push(`/zstPosts/view/day/?date=${datestr}`);
+    router.refresh();
   };
+
+  const detailinfo = `[${String(
+    nowZstPost.second
+  )}sec] [writing start-end:${GetDateTimeFormat(
+    nowZstPost.write_start_at
+  )}-${GetDateTimeFormat(nowZstPost.write_end_at)}] [create:${GetDateTimeFormat(
+    nowZstPost.create_at
+  )}/update:${GetDateTimeFormat(nowZstPost.update_at)}]`;
 
   return (
     <>
       <ZstTitle zstPost={nowZstPost} isDispDetail={true}>
         <div>
-          <div className="text-gray-600/70 text-sm">
-            [{String(nowZstPost.second)}sec] [writing start-end{" "}
-            {GetDateTimeFormat(nowZstPost.write_start_at)}-
-            {GetDateTimeFormat(nowZstPost.write_end_at)}] [create{" "}
-            {GetDateTimeFormat(nowZstPost.create_at)}/update
-            {GetDateTimeFormat(nowZstPost.update_at)}]
+          <div className="text-gray-600/70 ">
+            {/* todo:20240729 */}
+            <QuoteCollapseible
+              inputText={detailinfo}
+              length={10}
+            ></QuoteCollapseible>
           </div>
+
           <div className="flex flex-wrap  items-center space-x-2">
             <div className="flex ml-2 items-center space-x-2">
               <Switch

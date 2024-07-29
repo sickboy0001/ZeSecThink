@@ -44,6 +44,31 @@ const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
     <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
   );
 
+  const dialogFormElement = (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={() => setShowEdit(true)}
+        >
+          <Pencil2Icon className="h-5 w-5" /> add
+        </Button>
+      </DialogTrigger>
+      {showEdit ? (
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add</DialogTitle>
+            <DialogDescription>
+              <div className="p-4 md:p-5">{formElement}</div>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-start"></DialogFooter>
+        </DialogContent>
+      ) : null}
+    </Dialog>
+  );
+
   return (
     <>
       <Card className={cn(className)} {...props}>
@@ -54,30 +79,7 @@ const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
             isDispDetail={true}
           ></ZstTitles>
         </CardContent>
-        <CardFooter>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="w-full"
-                variant="outline"
-                onClick={() => setShowEdit(true)}
-              >
-                <Pencil2Icon className="h-5 w-5" /> add
-              </Button>
-            </DialogTrigger>
-            {showEdit ? (
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Edit</DialogTitle>
-                  <DialogDescription>
-                    <div className="p-4 md:p-5">{formElement}</div>
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter className="sm:justify-start"></DialogFooter>
-              </DialogContent>
-            ) : null}
-          </Dialog>
-        </CardFooter>
+        <CardFooter>{dialogFormElement}</CardFooter>
       </Card>
     </>
   );

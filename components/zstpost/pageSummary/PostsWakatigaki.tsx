@@ -66,7 +66,7 @@ const PostsWakatigaki = (prop: propType) => {
       text: surface_form,
       value: count,
     }));
-    console.log(result.slice(0, 10));
+    // console.log(result.slice(0, 10));
     setD3data(d3data);
   }
 

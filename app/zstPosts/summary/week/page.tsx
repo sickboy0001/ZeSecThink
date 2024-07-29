@@ -3,7 +3,7 @@ import React from "react";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { UserProvider } from "@/components/user/UserContext";
 import { User } from "@/app/types/user";
-import ZstPageSummaryPageWeek from "@/components/zstpost/pageSummary/page";
+import ZstPageSummaryWeekPage from "@/components/zstpost/pageSummary/pageWeek";
 const SummaryWeek = async () => {
   // console.log(searchParams);
 
@@ -13,7 +13,7 @@ const SummaryWeek = async () => {
   return (
     <>
       <UserProvider user={user as User}>
-        <ZstPageSummaryPageWeek></ZstPageSummaryPageWeek>
+        <ZstPageSummaryWeekPage></ZstPageSummaryWeekPage>
       </UserProvider>
     </>
   );

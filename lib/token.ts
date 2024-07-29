@@ -37,14 +37,14 @@ export const getTokensAnalyse = (tokens: TypeToken[]) => {
   );
 
   const tokenCountMap = new Map<string, number>();
-  filterd.forEach((each) => {
-    if (tokenCountMap.has(each.surface_form)) {
-      tokenCountMap.set(
-        each.surface_form,
-        tokenCountMap.get(each.surface_form)! + 1
-      );
-    } else {
-      tokenCountMap.set(each.surface_form, 1);
+  tokens.forEach((each) => {
+    if (
+      !no_include_pos.includes(each.pos) &&
+      !no_include_pos_detail_1.includes(each.pos_detail_1) &&
+      !no_include_pos_detail_2.includes(each.pos_detail_2)
+    ) {
+      const currentCount = tokenCountMap.get(each.surface_form) || 0;
+      tokenCountMap.set(each.surface_form, currentCount + 1);
     }
   });
 
@@ -54,8 +54,8 @@ export const getTokensAnalyse = (tokens: TypeToken[]) => {
   );
 
   // デバッグ用に出力
-  sortedTokenCounts.forEach(([surface_form, count]) => {
-    console.log(`${surface_form}: ${count}`);
-  });
+  // sortedTokenCounts.forEach(([surface_form, count]) => {
+  //   console.log(`${surface_form}: ${count}`);
+  // });
   return sortedTokenCounts;
 };

@@ -91,14 +91,15 @@ const ZstModalNew = (props: propTypes) => {
 
       // console.log(diffsec);
       formData.second = diffsec;
-      createZstPost({
+      await createZstPost({
         params: {
           ZstPost: formData,
         },
       });
     }
-    router.push(`/zstPosts/view/day/?date=${datebase}`);
     showModal(false);
+    router.push(`/zstPosts/view/day/?date=${datebase}`);
+    router.refresh();
   }
 
   return (
