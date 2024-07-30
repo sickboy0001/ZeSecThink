@@ -17,7 +17,11 @@ import { format as formatTz } from "date-fns-tz";
 import { TypeZstPost } from "@/app/types/zstTypes";
 import ZstModalNew from "./zstModalNew";
 import Link from "next/link";
-import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import {
+  GetDateFromyyyyMMdd,
+  GetDateTimeFormat,
+  GetyyyyMMddJpFromDate,
+} from "@/lib/utilsDate";
 import {
   Dialog,
   DialogContent,
@@ -27,6 +31,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import ZstAddDialog from "./zstAddDialog";
 
 interface propTypes {
   className: string;
@@ -43,33 +48,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
   const datestr = GetyyyyMMddJpFromDate(date);
 
   // console.log("zstDayTItle:start:");
-  const formElement = (
-    <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
-  );
-  const dialogFormElement = (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          className="w-full"
-          variant="outline"
-          onClick={() => setShowEdit(true)}
-        >
-          <Pencil2Icon className="h-5 w-5" /> add
-        </Button>
-      </DialogTrigger>
-      {showEdit ? (
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Add</DialogTitle>
-            <DialogDescription>
-              <div className="p-4 md:p-5">{formElement}</div>
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="sm:justify-start"></DialogFooter>
-        </DialogContent>
-      ) : null}
-    </Dialog>
-  );
+
   return (
     <>
       <div className="">
@@ -113,7 +92,13 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
           <CardContent className="grid py-1 md:px-4 px-2">
             <ZstTitle date={date} zstPosts={zstPosts}></ZstTitle>
           </CardContent>
-          <CardFooter>{dialogFormElement}</CardFooter>
+          <CardFooter>
+            <ZstAddDialog
+              showEdit={showEdit}
+              setShowEdit={setShowEdit}
+              date={date}
+            ></ZstAddDialog>
+          </CardFooter>
         </Card>
       </div>
     </>

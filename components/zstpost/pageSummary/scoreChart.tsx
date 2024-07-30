@@ -10,7 +10,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Bar, BarChart, Line, LineChart, XAxis, YAxis } from "recharts";
-import { Box } from "lucide-react";
 // var kuromoji = require("kuromoji");
 
 // Token型の定義

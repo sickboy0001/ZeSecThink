@@ -10,6 +10,15 @@ import { Label } from "@/components/ui/label";
 import WeekSummaryd3cloud from "./WeekSummaryd3cloud";
 import WeekSummaryChart from "./WeekSummaryChart";
 import { subDays } from "date-fns";
+import WeekSummaryDocument from "./WeekSummaryDocument";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { columns } from "./ListColumnDef";
+import { ListDataTable } from "./ListDataTable";
 
 const startSunday = 0; //0:sunday 1:monday
 
@@ -95,19 +104,32 @@ const ZstPageSummaryWeekPage = () => {
         <div className="grid max-w-lg gap-5 mx-auto lg:grid-cols-1 lg:max-w-none py-1">
           <div className="flex flex-col overflow-hidden rounded-lg shadow-md">
             <div className="flex flex-col justify-between flex-1 p-4 bg-white w-full">
-              <div className="flex items-center mt-3">
-                <Label className="px-2 font-extrabold">Display:</Label>
-                {GetDateTimeFormat(fromAt, "yyyy/MM/dd")} ～
-                {GetDateTimeFormat(toAt, "yyyy/MM/dd")}
-              </div>
-              <div className="">
-                <div>
-                  <WeekSummaryChart data={zstPosts}></WeekSummaryChart>
+              <div className="flex flex-wrap">
+                <div className="">
+                  <div className="flex items-center mt-3">
+                    <WeekSummaryDocument
+                      fromAt={fromAt}
+                      toAt={toAt}
+                      data={zstPosts}
+                    ></WeekSummaryDocument>
+                  </div>
+                  <div>
+                    <WeekSummaryChart data={zstPosts}></WeekSummaryChart>
+                  </div>
                 </div>
-                <div>
+                <div className="">
                   <WeekSummaryd3cloud data={zstPosts}></WeekSummaryd3cloud>
                 </div>
               </div>
+
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>一覧</AccordionTrigger>
+                  <AccordionContent>
+                    <ListDataTable columns={columns} data={zstPosts} />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </div>

@@ -39,6 +39,10 @@ interface TypeWord {
 
 const fontSizeMapper = (word: TypeWord) => Math.pow(word.value, 0.8) * 10;
 const fontFamily = "meiryo";
+const size = {
+  height: 490,
+  widht: 600,
+};
 
 const WeekSummaryd3cloud = (prop: propType) => {
   // const data = prop.data;
@@ -96,7 +100,7 @@ const WeekSummaryd3cloud = (prop: propType) => {
     (endTime ? GetDateTimeFormat(endTime, "HH:mm:ss") : "");
   console.log("WeekSummaryd3cloud", infostring);
   return (
-    <div>
+    <div className={`w-[500px] min-w-[380px] h-[500px] min-h-[380px]`}>
       {isClient && (
         <WordCloud data={d3data} fontSize={fontSizeMapper} font={fontFamily} />
       )}

@@ -11,6 +11,10 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, Line, LineChart, XAxis, YAxis } from "recharts";
 import { Box } from "lucide-react";
+// import XAxis from "./XAxis";
+// import CustomXAxis from "./CustomXAxis"; // カスタム XAxis をインポート
+// import CustomYAxis from "./CustomYAxis"; // カスタム YAxis をインポート
+
 // var kuromoji = require("kuromoji");
 
 // Token型の定義
@@ -22,8 +26,13 @@ interface propType {
 interface TypeContentLength {
   date: Date;
   avg_chars: number;
+  avgSec: number;
   postcount: number;
+  privatePostCount: number;
 }
+
+const CHART_HEIGHT = "250px";
+const CHART_WIDTH = "250px";
 
 const chartConfig = {
   length: {
@@ -40,14 +49,23 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+function getRandomValue(avgSec: number, variance = 10) {
+  // -varianceからvarianceまでのランダムな数を生成
+  const randomOffset = Math.random() * 2 * variance - variance;
+  // avgSecにランダムなオフセットを加算
+  return avgSec + randomOffset;
+}
+
 const WeekSummaryChart = (prop: propType) => {
   const data = prop.data;
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [startTime, setStartTime] = useState<Date>(new Date());
+  const [endTime, setEndTime] = useState<Date>(new Date());
   const [averageContentLength, setAverageContentLength] = useState<
     { date: string; avg_chars: number; postcount: number }[]
   >([]);
-
+  useEffect(() => {
+    setStartTime(new Date());
+  }, []);
   useEffect(() => {
     const fetch = async () => {
       if (data.length == 0) {
@@ -77,7 +95,12 @@ const WeekSummaryChart = (prop: propType) => {
         const avg_chars =
           values.reduce((sum, value) => sum + value, 0) / values.length;
         const postcount = values.reduce((sum, value) => sum + 1, 0);
-        return { date, avg_chars, postcount };
+        console.log(values);
+
+        // Generate a random number between -variance and variance
+        const privatePostCount = getRandomValue(5, 2);
+        const avgSec = getRandomValue(120, 10);
+        return { date, avg_chars, postcount, privatePostCount, avgSec };
       });
 
       const sortedAverages = averages.sort((a, b) => {
@@ -86,23 +109,40 @@ const WeekSummaryChart = (prop: propType) => {
 
       setAverageContentLength(sortedAverages);
       setEndTime(new Date());
+      const infostring =
+        "[" +
+        String((endTime.getTime() - startTime.getTime()) / 1000) +
+        "sec]" +
+        "start-end:" +
+        GetDateTimeFormat(startTime, "HH:mm:ss") +
+        " - " +
+        GetDateTimeFormat(endTime, "HH:mm:ss");
+
+      console.log("WeekSummaryChart", infostring);
     };
     fetch();
   }, [data]);
-  const infostring =
-    "[" +
-    String((endTime.getTime() - startTime.getTime()) / 1000) +
-    "sec]" +
-    "start-end:" +
-    GetDateTimeFormat(startTime, "HH:mm:ss") +
-    " - " +
-    GetDateTimeFormat(endTime, "HH:mm:ss");
   return (
+    // <div style={{ width: "500px", height: "500px" }}>
     <div>
       {/* <div>{infostring}</div> */}
 
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+      <ChartContainer
+        config={chartConfig}
+        className={`h-[${CHART_HEIGHT}]  w-[${CHART_WIDTH}]`}
+      >
         <LineChart accessibilityLayer data={averageContentLength}>
+          {/* <CustomXAxis
+            dataKey="date"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={(value) => GetDateTimeFormat(value, "MM-dd")}
+          />
+          <CustomYAxis yAxisId="left" />
+          <CustomYAxis yAxisId="left2" orientation="left" />
+          <CustomYAxis yAxisId="left3" orientation="left" />
+          <CustomYAxis yAxisId="left4" orientation="left" /> */}
           <XAxis
             dataKey="date"
             tickLine={false}
@@ -110,8 +150,11 @@ const WeekSummaryChart = (prop: propType) => {
             axisLine={false}
             tickFormatter={(value) => GetDateTimeFormat(value, "MM-dd")}
           />
-          <YAxis yAxisId="left" />
-          <YAxis yAxisId="right" orientation="right" />
+          <YAxis yAxisId="left" width={30} />
+          <YAxis yAxisId="left2" width={30} orientation="left" />
+          <YAxis yAxisId="left3" width={30} orientation="left" />
+          <YAxis yAxisId="left4" width={30} orientation="left" />
+
           <ChartTooltip content={<ChartTooltipContent />} />
           <Line
             yAxisId="left"
@@ -123,11 +166,29 @@ const WeekSummaryChart = (prop: propType) => {
             isAnimationActive={false} // アニメーションを無効にする
           />
           <Line
-            yAxisId="right"
+            yAxisId="left2"
             dataKey="postcount"
             type="monotone"
             dot={false}
-            stroke="#f87171"
+            stroke="rgb(23, 190, 207)"
+            activeDot={{ r: 8 }}
+            isAnimationActive={false} // アニメーションを無効にする
+          />
+          <Line
+            yAxisId="left3"
+            dataKey="privatePostCount"
+            type="monotone"
+            dot={false}
+            stroke="rgb(227, 119, 194)"
+            activeDot={{ r: 8 }}
+            isAnimationActive={false} // アニメーションを無効にする
+          />
+          <Line
+            yAxisId="left4"
+            dataKey="avgSec"
+            type="monotone"
+            dot={false}
+            stroke="rgb(255, 127, 14)"
             activeDot={{ r: 8 }}
             isAnimationActive={false} // アニメーションを無効にする
           />

@@ -117,7 +117,7 @@ export function ListDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <pre>
+      {/* <pre>
         {JSON.stringify(
           {
             columnFilters: table.getState().columnFilters,
@@ -126,7 +126,7 @@ export function ListDataTable<TData, TValue>({
           null,
           2
         )}
-      </pre>
+      </pre> */}
     </>
   );
 }

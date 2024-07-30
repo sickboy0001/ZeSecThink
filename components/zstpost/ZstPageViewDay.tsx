@@ -21,6 +21,7 @@ import ZstDDayTitles from "./zstDDayTitles";
 import UserContext from "../user/UserContext";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { User } from "@/app/types/user";
+import ZstAddDialog from "./zstAddDialog";
 
 interface propTypes {
   date: Date;
@@ -30,6 +31,7 @@ interface propTypes {
 const zstPageViewDay = (props: propTypes) => {
   const { className, date, zstPosts } = props;
   const [thisZstPosts, setThisZstPosts] = useState<TypeZstPost[]>([]);
+  const [showEdit, setShowEdit] = useState(false);
   const user = useContext(UserContext);
   // console.log("ZstPageViewGrid:start");
   let basedate = date;
@@ -41,7 +43,7 @@ const zstPageViewDay = (props: propTypes) => {
   const dateafter = GetyyyyMMddJpFromDate(addDays(basedate, 1));
 
   useEffect(() => {
-    console.log("zstPosts has changed:", zstPosts.slice(0, 2));
+    // console.log("zstPosts has changed:", zstPosts.slice(0, 2));
     setThisZstPosts(zstPosts);
   }, [zstPosts]);
 
@@ -86,6 +88,13 @@ const zstPageViewDay = (props: propTypes) => {
                 <DoubleArrowRightIcon className="h-4 w-4" />
               </a>
             </Button>
+            <div>
+              <ZstAddDialog
+                showEdit={showEdit}
+                setShowEdit={setShowEdit}
+                date={date}
+              ></ZstAddDialog>
+            </div>
           </div>
         </div>
         <div className="flex flex-row-reverse ">
