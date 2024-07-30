@@ -16,34 +16,34 @@ const ZstTitles = (props: propTypes) => {
   const { date, zstPosts, isDispDetail } = props;
   const [filteredPosts, setFilteredPosts] = useState<TypeZstPost[]>([]);
 
-  // // console.log("const ZstTitles", GetFormatTz(date, "yyyy-MM-dd"));
-  // const getDatePosts = () => {
-  //   const res =
-  //   return res;
-  // };
-
   useEffect(() => {
+    console.log("ZstTitles useEffect called");
+    console.log("date:", date);
+    console.log("zstPosts:", zstPosts.slice(0, 2));
+
     const thisfilteredPosts = zstPosts.filter(
       (f) =>
         GetFormatTz(f.current_at, "yyyy-MM-dd") ===
         GetFormatTz(date, "yyyy-MM-dd")
     );
     setFilteredPosts(thisfilteredPosts);
-  }, [zstPosts]);
+  }, [zstPosts, date]);
 
   if (filteredPosts.length === 0) {
     return <div>この日に投稿はありません。</div>;
   }
+  console.log("ZstTitles:", zstPosts[0].title);
+  console.log("ZstTitles:", filteredPosts[0].title);
 
   return (
     <>
       {filteredPosts.length > 0 &&
-        filteredPosts.map((zstPost, index) => (
+        filteredPosts.map((post, index) => (
           <div key={index}>
             {isDispDetail ? (
-              <ZstTitleAction zstPost={zstPost}></ZstTitleAction>
+              <ZstTitleAction zstPost={post}></ZstTitleAction>
             ) : (
-              <ZstTitle zstPost={zstPost} isDispDetail={false} />
+              <ZstTitle zstPost={post} isDispDetail={false} />
             )}
           </div>
         ))}

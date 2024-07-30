@@ -14,15 +14,12 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Input } from "../ui/input";
 
 interface propTypes {
   zstPost: TypeZstPost;
@@ -35,7 +32,6 @@ const ZstTitle = (props: propTypes) => {
   // const [nowZstPost, setNowZstPost] = useState<TypeZstPost>(zstPost);
   const itemkey = 0;
   const [showEdit, setShowEdit] = useState(false);
-
   const formElement = (
     <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
   );

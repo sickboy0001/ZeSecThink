@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -43,6 +43,10 @@ const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
   const formElement = (
     <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
   );
+
+  useEffect(() => {
+    console.log("ZstDDayTitles: zstPosts changed:", zstPosts.slice(0, 2));
+  }, [zstPosts]);
 
   const dialogFormElement = (
     <Dialog>

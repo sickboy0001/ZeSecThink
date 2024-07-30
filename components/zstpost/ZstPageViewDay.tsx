@@ -29,9 +29,9 @@ interface propTypes {
 }
 const zstPageViewDay = (props: propTypes) => {
   const { className, date, zstPosts } = props;
+  const [thisZstPosts, setThisZstPosts] = useState<TypeZstPost[]>([]);
   const user = useContext(UserContext);
   // console.log("ZstPageViewGrid:start");
-  const [nowUser, setNowUser] = useState<User | null>(null);
   let basedate = date;
   const nowstring = GetyyyyMMddJpFromDate(new Date());
   if (!basedate) {
@@ -40,15 +40,11 @@ const zstPageViewDay = (props: propTypes) => {
   const datebefore = GetyyyyMMddJpFromDate(addDays(basedate, -1));
   const dateafter = GetyyyyMMddJpFromDate(addDays(basedate, 1));
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const user = await getUtilUser();
-  //     if (user) {
-  //       setNowUser(user);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
+  useEffect(() => {
+    console.log("zstPosts has changed:", zstPosts.slice(0, 2));
+    setThisZstPosts(zstPosts);
+  }, [zstPosts]);
+
   const isSunday = date.getDay() === 0;
   const isSatday = date.getDay() === 6;
 
@@ -111,7 +107,7 @@ const zstPageViewDay = (props: propTypes) => {
       </div>
       <ZstDDayTitles
         className={className}
-        zstPosts={zstPosts}
+        zstPosts={thisZstPosts}
         date={date}
       ></ZstDDayTitles>
     </div>

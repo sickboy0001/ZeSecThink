@@ -10,7 +10,7 @@ type TypeProps = {
 export const QuoteCollapseible = (props: TypeProps) => {
   const { inputText, length } = props;
   const [isOpenCollapse, setIsOpenCollapse] = useState<boolean>(false);
-  console.log(inputText);
+  //   console.log(inputText);
   return (
     <>
       <div>

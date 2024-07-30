@@ -99,7 +99,7 @@ const ZstModalNew = (props: propTypes) => {
     }
     showModal(false);
     router.push(`/zstPosts/view/day/?date=${datebase}`);
-    router.refresh();
+    window.location.reload(); // ページを再読み込みして最新のデータを取得する
   }
 
   return (

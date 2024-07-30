@@ -82,7 +82,7 @@ const zstTitleAction = (props: propTypes) => {
 
     const datestr = GetyyyyMMddJpFromDate(date);
     router.push(`/zstPosts/view/day/?date=${datestr}`);
-    router.refresh();
+    window.location.reload(); // ページを再読み込みして最新のデータを取得する
   };
 
   const detailinfo = `[${String(
