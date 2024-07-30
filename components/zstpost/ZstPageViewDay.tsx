@@ -74,17 +74,17 @@ const zstPageViewDay = (props: propTypes) => {
           </div>
           <div className="flex ">
             <Button className="underline" variant="outline">
-              <Link href={`/zstPosts/view/day/?date=${nowstring}`}>today</Link>
+              <a href={`/zstPosts/view/day/?date=${nowstring}`}>today</a>
             </Button>
             <Button className="" variant="outline" size="icon">
-              <Link href={`/zstPosts/view/day/?date=${datebefore}`}>
+              <a href={`/zstPosts/view/day/?date=${datebefore}`}>
                 <DoubleArrowLeftIcon className="h-4 w-4" />
-              </Link>
+              </a>
             </Button>
             <Button className="" variant="outline" size="icon">
-              <Link href={`/zstPosts/view/day/?date=${dateafter}`}>
+              <a href={`/zstPosts/view/day/?date=${dateafter}`}>
                 <DoubleArrowRightIcon className="h-4 w-4" />
-              </Link>
+              </a>
             </Button>
           </div>
         </div>

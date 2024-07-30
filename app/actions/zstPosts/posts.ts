@@ -57,11 +57,7 @@ export const getPosts = async (
     "HH:mm:ss"
   )} end ${GetDateTimeFormat(endTime, "HH:mm:ss")}`;
 
-  console.log(
-    "zstposts/posts/getPosts infostring:",
-    infostring,
-    posts[0].title
-  );
+  console.log("zstposts/posts/getPosts infostring:", infostring);
   console.log(
     "zstposts/posts/getPosts:",
     GetStringPosgreDateTime(from_at),

@@ -17,9 +17,9 @@ const ZstTitles = (props: propTypes) => {
   const [filteredPosts, setFilteredPosts] = useState<TypeZstPost[]>([]);
 
   useEffect(() => {
-    console.log("ZstTitles useEffect called");
-    console.log("date:", date);
-    console.log("zstPosts:", zstPosts.slice(0, 2));
+    // console.log("ZstTitles useEffect called");
+    // console.log("date:", date);
+    // console.log("zstPosts:", zstPosts.slice(0, 2));
 
     const thisfilteredPosts = zstPosts.filter(
       (f) =>
@@ -32,8 +32,8 @@ const ZstTitles = (props: propTypes) => {
   if (filteredPosts.length === 0) {
     return <div>この日に投稿はありません。</div>;
   }
-  console.log("ZstTitles:", zstPosts[0].title);
-  console.log("ZstTitles:", filteredPosts[0].title);
+  // console.log("ZstTitles:", zstPosts[0].title);
+  // console.log("ZstTitles:", filteredPosts[0].title);
 
   return (
     <>

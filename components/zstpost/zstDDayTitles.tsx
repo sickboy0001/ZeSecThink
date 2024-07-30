@@ -44,9 +44,9 @@ const ZstDDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
     <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
   );
 
-  useEffect(() => {
-    console.log("ZstDDayTitles: zstPosts changed:", zstPosts.slice(0, 2));
-  }, [zstPosts]);
+  // useEffect(() => {
+  //   console.log("ZstDDayTitles: zstPosts changed:", zstPosts.slice(0, 2));
+  // }, [zstPosts]);
 
   const dialogFormElement = (
     <Dialog>

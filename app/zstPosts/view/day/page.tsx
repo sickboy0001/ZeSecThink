@@ -40,8 +40,7 @@ const ViewDay = async ({ searchParams }: propsType) => {
 
   console.log(
     "const ViewDay getPostsTime msec :",
-    endtime.getTime() - starttime.getTime(),
-    zstPosts[0].title
+    endtime.getTime() - starttime.getTime()
   );
 
   return (
