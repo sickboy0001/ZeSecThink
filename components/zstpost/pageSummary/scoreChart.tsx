@@ -20,7 +20,7 @@ interface propType {
 
 interface TypeContentLength {
   date: Date;
-  avg_chars: number;
+  avgChars: number;
   postcount: number;
 }
 
@@ -29,8 +29,8 @@ const chartConfig = {
     label: "length",
     color: "#2563eb",
   },
-  avg_chars: {
-    label: "avg_chars",
+  avgChars: {
+    label: "avgChars",
     color: "#34d399",
   },
   postcount: {
@@ -44,7 +44,7 @@ const ScoreChart = (prop: propType) => {
   const analysedata = data;
   const [contentLength, setContentLength] = useState<TypeContentLength[]>([]);
   const [averageContentLength, setAverageContentLength] = useState<
-    { date: string; avg_chars: number; postcount: number }[]
+    { date: string; avgChars: number; postcount: number }[]
   >([]);
 
   async function analyse(event: any) {
@@ -71,10 +71,10 @@ const ScoreChart = (prop: propType) => {
     // 各グループの平均値を計算
     const averages = Object.keys(groupedByDate).map((date) => {
       const values = groupedByDate[date];
-      const avg_chars =
+      const avgChars =
         values.reduce((sum, value) => sum + value, 0) / values.length;
       const postcount = values.reduce((sum, value) => sum + 1, 0);
-      return { date, avg_chars, postcount };
+      return { date, avgChars, postcount };
     });
 
     const sortedAverages = averages.sort((a, b) => {
@@ -110,7 +110,7 @@ const ScoreChart = (prop: propType) => {
             <ChartTooltip content={<ChartTooltipContent />} />
             <Line
               yAxisId="left"
-              dataKey="avg_chars"
+              dataKey="avgChars"
               dot={false}
               type="monotone"
               stroke="#8884d8"

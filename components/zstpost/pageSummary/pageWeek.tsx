@@ -3,7 +3,11 @@ import { TypeZstPost } from "@/app/types/zstTypes";
 import React, { useContext, useEffect, useState } from "react";
 import { getPosts } from "@/app/actions/zstPosts/posts";
 import UserContext from "@/components/user/UserContext";
-import { GetDateTimeFormat } from "@/lib/utilsDate";
+import {
+  GetDateFromyyyyMMdd,
+  GetDateTimeFormat,
+  GetyyyyMMddJpFromDate,
+} from "@/lib/utilsDate";
 import ConditionInput from "./conditionInput";
 import { Label } from "@/components/ui/label";
 
@@ -19,6 +23,15 @@ import {
 } from "@/components/ui/accordion";
 import { columns } from "./ListColumnDef";
 import { ListDataTable } from "./ListDataTable";
+import {
+  GetWeekChartSummary,
+  TypeDayChartSummary,
+} from "@/service/zstPost/Summary";
+import { Button } from "@/components/ui/button";
+import {
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from "@radix-ui/react-icons";
 
 const startSunday = 0; //0:sunday 1:monday
 
@@ -31,31 +44,41 @@ async function getDataLocal(
   return result;
 }
 
-const ZstPageSummaryWeekPage = () => {
+interface propType {
+  datestring: string;
+}
+
+const ZstPageSummaryWeekPage = (props: propType) => {
+  const { datestring } = props;
+  // date yyyyMMdd
   const user = useContext(UserContext);
   const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
   let now = new Date();
   const [fromAt, setFromAt] = useState<Date>(now);
   const [toAt, setToAt] = useState<Date>(now);
+  const [daySummarys, setDaySummarys] = useState<TypeDayChartSummary[]>([]);
+  const [datebeforeString, setDatebeforeString] = useState<string>(datestring);
+  const [dateafterString, setDateafterString] = useState<string>(datestring);
 
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
 
   useEffect(() => {
     const fetch = () => {
-      let nowDate = new Date();
+      let nowDate = GetDateFromyyyyMMdd(datestring);
+      // console.log("ZstPageSummaryWeekPage:", nowDate);
       nowDate.setHours(0, 0, 0, 0);
-      const newStartDate = subDays(nowDate, nowDate.getDay() - startSunday + 7);
+      const newStartDate = subDays(nowDate, nowDate.getDay() - startSunday);
       setFromAt(newStartDate);
       setToAt(subDays(newStartDate, -6));
+
+      setDatebeforeString(GetyyyyMMddJpFromDate(subDays(newStartDate, 7)));
+      setDateafterString(GetyyyyMMddJpFromDate(subDays(newStartDate, -7)));
       setZstPosts([]);
       // setStartDate(newStartDate);
     };
     fetch();
   }, []);
-
-  // // const fromAt = addDays(new Date(), -7);
-  // const toAt = new Date();
 
   useEffect(() => {
     const fetch = async () => {
@@ -71,6 +94,20 @@ const ZstPageSummaryWeekPage = () => {
     };
     fetch();
   }, [fromAt, toAt]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (zstPosts.length == 0) {
+        return;
+      }
+      const thisDaySummarys = GetWeekChartSummary(
+        zstPosts
+      ) as TypeDayChartSummary[];
+      setDaySummarys(thisDaySummarys);
+      setEndTime(new Date());
+    };
+    fetch();
+  }, [zstPosts]);
 
   const infostring =
     "[" +
@@ -88,13 +125,20 @@ const ZstPageSummaryWeekPage = () => {
         <div className="grid max-w-lg gap-5 mx-auto lg:grid-cols-1 lg:max-w-none py-1">
           <div className="flex flex-col overflow-hidden rounded-lg shadow-md">
             <div className="flex flex-col justify-between flex-1 p-4 bg-white">
-              <div className="flex items-center mt-3">
-                <ConditionInput
-                  fromAt={fromAt}
-                  toAt={toAt}
-                  setFromAt={setFromAt}
-                  setToAt={setToAt}
-                ></ConditionInput>
+              <div className="flex   flex-wrap items-center mt-3">
+                <Button className="" variant="outline" size="icon">
+                  <a href={`/zstPosts/summary/week/?date=${datebeforeString}`}>
+                    <DoubleArrowLeftIcon className="h-4 w-4" />
+                  </a>
+                </Button>
+                <Label className="font-extrabold px-3">
+                  {fromAt.toLocaleDateString()} ～{toAt.toLocaleDateString()}
+                </Label>
+                <Button className="" variant="outline" size="icon">
+                  <a href={`/zstPosts/summary/week/?date=${dateafterString}`}>
+                    <DoubleArrowRightIcon className="h-4 w-4" />
+                  </a>
+                </Button>
               </div>
             </div>
           </div>
@@ -110,11 +154,13 @@ const ZstPageSummaryWeekPage = () => {
                     <WeekSummaryDocument
                       fromAt={fromAt}
                       toAt={toAt}
-                      data={zstPosts}
+                      zstPosts={zstPosts}
                     ></WeekSummaryDocument>
                   </div>
                   <div>
-                    <WeekSummaryChart data={zstPosts}></WeekSummaryChart>
+                    <WeekSummaryChart
+                      dayChartSummarys={daySummarys}
+                    ></WeekSummaryChart>
                   </div>
                 </div>
                 <div className="">

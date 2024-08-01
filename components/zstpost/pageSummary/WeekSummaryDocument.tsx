@@ -23,15 +23,7 @@ import { Label } from "@radix-ui/react-label";
 interface propType {
   toAt: Date;
   fromAt: Date;
-  data: TypeZstPost[];
-}
-
-interface TypeContentLength {
-  date: Date;
-  avg_chars: number;
-  avgSec: number;
-  postcount: number;
-  privatePostCount: number;
+  zstPosts: TypeZstPost[];
 }
 
 const CHART_HEIGHT = "250px";
@@ -42,8 +34,8 @@ const chartConfig = {
     label: "length",
     color: "#2563eb",
   },
-  avg_chars: {
-    label: "avg_chars",
+  avgChars: {
+    label: "avgChars",
     color: "#34d399",
   },
   postcount: {
@@ -60,12 +52,31 @@ function getRandomValue(avgSec: number, variance = 10) {
 }
 
 const WeekSummaryDocument = (prop: propType) => {
-  const { data, toAt, fromAt } = prop;
-  const [startTime, setStartTime] = useState<Date>(new Date());
-  const [endTime, setEndTime] = useState<Date>(new Date());
-  const [averageContentLength, setAverageContentLength] = useState<
-    { date: string; avg_chars: number; postcount: number }[]
-  >([]);
+  const { zstPosts, toAt, fromAt } = prop;
+  const [postsCount, setPostsCount] = useState<number>(0);
+  const [postsCountAvgDay, setPostsCountAvgDay] = useState<number>(0);
+  const [charsCount, setCharsCount] = useState<number>(0);
+  const [charsCountAvgPost, setCharsCountAvgPost] = useState<number>(0);
+  const [secCount, setSecCount] = useState<number>(0);
+  const [secCountAvgPost, setSecCountAvgPost] = useState<number>(0);
+
+  useEffect(() => {
+    const thisPostsCount = zstPosts.length;
+    setPostsCount(thisPostsCount);
+    setPostsCountAvgDay(thisPostsCount / 7);
+
+    const thisCharsCount = zstPosts.reduce(
+      (sum, value) => sum + value.content.length,
+      0
+    );
+    setCharsCount(thisCharsCount);
+    setCharsCountAvgPost(thisCharsCount / thisPostsCount);
+
+    const thisSecCount = zstPosts.reduce((sum, value) => sum + value.second, 0);
+    setSecCount(thisSecCount);
+    setSecCountAvgPost(thisSecCount / thisPostsCount);
+  }, [zstPosts]);
+
   return (
     <div>
       <div>
@@ -75,15 +86,19 @@ const WeekSummaryDocument = (prop: propType) => {
       </div>
       <div>
         <Label className="px-2 font-extrabold">Post:</Label>
-        75(10/day)
+        {postsCount}posts({postsCountAvgDay.toFixed(1)}posts/day)
+        {/* ----ポスト数合計（１日の平均） */}
       </div>
       <div>
         <Label className="px-2 font-extrabold">Chars:</Label>
-        12000(300/post)
+        {/* 12000chars(300chars/post)---- 文字数（１ポストの平均） */}
+        {charsCount}chars({charsCountAvgPost.toFixed(1)}posts/post)
+        {/* ----ポスト数合計（１日の平均） */}
       </div>
       <div>
         <Label className="px-2 font-extrabold">Sec:</Label>
-        13000(120sec/post)
+        {secCount}sec({secCountAvgPost.toFixed(1)}posts/post)
+        {/* ---- ----秒数（１ポストの平均） */}
       </div>
     </div>
   );
