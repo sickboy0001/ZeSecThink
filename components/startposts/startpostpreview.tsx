@@ -2,6 +2,9 @@ import React from "react";
 import StartTitle from "./startTitle";
 import { getStartPagePostManyStartPage } from "@/app/actions/startPage";
 import { TypeStartPost } from "@/app/types/types";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 const contents = [
   {
@@ -41,9 +44,14 @@ const StartPagePreview = async () => {
             {data.map((item, index) => (
               <div key={index}>
                 <h2 className="text-2xl">{item.title}</h2>
-                <p className=" mx-auto text-base leading-relaxed text-gray-500">
-                  {item.content}
-                </p>
+                <div className=" mx-auto text-base leading-relaxed text-gray-500">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeRaw]}
+                  >
+                    {item.content}
+                  </ReactMarkdown>
+                </div>
               </div>
             ))}
           </div>

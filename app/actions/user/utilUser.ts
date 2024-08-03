@@ -37,7 +37,7 @@ const getUserNameComment = async (
   user_id: number,
   email: string | undefined
 ) => {
-  console.log(`getUserNameComment:start:${String(user_id)}`);
+  // console.log(`getUserNameComment:start:${String(user_id)}`);
   const supabase = createClient();
   const { data: res, error } = await supabase
     .from("user_info")
