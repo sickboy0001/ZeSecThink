@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPosts, getPostsDummy } from "@/app/actions/zstPosts/posts";
-import ZstPageViewGrid from "@/components/zstpost/zstPageViewGrid";
+import ZstPageViewGrid from "@/components/zstpost/pagePosts/zstPageViewGrid";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { addDays } from "date-fns";
 import { toZonedTime } from "date-fns-tz";

@@ -1,27 +1,9 @@
 "use client";
-import React, { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { CalendarIcon, Pencil2Icon } from "@radix-ui/react-icons";
-import { Button } from "../ui/button";
-import ZstTitle from "./zstTitles";
-import { ja } from "date-fns/locale/ja";
-import { format as formatTz } from "date-fns-tz";
-
-import { TypeZstPost } from "@/app/types/zstTypes";
+import React from "react";
+import { Pencil2Icon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 import ZstModalNew from "./zstModalNew";
-import Link from "next/link";
-import {
-  GetDateFromyyyyMMdd,
-  GetDateTimeFormat,
-  GetyyyyMMddJpFromDate,
-} from "@/lib/utilsDate";
+import { GetDateTimeFormat } from "@/lib/utilsDate";
 import {
   Dialog,
   DialogContent,
@@ -30,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 
 interface propTypes {
   date: Date;

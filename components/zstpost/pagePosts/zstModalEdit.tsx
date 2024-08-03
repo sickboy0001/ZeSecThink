@@ -1,5 +1,5 @@
 "use client";
-import { TypeZstContent, TypeZstPost } from "@/app/types/zstTypes";
+import { TypeZstPost } from "@/app/types/zstTypes";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";

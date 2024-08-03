@@ -11,11 +11,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { User } from "@/app/types/user";
 import { createZstPost } from "@/app/actions/zstPosts/posts";
 import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
-import { Button } from "../ui/button";
-import UserContext from "../user/UserContext";
+import { Button } from "@/components/ui/button";
+import UserContext from "@/components/user/UserContext";
 
 interface propTypes {
   date: Date;

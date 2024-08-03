@@ -3,13 +3,13 @@
 import { TypeZstPost } from "@/app/types/zstTypes";
 import { Pencil1Icon, LockClosedIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
+import ZstModalEdit from "./zstModalEdit";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/accordion";
-import ZstModalEdit from "./zstModalEdit";
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -19,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 
 interface propTypes {
   zstPost: TypeZstPost;

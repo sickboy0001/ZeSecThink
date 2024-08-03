@@ -1,8 +1,7 @@
 import React from "react";
 import { getPosts } from "@/app/actions/zstPosts/posts";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
-import { addDays } from "date-fns";
-import ZstPageViewDay from "@/components/zstpost/ZstPageViewDay";
+import ZstPageViewDay from "@/components/zstpost/pagePosts/ZstPageViewDay";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { UserProvider } from "@/components/user/UserContext";
 import { User } from "@/app/types/user";

@@ -1,6 +1,5 @@
 "use client";
 import { TypeZstPost } from "@/app/types/zstTypes";
-import { Pencil1Icon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import ZstTitle from "./zstTitle";
 import ZstTitleAction from "./zstTitleAction";

@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ZstViewGrid from "./zstViewGrid";
 import { TypeZstPost } from "@/app/types/zstTypes";
-import Link from "next/link";
 import { addDays } from "date-fns";
 import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import {
@@ -11,10 +10,10 @@ import {
   GridIcon,
   CalendarIcon,
 } from "@radix-ui/react-icons";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 import { User } from "@/app/types/user";
-import UserContext from "../user/UserContext";
+import UserContext from "@/components/user/UserContext";
 
 interface propTypes {
   rows: number;

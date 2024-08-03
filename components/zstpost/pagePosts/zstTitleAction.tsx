@@ -4,15 +4,11 @@ import { TypeZstPost } from "@/app/types/zstTypes";
 import React, { useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  GetDateTimeFormat,
-  GetFormatTz,
-  GetyyyyMMddJpFromDate,
-} from "@/lib/utilsDate";
+import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { deleteZstPost, updateFlgZstPost } from "@/app/actions/zstPosts/posts";
 import ZstTitle from "./zstTitle";
-import { Button } from "../ui/button";
-import { LockClosedIcon, TrashIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import { TrashIcon } from "@radix-ui/react-icons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,9 +19,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
-import { QuoteCollapseible } from "../ui/QuoteCollapseible";
+import { QuoteCollapseible } from "@/components/ui/QuoteCollapseible";
 interface propTypes {
   zstPost: TypeZstPost;
   isDispDetail?: boolean;

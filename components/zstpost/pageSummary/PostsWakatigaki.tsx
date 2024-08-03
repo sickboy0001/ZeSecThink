@@ -14,24 +14,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import WordCloud from "react-d3-cloud";
+import { TypeWordCount } from "@/app/types/wordCloud";
 // var kuromoji = require("kuromoji");
 
 // Token型の定義
 
-interface TypeWordCount {
-  surface_form: string;
-  count: number;
-}
 interface propType {
   data: TypeZstPost[];
 }
 
-interface TypeWord {
-  text: string;
-  value: number;
-}
-
-const fontSizeMapper = (word: TypeWord) => Math.pow(word.value, 0.8) * 10;
+const fontSizeMapper = (word: TypeWordCount) => Math.pow(word.value, 0.8) * 10;
 const fontFamily = "meiryo";
 
 const PostsWakatigaki = (prop: propType) => {
@@ -57,8 +49,8 @@ const PostsWakatigaki = (prop: propType) => {
     const result = getTokensAnalyse(path);
 
     const formattedResult = result.map(([surface_form, count]) => ({
-      surface_form,
-      count,
+      text: surface_form,
+      value: count,
     }));
     setWordCount(formattedResult); // トークナイズ結果をステートにセット
 
@@ -111,8 +103,8 @@ const PostsWakatigaki = (prop: propType) => {
                   <tbody>
                     {wordCount.map((each, index) => (
                       <tr key={index}>
-                        <td>{each.surface_form}</td>
-                        <td>{each.count}</td>
+                        <td>{each.text}</td>
+                        <td>{each.value}</td>
                       </tr>
                     ))}
                   </tbody>

@@ -1,29 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import React, { useState } from "react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Pencil2Icon } from "@radix-ui/react-icons";
-import { Button } from "../ui/button";
 import ZstTitles from "./zstTitles";
 
 import { TypeZstPost } from "@/app/types/zstTypes";
-import ZstModalNew from "./zstModalNew";
-import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+
 import ZstAddDialog from "./zstAddDialog";
 
 interface propTypes {

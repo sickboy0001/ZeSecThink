@@ -22,23 +22,15 @@ import WordCloud from "react-d3-cloud";
 import { GetDateTimeFormat } from "@/lib/utilsDate";
 import { OUTPUTOVERCOUNTER } from "@/constants/d3Cloud";
 import { getTokenAnalyseKeywordGoo } from "@/app/actions/gooapi/gooApi";
+import { TypeWordCount } from "@/app/types/wordCloud";
 
 // Token型の定義
 
-interface TypeWordCount {
-  surface_form: string;
-  count: number;
-}
 interface propType {
   data: TypeZstPost[];
 }
 
-interface TypeWord {
-  text: string;
-  value: number;
-}
-
-const fontSizeMapper = (word: TypeWord) => Math.pow(word.value, 0.8) * 10;
+const fontSizeMapper = (word: TypeWordCount) => Math.pow(word.value, 0.8) * 10;
 const fontFamily = "meiryo";
 
 const WeekSummaryd3cloud = (prop: propType) => {

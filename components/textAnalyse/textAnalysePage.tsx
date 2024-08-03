@@ -32,14 +32,10 @@ import { getPosts } from "@/app/actions/zstPosts/posts";
 import WordCloud from "react-d3-cloud";
 import Result from "./result";
 import { getTokenAnalyseKuromoji } from "@/lib/token";
+import { TypeWordCount } from "@/app/types/wordCloud";
 
-const fontSizeMapper = (word: TypeWord) => Math.pow(word.value, 0.8) * 10;
+const fontSizeMapper = (word: TypeWordCount) => Math.pow(word.value, 0.8) * 10;
 const fontFamily = "meiryo";
-
-interface TypeWord {
-  text: string;
-  value: number;
-}
 
 const USER_ID = 1;
 const FormSchema = z.object({
