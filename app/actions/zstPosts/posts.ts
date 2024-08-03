@@ -26,9 +26,9 @@ export const getPosts = async (
     .select("*")
     .eq("user_id", user_id)
     // .gte("current_at", getJpTimeZoneFromUtc(from_at))
-    .gte("current_at", getJpTimeZoneFromUtc(from_at))
+    .gte("current_at", GetDateTimeFormat(from_at))
     // .lte("current_at", getJpTimeZoneFromUtc(to_at))
-    .lte("current_at", getJpTimeZoneFromUtc(to_at))
+    .lte("current_at", GetDateTimeFormat(to_at))
     .order("current_at", { ascending: false }) // 最初のソート条件: true 昇順
     .order("write_start_at", { ascending: false }) // 次のソート条件: false 降順;
     .order("update_at", { ascending: false }); // 次のソート条件: 降順;
