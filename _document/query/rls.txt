@@ -27,3 +27,7 @@ GRANT USAGE ON SEQUENCE zst_post_id_seq TO authenticated;
 
 GRANT USAGE ON SEQUENCE user_info_id_seq TO anon;
 GRANT USAGE ON SEQUENCE user_info_id_seq TO authenticated;
+
+GRANT USAGE ON SEQUENCE mail_to_id_id_seq TO anon;
+GRANT USAGE ON SEQUENCE mail_to_id_id_seq TO authenticated;
+

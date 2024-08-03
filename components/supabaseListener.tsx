@@ -17,7 +17,7 @@ const SupabaseListener = async () => {
   // const {
   //   data: { user },
   // } = await supabase.auth.getUser();
-
+  // console.log("supabaselistener:", user);
   return <Navigation user={user} />;
 };
 

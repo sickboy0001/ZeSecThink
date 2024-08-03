@@ -7,8 +7,16 @@ import { createClient } from "@/utils/supabase/server";
 export const getUtilUser = async (): Promise<User | null> => {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
+  if (error || !data) {
+    console.log(
+      "Session error:",
+      error?.message || "No session data found",
+      data
+    );
+    return null;
+  }
   if (error) {
-    console.log("Error fetching user:", error.message);
+    // console.log("Error fetching user:", error?.message);
     return null;
   }
   // console.log("getUtilUser:", data);
@@ -16,13 +24,19 @@ export const getUtilUser = async (): Promise<User | null> => {
   if (user.email != undefined) {
     user.userid = await getUserId(user.email);
     const parsedUserId = user.userid || 0; //parseInt( || 0);
-    [user.username, user.comment] = await getUserNameComment(parsedUserId);
+    [user.username, user.comment] = await getUserNameComment(
+      parsedUserId,
+      data.user.email
+    );
     user.isSuperUser = isSuperUser(user.email);
   }
 
   return user;
 };
-const getUserNameComment = async (user_id: number) => {
+const getUserNameComment = async (
+  user_id: number,
+  email: string | undefined
+) => {
   console.log(`getUserNameComment:start:${String(user_id)}`);
   const supabase = createClient();
   const { data: res, error } = await supabase
@@ -32,9 +46,15 @@ const getUserNameComment = async (user_id: number) => {
     .eq("delete_flg", false)
     .single();
 
-  if (error) {
-  }
   console.log(res);
+  if (res === null) {
+    if (email === undefined) {
+      return ["nanashi", "nanashi"];
+    }
+
+    const defname = email.split("@").length > 0 ? email.split("@")[0] : email;
+    return [defname, defname];
+  }
   return [res?.name, res?.comment];
   // return ["12", "12"];
 
@@ -70,17 +90,19 @@ const getUserIdInserted = async (email: string) => {
   if (error) {
     console.log(error);
   }
-  if (res == null) {
+  if (res == null || res?.length == 0) {
     return null;
   } else {
     return res[0].id;
   }
 };
 const getUserId = async (email: string) => {
-  let user_id = getUserIdInserted(email);
+  let user_id = await getUserIdInserted(email);
+  // console.log("getUserId new user_id insert :", user_id);
   if (!user_id) {
+    // console.log("getUserId new user_id insert :", email);
     InsertMailToId(email);
-    const insertUserId = getUserIdInserted(email);
+    const insertUserId = await getUserIdInserted(email);
     if (insertUserId == null) {
       console.log("");
     } else {
