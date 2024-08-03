@@ -6,7 +6,11 @@ import React, { useContext, useEffect, useState } from "react";
 // import { Input } from "@/components/ui/input";
 // import { Button } from "@/components/ui/button";
 // import { TypeToken } from "@/app/types/kuromoji";
-import { getTokens, getTokensAnalyse } from "@/lib/token";
+import {
+  getTokenAnalyseKuromoji,
+  getTokens,
+  getTokensAnalyse,
+} from "@/lib/token";
 // import {
 //   Accordion,
 //   AccordionContent,
@@ -16,13 +20,10 @@ import { getTokens, getTokensAnalyse } from "@/lib/token";
 import WordCloud from "react-d3-cloud";
 // import { data } from "autoprefixer";
 import { GetDateTimeFormat } from "@/lib/utilsDate";
-// import dynamic from "next/dynamic";
-// const WordCloud = dynamic(() => import("react-d3-cloud"), { ssr: false });
-// var kuromoji = require("kuromoji");
+import { OUTPUTOVERCOUNTER } from "@/constants/d3Cloud";
+import { getTokenAnalyseKeywordGoo } from "@/app/actions/gooapi/gooApi";
 
 // Token型の定義
-
-const OUTPUTOVERCOUNTER = 1;
 
 interface TypeWordCount {
   surface_form: string;
@@ -39,10 +40,6 @@ interface TypeWord {
 
 const fontSizeMapper = (word: TypeWord) => Math.pow(word.value, 0.8) * 10;
 const fontFamily = "meiryo";
-const size = {
-  height: 490,
-  widht: 600,
-};
 
 const WeekSummaryd3cloud = (prop: propType) => {
   // const data = prop.data;
@@ -66,18 +63,28 @@ const WeekSummaryd3cloud = (prop: propType) => {
         ""
       );
 
-      // kuromojiを使ってテキストをトークナイズ;
-      const path = await getTokens(text);
-      const result = getTokensAnalyse(path);
+      // const newDataD3data = await getTokenAnalyseKuromoji(text);
+      // setD3data(newDataD3data);
 
-      const d3data = result
-        .filter(([surface_form, count]) => count > OUTPUTOVERCOUNTER)
-        .map(([surface_form, count]) => ({
-          text: surface_form,
-          value: count,
-        }));
-      // console.log(result.slice(0, 10));
-      setD3data(d3data);
+      // const newTextData = await getTokenAnalyseTextGoo(text);
+      // // setResult(JSON.stringify(newResult, null, 2));
+      // setD3data(newTextData);
+
+      const newKeywordData = await getTokenAnalyseKeywordGoo(text);
+      setD3data(newKeywordData);
+
+      // // kuromojiを使ってテキストをトークナイズ;
+      // const path = await getTokens(text);
+      // const result = getTokensAnalyse(path);
+
+      // const d3data = result
+      //   .filter(([surface_form, count]) => count > OUTPUTOVERCOUNTER)
+      //   .map(([surface_form, count]) => ({
+      //     text: surface_form,
+      //     value: count,
+      //   }));
+      // // console.log(result.slice(0, 10));
+      // setD3data(d3data);
       setEndTime(new Date());
     };
     fetch();

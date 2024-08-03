@@ -109,15 +109,6 @@ const ZstPageSummaryWeekPage = (props: propType) => {
     fetch();
   }, [zstPosts]);
 
-  const infostring =
-    "[" +
-    String((endTime.getTime() - startTime.getTime()) / 1000) +
-    "sec]" +
-    "start-end:" +
-    GetDateTimeFormat(startTime, "HH:mm:ss") +
-    " - " +
-    GetDateTimeFormat(endTime, "HH:mm:ss");
-
   return (
     <div>
       <div>

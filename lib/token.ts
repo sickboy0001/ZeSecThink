@@ -1,5 +1,22 @@
+"use client";
 import { TypeToken } from "@/app/types/kuromoji";
+import { OUTPUTOVERCOUNTER } from "@/constants/d3Cloud";
 import kuromoji from "kuromoji";
+
+export const getTokenAnalyseKuromoji = async (text: string) => {
+  const path = await getTokens(text);
+  const result = getTokensAnalyse(path);
+
+  const d3data = result
+    .filter(([surface_form, count]) => count > OUTPUTOVERCOUNTER)
+    .map(([surface_form, count]) => ({
+      text: surface_form,
+      value: count,
+    }));
+  // console.log(result.slice(0, 10));
+
+  return d3data;
+};
 
 const no_include_pos = [
   "記号",

@@ -63,8 +63,6 @@ https://zenn.dev/daimyo404/articles/3fefe4ef2d9500
 
 https://ritaiz.com/articles/setup-supabase-email-configuring-to-send-email-through-resendhttps://zenn.dev/hayato94087/articles/53c0c759a23a19
 
-## 2024 年 7 月 22 日
-
 ### Cant_resolve_github_vercel
 
 NextJS デプロイ失敗について
@@ -148,6 +146,18 @@ Yahoo! JAPAN テキスト解析 Web API
 HTTP リクエストでアクセスし、リクエストパラメータは xml で返されます。HTTP メソッドは GET でも POST でも可能です。
 制限は 24 時間で 5 万件まで。1 リクエストの最大サイズ 10KB までとなっています。
 サイズ４ K になっている模様（追記 7 月 28 日）
+
+## 2024 年 8 月 2 日
+
+### 形態素解析・他社サービスも検討
+
+サービス名 料金プラン 無料利用枠 備考
+Amazon Comprehend 1 文字あたり$0.0001（100 万文字あたり$100） 毎月 50,000 文字が無料 初回 12 ヶ月間適用
+Google Cloud Natural Language API 1,000 文字あたり$1.00（1 ～ 1,000,000 文字） $300 の無料クレジット 初回登録時
+Yahoo! JAPAN Web API 基本無料（詳細は要確認） - API キーの取得が必要
+Rakuten RapidAPI - Rakuten MA Basic: 月額$0、1,000 リクエストまで無料 月 1,000 リクエストまで無料 追加リクエストは$0.01/リクエスト
+A3RT Text Analysis API 無料 無制限 -
+[Goo ラボ](https://labs.goo.ne.jp/api/) API 無料 無制限 利用登録が必要
 
 ### UI collapsibleTrigger
 

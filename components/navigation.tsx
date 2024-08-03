@@ -76,6 +76,14 @@ const Navigation = ({ user }: { user: User | null }) => {
                   post/view
                 </a>
               </li>
+              <li className="nav-item">
+                <a
+                  className="px-3 py-2 flex items-center text-xs  font-bold leading-snug  hover:opacity-75"
+                  href="/zstPosts/summary/week"
+                >
+                  Summary
+                </a>
+              </li>
               {user ? (
                 <li className="nav-item">
                   <DropdownMenu>
@@ -98,29 +106,25 @@ const Navigation = ({ user }: { user: User | null }) => {
                           Edit
                         </a>
                       </DropdownMenuItem>
-                      <DropdownMenuItem disabled>◇Settings</DropdownMenuItem>
-                      <DropdownMenuItem disabled>
-                        ◇Keyboard shortcuts
-                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
 
                       <DropdownMenuItem>
-                        <Link
+                        <a
                           className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
                           href="/importdata/selectfile"
                         >
                           CSV-import
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <a
-                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
-                          href="/zstPosts/summary/week"
-                        >
-                          Summary
                         </a>
                       </DropdownMenuItem>
-                      <DropdownMenuItem disabled>API</DropdownMenuItem>
+
+                      <DropdownMenuItem>
+                        <Link
+                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                          href="/test-api/textanalyse"
+                        >
+                          API-TextAnalyse
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>
                         <form action="/auth/logout" method="post">

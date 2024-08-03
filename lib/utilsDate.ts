@@ -1,4 +1,5 @@
-import { format, format as formatTz, toZonedTime } from "date-fns-tz";
+import { format as formatTz, toZonedTime } from "date-fns-tz";
+import { format } from "date-fns-tz";
 import { ja } from "date-fns/locale/ja";
 
 export function GetDateFromyyyyMMdd(yyyyMMdd: string) {

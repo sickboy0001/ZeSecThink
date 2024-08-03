@@ -94,100 +94,102 @@ const StartPageEdit: React.FC<StartPageEditProps> = ({
 
   return (
     <>
-      <form className="space-y-3 py-7 px-7 w-1/2" onSubmit={handleSubmit}>
-        {/* // action="/auth/login" */}
-        <div className="flex  items-center">
+      <div className="flex justify-center ">
+        <form className="space-y-3 py-7 px-7 w-1/2 " onSubmit={handleSubmit}>
+          {/* // action="/auth/login" */}
+          <div className="flex  items-center">
+            <div>
+              <Label htmlFor="select_type" className="text-sm font-medium ">
+                タイプ
+              </Label>
+            </div>
+            <div className="mx-3">
+              <Select value={type} onValueChange={(value) => setType(value)}>
+                <SelectTrigger
+                  id="select_type"
+                  className="bg-gray-50 border border-gray-300 w-[180px]"
+                >
+                  <SelectValue placeholder="Select Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {startPageTypeMany.map((value, index) => (
+                      <SelectItem value={String(value.name)} key={index}>
+                        {value.disp_name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <div>
-            <Label htmlFor="select_type" className="text-sm font-medium ">
-              タイプ
+            <Label
+              htmlFor="input_title"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              タイトル
             </Label>
-          </div>
-          <div className="mx-3">
-            <Select value={type} onValueChange={(value) => setType(value)}>
-              <SelectTrigger
-                id="select_type"
-                className="bg-gray-50 border border-gray-300 w-[180px]"
-              >
-                <SelectValue placeholder="Select Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {startPageTypeMany.map((value, index) => (
-                    <SelectItem value={String(value.name)} key={index}>
-                      {value.disp_name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <div>
-          <Label
-            htmlFor="input_title"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            タイトル
-          </Label>
-          <Input
-            // type="email"
-            // name="email"
-            name="input_title"
-            id="input_title"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="概要（overview）・・・・"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div>
-          <Label
-            htmlFor="input_content"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            内容
-          </Label>
-          <Textarea
-            name="input_content"
-            id="input_content"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="サイインし、ログイン後、日々のゼロ秒思考を「入力」 入力時のデフォルトはPrivateのフラグが付与されています。..."
-            required
-            value={content}
-            rows={7}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </div>
-        <div className="flex justify-end">
-          <div className="flex items-center space-x-2 mx-3">
-            <Checkbox
-              onCheckedChange={(e) => {
-                setPublicFlg(!publicFlg);
-              }}
-              id="check_publicFlg"
-              checked={publicFlg}
+            <Input
+              // type="email"
+              // name="email"
+              name="input_title"
+              id="input_title"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="概要（overview）・・・・"
+              required
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-            {/* onCheckedChange */}
-            <label
-              htmlFor="check_publicFlg"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              公開
-            </label>
           </div>
           <div>
-            <Button
-              type="submit"
-              disabled={pending}
-              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            <Label
+              htmlFor="input_content"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
-              登録
-            </Button>
+              内容
+            </Label>
+            <Textarea
+              name="input_content"
+              id="input_content"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="サイインし、ログイン後、日々のゼロ秒思考を「入力」 入力時のデフォルトはPrivateのフラグが付与されています。..."
+              required
+              value={content}
+              rows={7}
+              onChange={(e) => setContent(e.target.value)}
+            />
           </div>
-        </div>
-      </form>
-      <pre>{propsstring}</pre>
+          <div className="flex justify-end">
+            <div className="flex items-center space-x-2 mx-3">
+              <Checkbox
+                onCheckedChange={(e) => {
+                  setPublicFlg(!publicFlg);
+                }}
+                id="check_publicFlg"
+                checked={publicFlg}
+              />
+              {/* onCheckedChange */}
+              <label
+                htmlFor="check_publicFlg"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                公開
+              </label>
+            </div>
+            <div>
+              <Button
+                type="submit"
+                disabled={pending}
+                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              >
+                登録
+              </Button>
+            </div>
+          </div>
+        </form>
+      </div>{" "}
+      <pre className="whitespace-pre-wrap">{propsstring}</pre>
     </>
   );
 };

@@ -40,7 +40,7 @@ interface TypeContentLength {
 }
 
 const CHART_HEIGHT = "250px";
-const CHART_WIDTH = "450px";
+const CHART_WIDTH = "350px";
 
 const chartConfig = {
   // length: {
