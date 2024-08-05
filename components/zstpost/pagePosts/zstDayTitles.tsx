@@ -48,7 +48,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
                       isSatday ? "text-blue-500" : ""
                     }`}
                   >
-                    {formatTz(date, "yyyy/MM/dd", {
+                    {formatTz(date, "yyyy/M/d", {
                       timeZone: "Asia/Tokyo",
                       locale: ja,
                     })}

@@ -164,6 +164,15 @@ A3RT Text Analysis API 無料 無制限 -
 コンポーネント化するべきか悩む・・・(todo:20240729)
 [【React】文章が長くなる時に collapse が必要か判定する方法](https://zenn.dev/someone7140/articles/a9e9190f29db06)
 
+### 仕様
+
+image_file_name = type-userid-public-fromymd-toymd
+type:kuromoji / goolabtext / goolabkeyword
+userid: 1-
+public: 1:public 0:private
+fromymd:20240701
+totymd:20240701
+
 ## Features
 
 - Works across the entire [Next.js](https://nextjs.org) stack

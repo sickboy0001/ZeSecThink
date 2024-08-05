@@ -55,7 +55,7 @@ const zstPageViewDay = (props: propTypes) => {
                 isSatday ? "text-blue-500" : ""
               }`}
             >
-              {GetDateTimeFormat(date, "yyyy/MM/dd(E)")}
+              {GetDateTimeFormat(date, "yyyy/M/d(E)")}
             </div>
           </div>
           <div className="px-3 text-gray-500 font-semibold ">

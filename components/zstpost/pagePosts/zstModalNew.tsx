@@ -97,8 +97,8 @@ const ZstModalNew = (props: propTypes) => {
       });
     }
     showModal(false);
-    router.push(`/zstPosts/view/day/?date=${datebase}`);
     window.location.reload(); // ページを再読み込みして最新のデータを取得する
+    router.push(`/zstPosts/view/day/?date=${datebase}`);
   }
 
   return (

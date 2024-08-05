@@ -35,14 +35,16 @@ const Navigation = ({ user }: { user: User | null }) => {
             >
               ZeroSecondThinking
             </a>
-            <Button
-              type="button"
-              onClick={() => setNavbarOpen(!navbarOpen)}
-              variant="outline"
-              size="icon"
-            >
-              <HamburgerMenuIcon className="h-5 w-5" />
-            </Button>
+            <div className="lg:hidden">
+              <Button
+                type="button"
+                onClick={() => setNavbarOpen(!navbarOpen)}
+                variant="outline"
+                size="icon"
+              >
+                <HamburgerMenuIcon className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
           <div
             className={
@@ -54,7 +56,7 @@ const Navigation = ({ user }: { user: User | null }) => {
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               <li className="nav-item">
                 <Link
-                  className="px-3 py-2 flex items-center text-xs  font-bold leading-snug hover:opacity-75"
+                  className="px-3 py-2  items-center text-xs  font-bold leading-snug hover:opacity-75"
                   href="/tutorial/"
                 >
                   tutorial
@@ -62,7 +64,7 @@ const Navigation = ({ user }: { user: User | null }) => {
               </li>
               <li className="nav-item">
                 <a
-                  className="px-3 py-2 flex items-center text-xs  font-bold leading-snug hover:opacity-75"
+                  className="px-3 py-2  items-center text-xs  font-bold leading-snug hover:opacity-75"
                   href="/startPosts/list"
                 >
                   Setting
@@ -70,7 +72,7 @@ const Navigation = ({ user }: { user: User | null }) => {
               </li>
               <li className="nav-item">
                 <a
-                  className="px-3 py-2 flex items-center text-xs  font-bold leading-snug  hover:opacity-75"
+                  className="px-3 py-2  items-center text-xs  font-bold leading-snug  hover:opacity-75"
                   href="/zstPosts/view/grid"
                 >
                   post/view
@@ -78,22 +80,13 @@ const Navigation = ({ user }: { user: User | null }) => {
               </li>
               <li className="nav-item">
                 <a
-                  className="px-3 py-2 flex items-center text-xs  font-bold leading-snug  hover:opacity-75"
+                  className="px-3 py-2  items-center text-xs  font-bold leading-snug  hover:opacity-75"
                   href="/zstPosts/summary/week"
                 >
                   Summary
                 </a>
               </li>
-              <li className="nav-item">
-                <a
-                  className="px-3 py-2 flex items-center text-xs  font-bold leading-snug  hover:opacity-75"
-                  href="/zstPosts/summary/week"
-                >
-                  <form action="/auth/logout" method="post">
-                    <button type="submit">logout</button>
-                  </form>
-                </a>
-              </li>
+              <li className="nav-item"></li>
               {user !== null ? (
                 <li className="nav-item">
                   <DropdownMenu>
@@ -134,9 +127,17 @@ const Navigation = ({ user }: { user: User | null }) => {
                       <DropdownMenuItem>
                         <Link
                           className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
-                          href="/test-api/textanalyse"
+                          href="/test/textanalyse"
                         >
-                          API-TextAnalyse
+                          test-API-TextAnalyse
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link
+                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                          href="/test/storagetest"
+                        >
+                          Supabase Storage Test
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
@@ -151,14 +152,10 @@ const Navigation = ({ user }: { user: User | null }) => {
               ) : (
                 <>
                   <li className="nav-item">
-                    <div className="px-3 py-2 flex items-center text-xs  font-bold leading-snug  ">
-                      <ModalCore modalType={ModalType.SignIn}></ModalCore>
-                    </div>
+                    <ModalCore modalType={ModalType.SignIn}></ModalCore>
                   </li>
                   <li className="nav-item">
-                    <div className="px-3 py-2 flex items-center text-xs  font-bold leading-snug  ">
-                      <ModalCore modalType={ModalType.SignUp}></ModalCore>
-                    </div>
+                    <ModalCore modalType={ModalType.SignUp}></ModalCore>
                   </li>
                 </>
               )}

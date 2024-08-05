@@ -2,6 +2,16 @@ import { useState } from "react";
 import { ModalType } from "./modal/modalType";
 import SignUpForm from "./modal/signupForm";
 import SignInForm from "./modal/signinForm";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Button } from "./ui/button";
 
 interface Props {
   modalType: ModalType;
@@ -27,7 +37,54 @@ const ModalCore = ({ modalType }: Props) => {
   }
   return (
     <>
-      <button
+      {/* <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={() => setShowEdit(true)}
+        >
+          <Pencil2Icon className="h-5 w-5" /> add
+        </Button>
+      </DialogTrigger>
+      {showEdit ? (
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add ({GetDateTimeFormat(date, "M/dd")})</DialogTitle>
+            <DialogDescription></DialogDescription>
+            <div className="p-4 md:p-5">
+              <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
+            </div>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-start"></DialogFooter>
+        </DialogContent>
+      ) : null}
+    </Dialog> */}
+      <Dialog>
+        <DialogTrigger asChild>
+          <a
+            // className="w-full"
+            // variant="outline"
+            // className="text-gray-600 hover:text-blue-600"
+            // className="px-3 py-1 items-center text-xs  font-bold leading-snug    hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+            className="px-3 text-xs  font-bold leading-snug  hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+            onClick={() => setShowModal(true)}
+          >
+            {headerButton}
+          </a>
+        </DialogTrigger>
+        {showModal ? (
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription></DialogDescription>
+              <div className="p-4 md:p-5">{formElement}</div>
+            </DialogHeader>
+            <DialogFooter className="sm:justify-start"></DialogFooter>
+          </DialogContent>
+        ) : null}
+      </Dialog>
+      {/* <button
         className="text-gray-600 hover:text-blue-600"
         type="button"
         onClick={() => setShowModal(true)}
@@ -72,7 +129,7 @@ const ModalCore = ({ modalType }: Props) => {
             </div>
           </div>
         </>
-      ) : null}
+      ) : null} */}
     </>
   );
 };
