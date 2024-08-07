@@ -34,6 +34,7 @@ import {
 } from "@radix-ui/react-icons";
 
 const startSunday = 0; //0:sunday 1:monday
+const defPublicFlg = 1;
 
 async function getDataLocal(
   userid: number,
@@ -50,7 +51,7 @@ interface propType {
 
 const ZstPageSummaryWeekPage = (props: propType) => {
   const { datestring } = props;
-  // date yyyyMMdd
+  // datestring yyyyMMdd
   const user = useContext(UserContext);
   const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
   let now = new Date();
@@ -59,9 +60,6 @@ const ZstPageSummaryWeekPage = (props: propType) => {
   const [daySummarys, setDaySummarys] = useState<TypeDayChartSummary[]>([]);
   const [datebeforeString, setDatebeforeString] = useState<string>(datestring);
   const [dateafterString, setDateafterString] = useState<string>(datestring);
-
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
 
   useEffect(() => {
     const fetch = () => {
@@ -88,7 +86,6 @@ const ZstPageSummaryWeekPage = (props: propType) => {
         // console.log(fromAt, toAt);
         const nowZstPosts = await getDataLocal(user?.userid || 0, fromAt, toAt);
         setZstPosts(nowZstPosts);
-        setEndTime(new Date());
       }
       // console.log("ZstPageSummaryList:", nowZstPosts);
     };
@@ -104,7 +101,6 @@ const ZstPageSummaryWeekPage = (props: propType) => {
         zstPosts
       ) as TypeDayChartSummary[];
       setDaySummarys(thisDaySummarys);
-      setEndTime(new Date());
     };
     fetch();
   }, [zstPosts]);
@@ -155,7 +151,13 @@ const ZstPageSummaryWeekPage = (props: propType) => {
                   </div>
                 </div>
                 <div className="">
-                  <WeekSummaryd3cloud data={zstPosts}></WeekSummaryd3cloud>
+                  <WeekSummaryd3cloud
+                    data={zstPosts}
+                    publicFlg={defPublicFlg}
+                    userid={user?.userid || 0}
+                    fromAtString={GetyyyyMMddJpFromDate(fromAt)}
+                    toAtString={GetyyyyMMddJpFromDate(toAt)}
+                  ></WeekSummaryd3cloud>
                 </div>
               </div>
 

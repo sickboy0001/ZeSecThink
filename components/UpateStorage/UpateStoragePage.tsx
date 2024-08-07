@@ -32,7 +32,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import domtoimage from "dom-to-image";
 import { createClient } from "@/utils/supabase/client";
-import { UploadElementText } from "@/app/actions/storage/cloudImage";
+// import { UploadElementText } from "@/app/actions/storage/cloudImage";
 
 const USER_ID = 1;
 const FormSchema = z.object({
@@ -64,10 +64,10 @@ const UpdateStroagePage = () => {
       data.text.repeat(3) + "\n" + new Date().toLocaleTimeString();
 
     setText(thistext);
-    const imageUrl = await UploadElementText(thistext);
+    // const imageUrl = await UploadElementText(thistext);
 
-    console.log("Image URL(client):", imageUrl);
-    setImageUrl(imageUrl);
+    // console.log("Image URL(client):", imageUrl);
+    // setImageUrl(imageUrl);
   }
   async function handleSave() {
     const imgbase = document.getElementById("text_plan");

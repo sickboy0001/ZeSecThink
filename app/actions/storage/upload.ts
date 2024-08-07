@@ -2,55 +2,26 @@
 
 import { createClient } from "@/utils/supabase/server";
 
-export async function uploadImage(filePath: string, screenshotBuffer: Buffer) {
+export async function uploadImage(filePath: string, base64Data: string) {
   const supabase = createClient();
+  const propsdata = Buffer.from(base64Data, "base64");
   console.log("uploadImageZstPosts:", filePath);
+  // console.log("screenshotBuffer Length:", screenshotBuffer.length);
+  const { data, error } = await supabase.storage
+    .from("zstposts")
+    .upload(filePath, propsdata, {
+      contentType: "image/png", // コンテンツタイプを指定
+    });
 
-  // ファイルの存在をHEADリクエストで確認
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from("zstposts").getPublicUrl(filePath);
-
-  try {
-    const response = await fetch(publicUrl, { method: "HEAD" });
-
-    if (response.ok) {
-      console.log(`File ${filePath} already exists.`);
-      throw new Error("The resource already exists");
-    } else if (response.status === 404) {
-      // ファイルが存在しない場合にアップロード
-      const { data, error } = await supabase.storage
-        .from("zstposts")
-        .upload(filePath, screenshotBuffer, {
-          contentType: "image/png",
-        });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-
-      console.log("File uploaded successfully:", data);
-      return data;
-    } else {
-      console.error(
-        "Error checking file existence:",
-        response.status,
-        response.statusText
-      );
-      throw new Error(`Unexpected status: ${response.status}`);
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error during upload process:", error.message);
-      throw new Error(error.message);
-    } else {
-      console.error("An unexpected error occurred:", error);
-      throw new Error("An unexpected error occurred");
-    }
+  if (error) {
+    throw new Error(error.message);
   }
+
+  console.log("File uploaded successfully:", data);
+  return data;
 }
 
-export const uploadPublicUrlZstPosts = async (filePath: string) => {
+export const uploadedPublicUrl = async (filePath: string) => {
   const supabase = createClient();
   const { data: storageData } = supabase.storage
     .from("zstposts")

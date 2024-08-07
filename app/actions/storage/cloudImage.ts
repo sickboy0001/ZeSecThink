@@ -2,34 +2,31 @@
 
 import { TypeWordCount } from "@/app/types/wordCloud";
 import puppeteer from "puppeteer";
-import { v4 as uuidv4 } from "uuid";
-import { uploadImage, uploadPublicUrlZstPosts } from "./upload";
-
 interface propType {
   data: TypeWordCount[];
 }
 
-export const UploadElementText = async (text: string) => {
-  const text2 = getTestData();
-  const screenshotBuffer = await getScreenshotBuffer(text2);
+// export const UploadElementText = async (text: string) => {
+//   const text2 = getTestData();
+//   const screenshotBuffer = await getScreenshotBuffer(text2);
 
-  // pathの作成
-  const filename = getFileName("goolabtext", 1, 1, "20240723", "20240723");
-  const filePath = getFilePath(filename);
+//   // pathの作成
+//   const filename = getFileName("goolabtext", 1, 1, "20240723", "20240723");
+//   const filePath = getFilePath(filename);
 
-  const beforeUrl = await uploadPublicUrlZstPosts(filePath);
-  if (!beforeUrl) {
-    // imgのアップロード
-    await uploadImage(filePath, screenshotBuffer);
-  }
+//   const beforeUrl = await uploadPublicUrlZstPosts(filePath);
+//   if (!beforeUrl) {
+//     // imgのアップロード
+//     await uploadImage(filePath, screenshotBuffer);
+//   }
 
-  // imgのパスの取得
-  const result = await uploadPublicUrlZstPosts(filePath);
+//   // imgのパスの取得
+//   const result = await uploadPublicUrlZstPosts(filePath);
 
-  console.log("export const UploadElementText :", result);
+//   console.log("export const UploadElementText :", result);
 
-  return result;
-};
+//   return result;
+// };
 
 const getFilePath = (filename: string) => {
   return `images/${filename}`;
@@ -139,29 +136,4 @@ const getPageContetString = (wordcounts: TypeWordCount[]) => {
       </body>
     </html>
   `;
-};
-const getTestData = () => {
-  const text2 = [
-    { text: "JavaScript", value: 40 },
-    { text: "TypeScript", value: 30 },
-    { text: "React", value: 50 },
-    { text: "Next.js", value: 20 },
-    { text: "Node.js", value: 45 },
-    { text: "GraphQL", value: 25 },
-    { text: "HTML", value: 35 },
-    { text: "CSS", value: 38 },
-    { text: "Webpack", value: 28 },
-    { text: "Babel", value: 22 },
-    { text: "Jest", value: 15 },
-    { text: "Testing", value: 32 },
-    { text: "Redux", value: 27 },
-    { text: "MobX", value: 18 },
-    { text: "Tailwind", value: 25 },
-    { text: "Styled-Components", value: 12 },
-    { text: "Sass", value: 30 },
-    { text: "Less", value: 18 },
-    { text: "ES6", value: 34 },
-    { text: "Functional Programming", value: 22 },
-  ];
-  return text2;
 };

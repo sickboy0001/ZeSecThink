@@ -5,7 +5,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible";
-import LocalWordCloud from "../localWordCloud/LocalWordCloud";
 
 interface TypeCloudWord {
   text: string;
@@ -32,7 +31,7 @@ const Result = (props: TypeProps) => {
         <div className="flex  flex-wrao items-start">
           <div className="flex-shrink-0">
             <div className="w-[500px] min-w-[380px] h-[500px] min-h-[380px]">
-              <LocalWordCloud data={data} />
+              {/* <LocalWordCloud data={data} /> */}
               {/* <WordCloud
                 data={data}
                 fontSize={fontSizeMapper}
