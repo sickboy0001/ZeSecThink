@@ -4,6 +4,7 @@ import { TypeZstPost } from "@/app/types/zstTypes";
 import { addDays, format } from "date-fns";
 import {
   GetDateFromyyyyMMdd,
+  GetDateFromyyyyMMdd2,
   GetDateTimeFormat,
   GetyyyyMMddJpFromDate,
 } from "@/lib/utilsDate";
@@ -35,7 +36,7 @@ const zstPageViewDay = (props: propTypes) => {
   const nowstring = format(now, "yyyyMMdd");
   console.log("const zstPageViewDay:nowstring", nowstring);
   if (!basedate) {
-    basedate = GetDateFromyyyyMMdd(nowstring);
+    basedate = GetDateFromyyyyMMdd2(nowstring);
   }
   console.log("const zstPageViewDay:basedate", basedate);
   const datebefore = GetyyyyMMddJpFromDate(addDays(basedate, -1));

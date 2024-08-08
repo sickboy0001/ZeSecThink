@@ -6,7 +6,18 @@ export function GetDateFromyyyyMMdd(yyyyMMdd: string) {
   const year = parseInt(yyyyMMdd.substring(0, 4));
   const month = parseInt(yyyyMMdd.substring(4, 6)) - 1; // 月は0ベース
   const day = parseInt(yyyyMMdd.substring(6, 8));
+  // UTC基準で日付を作成
   return new Date(year, month, day, 0, 0, 0, 0);
+  // return toZonedTime(new Date(year, month, day, 0, 0, 0, 0), "Asia/Tokyo");
+}
+
+export function GetDateFromyyyyMMdd2(yyyyMMdd: string) {
+  const year = parseInt(yyyyMMdd.substring(0, 4));
+  const month = parseInt(yyyyMMdd.substring(4, 6)) - 1; // 月は0ベース
+  const day = parseInt(yyyyMMdd.substring(6, 8));
+  // UTC基準で日付を作成
+  const utcDate = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
+  return toZonedTime(utcDate, "Asia/Tokyo");
   // return toZonedTime(new Date(year, month, day, 0, 0, 0, 0), "Asia/Tokyo");
 }
 
