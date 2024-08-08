@@ -116,7 +116,7 @@ const zstPageViewDay = (props: propTypes) => {
       <ZstDDayTitles
         className={className}
         zstPosts={thisZstPosts}
-        date={date}
+        date={basedate}
       ></ZstDDayTitles>
     </div>
   );
