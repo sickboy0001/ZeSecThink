@@ -6,7 +6,7 @@ export function GetDateFromyyyyMMdd(yyyyMMdd: string) {
   const year = parseInt(yyyyMMdd.substring(0, 4));
   const month = parseInt(yyyyMMdd.substring(4, 6)) - 1; // 月は0ベース
   const day = parseInt(yyyyMMdd.substring(6, 8));
-  return new Date(year, month, day, 0, 0, 0, 0);
+  return toZonedTime(new Date(year, month, day, 0, 0, 0, 0), "Asia/Tokyo");
 }
 
 export function GetyyyyMMddJpFromDate(thisdate: Date) {
