@@ -91,7 +91,7 @@ const zstPageViewDay = (props: propTypes) => {
               <ZstAddDialog
                 showEdit={showEdit}
                 setShowEdit={setShowEdit}
-                date={date}
+                date={basedate}
               ></ZstAddDialog>
             </div>
           </div>
