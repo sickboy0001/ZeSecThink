@@ -101,17 +101,17 @@ const ZstPageViewGrid = (props: propTypes) => {
           <div className="flex flex-row">
             <div>
               <Button className="" variant="outline" size="icon">
-                <a
-                  href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
-                >
-                  <GridIcon className="h-4 w-4" />
+                <a href={`/zstPosts/view/day/`}>
+                  <CalendarIcon className="h-4 w-4" />
                 </a>
               </Button>
             </div>
             <div>
               <Button className="" variant="outline" size="icon">
-                <a href={`/zstPosts/view/day/?date=${basedateafter}`}>
-                  <CalendarIcon className="h-4 w-4" />
+                <a
+                  href={`/zstPosts/view/grid/?basedate=${basedateafter}&cols=${cols}&rows=${rows}`}
+                >
+                  <GridIcon className="h-4 w-4" />
                 </a>
               </Button>
             </div>

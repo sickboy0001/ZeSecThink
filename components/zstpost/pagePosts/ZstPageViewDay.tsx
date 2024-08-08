@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { TypeZstPost } from "@/app/types/zstTypes";
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 import {
   GetDateFromyyyyMMdd,
   GetDateTimeFormat,
@@ -30,7 +30,7 @@ const zstPageViewDay = (props: propTypes) => {
   const user = useContext(UserContext);
   // console.log("ZstPageViewGrid:start");
   let basedate = date;
-  const nowstring = GetyyyyMMddJpFromDate(new Date());
+  const nowstring = format(new Date(), "yyyyMMdd");
   if (!basedate) {
     basedate = GetDateFromyyyyMMdd(nowstring);
   }
@@ -71,7 +71,7 @@ const zstPageViewDay = (props: propTypes) => {
           </div>
           <div className="flex ">
             <Button className="underline" variant="outline">
-              <a href={`/zstPosts/view/day/?date=${nowstring}`}>today</a>
+              <a href={`/zstPosts/view/day/`}>today</a>
             </Button>
             <Button className="" variant="outline" size="icon">
               <a href={`/zstPosts/view/day/?date=${datebefore}`}>
@@ -102,7 +102,7 @@ const zstPageViewDay = (props: propTypes) => {
           </div>
           <div>
             <Button className="" variant="outline" size="icon">
-              <a href={`/zstPosts/view/day/?date=${nowstring}`}>
+              <a href={`/zstPosts/view/day/`}>
                 <CalendarIcon className="h-4 w-4" />
               </a>
             </Button>
@@ -119,3 +119,6 @@ const zstPageViewDay = (props: propTypes) => {
 };
 
 export default zstPageViewDay;
+function formatTz(arg0: Date, arg1: string) {
+  throw new Error("Function not implemented.");
+}
