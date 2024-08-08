@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import ZstDDayTitles from "./zstDDayTitles";
 import UserContext from "@/components/user/UserContext";
 import ZstAddDialog from "./zstAddDialog";
+import { toZonedTime } from "date-fns-tz";
 
 interface propTypes {
   date: Date;
@@ -30,7 +31,8 @@ const zstPageViewDay = (props: propTypes) => {
   const user = useContext(UserContext);
   // console.log("ZstPageViewGrid:start");
   let basedate = date;
-  const nowstring = format(new Date(), "yyyyMMdd");
+  const now = toZonedTime(new Date(), "Asia/Tokyo"); // UTCを日本時間に変換
+  const nowstring = format(now, "yyyyMMdd");
   if (!basedate) {
     basedate = GetDateFromyyyyMMdd(nowstring);
   }
@@ -120,5 +122,8 @@ const zstPageViewDay = (props: propTypes) => {
 
 export default zstPageViewDay;
 function formatTz(arg0: Date, arg1: string) {
+  throw new Error("Function not implemented.");
+}
+function utcToZonedTime(arg0: Date, arg1: string) {
   throw new Error("Function not implemented.");
 }
