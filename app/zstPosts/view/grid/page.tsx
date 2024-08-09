@@ -14,7 +14,8 @@ const generateDates = (today: Date, count: number) => {
   let thisday = addDays(today, -1);
   for (let i = 0; i < count; i++) {
     thisday = addDays(thisday, 1);
-    dates.push(thisday);
+    const thisdaytz = toZonedTime(thisday, "Asia/Tokyo");
+    dates.push(thisdaytz);
   }
   return dates;
 };
