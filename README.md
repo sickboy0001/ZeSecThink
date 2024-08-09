@@ -75,6 +75,35 @@ https://qiita.com/sawadashota/items/aa312a3b7e2403448efe
 一度別名でファイル作成（名前の変更）その後 GitHub に一度上げる、
 その後ファイル名をもとに戻すことで、github 上のファイル期待通りになる
 
+### 日付周り
+
+LOACAL:OK!!
+
+```
+export const getPosts 2024-08-09 00:00:00+09:00-2024-08-12 00:00:00+09:00
+```
+
+VERCEL:NG1:
+
+```
+const thisdaytz = toZonedTime(thisday, "Asia/Tokyo");
+export const getPosts 2024-08-09 09:00:00+09:00-2024-08-12 09:00:00+09:00
+```
+
+VERCEL:NG2:
+
+```
+// const thisdaytz = toZonedTime(thisday, "Asia/Tokyo");
+export const getPosts 2024-08-09 09:00:00+09:00-2024-08-12 09:00:00+09:00
+```
+
+VERCEL:OK:
+
+```
+thisday.setHours(0, 0, 0);
+export const getPosts 2024-08-09 00:00:00000-2024-08-12 00:00:00000
+```
+
 ## 2024 年 7 月 22 日
 
 - 中；優先度高タスク

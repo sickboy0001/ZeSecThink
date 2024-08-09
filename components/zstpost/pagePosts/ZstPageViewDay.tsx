@@ -50,7 +50,7 @@ const zstPageViewDay = (props: propTypes) => {
       console.log("zstPageViewDay.fetch.thisdt", thisdt);
       const thisdttz = toZonedTime(thisdt, "Asia/Tokyo");
       console.log("zstPageViewDay.fetch.thisdttz", thisdttz);
-      const ThisZstPosts = await getPosts(user?.userid, thisdt, thisdt);
+      const ThisZstPosts = await getPosts(user?.userid, thisdttz, thisdttz);
       setZstPosts(ThisZstPosts);
     };
     fetch();
