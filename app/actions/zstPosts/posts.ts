@@ -9,7 +9,7 @@ import {
 } from "@/lib/utilsDate";
 import { Identifier } from "typescript";
 import { format } from "date-fns/format";
-import { format as formatTz } from "date-fns-tz";
+import { format as formatTz, toZonedTime } from "date-fns-tz";
 
 export const getPosts = async (
   user_id: number | undefined,
@@ -22,12 +22,20 @@ export const getPosts = async (
   // const thisFromAt = format(from_at, "yyyy-MM-dd 00:00:00000");
   // const thisToAt = format(to_at, "yyyy-MM-dd 00:00:00000"); // getJpTimeZoneFromUtc(to_at);
   const timeZone = "Asia/Tokyo";
-  const thisFromAt = formatTz(from_at, "yyyy-MM-dd 00:00:00000", {
-    timeZone,
-  });
-  const thisToAt = formatTz(to_at, "yyyy-MM-dd 00:00:00000", {
-    timeZone,
-  }); // getJpTimeZoneFromUtc(to_at);
+  const thisFromAt = formatTz(
+    toZonedTime(from_at, timeZone),
+    "yyyy-MM-dd 00:00:00000",
+    {
+      timeZone,
+    }
+  );
+  const thisToAt = formatTz(
+    toZonedTime(to_at, timeZone),
+    "yyyy-MM-dd 00:00:00000",
+    {
+      timeZone,
+    }
+  ); // getJpTimeZoneFromUtc(to_at);
 
   console.log("export const getPosts ", thisFromAt + "-" + thisToAt);
   if (user_id === undefined) {
