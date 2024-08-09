@@ -1,3 +1,5 @@
+"use server";
+
 import React from "react";
 
 import { getUtilUser } from "@/app/actions/user/utilUser";
@@ -27,13 +29,10 @@ const SummaryWeek = async ({ searchParams }: propsType) => {
   }
   console.log("const SummaryWeek :", date);
   // searchParams.basedateの取得
-  const user = await getUtilUser();
 
   return (
     <>
-      <UserProvider user={user as User}>
-        <ZstPageSummaryWeekPage datestring={date}></ZstPageSummaryWeekPage>
-      </UserProvider>
+      <ZstPageSummaryWeekPage datestring={date}></ZstPageSummaryWeekPage>
     </>
   );
 };

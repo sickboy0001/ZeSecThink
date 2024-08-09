@@ -77,7 +77,7 @@ const ZstTitle = (props: propTypes) => {
               {showEdit ? (
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
-                    <DialogTitle className="text-left">Edit</DialogTitle>
+                    <DialogTitle className="text-left">Edit </DialogTitle>
                   </DialogHeader>
                   <div className="">{formElement}</div>
                   <DialogFooter className="sm:justify-start"></DialogFooter>

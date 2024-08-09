@@ -37,7 +37,12 @@ const ZstAddDialog = ({ date, showEdit, setShowEdit }: propTypes) => {
       {showEdit ? (
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Add ({GetDateTimeFormat(date, "M/d")})</DialogTitle>
+            <DialogTitle className="text-left">
+              Add
+              <label className="text-gray-500 px-2">
+                [Date:{GetDateTimeFormat(date, "M/d")}]
+              </label>
+            </DialogTitle>
             <DialogDescription></DialogDescription>
             <div className="p-4 md:p-5">
               <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>

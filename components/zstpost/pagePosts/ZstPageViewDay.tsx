@@ -19,17 +19,21 @@ import ZstDDayTitles from "./zstDDayTitles";
 import UserContext from "@/components/user/UserContext";
 import ZstAddDialog from "./zstAddDialog";
 import { toZonedTime } from "date-fns-tz";
+import { getPosts } from "@/app/actions/zstPosts/posts";
 
 interface propTypes {
   date: Date;
-  zstPosts: TypeZstPost[];
+  // zstPosts: TypeZstPost[];
   className: string;
 }
 const zstPageViewDay = (props: propTypes) => {
-  const { className, date, zstPosts } = props;
-  const [thisZstPosts, setThisZstPosts] = useState<TypeZstPost[]>([]);
+  const { className, date } = props;
+  const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
   const [showEdit, setShowEdit] = useState(false);
   const user = useContext(UserContext);
+
+  // const zstPosts = await getPosts(user?.userid, date, date);
+
   // console.log("ZstPageViewGrid:start");
   let basedate = date;
   const now = toZonedTime(new Date(), "Asia/Tokyo"); // UTCを日本時間に変換
@@ -38,14 +42,19 @@ const zstPageViewDay = (props: propTypes) => {
   if (!basedate) {
     basedate = GetDateFromyyyyMMdd2(nowstring);
   }
-  // console.log("const zstPageViewDay:basedate", basedate);
-  const datebefore = GetyyyyMMddJpFromDate(addDays(basedate, -1));
-  const dateafter = GetyyyyMMddJpFromDate(addDays(basedate, 1));
 
   useEffect(() => {
     // console.log("zstPosts has changed:", zstPosts.slice(0, 2));
-    setThisZstPosts(zstPosts);
-  }, [zstPosts]);
+    const fetch = async () => {
+      const ThisZstPosts = await getPosts(user?.userid, date, date);
+      setZstPosts(ThisZstPosts);
+    };
+    fetch();
+  }, [basedate]);
+
+  // console.log("const zstPageViewDay:basedate", basedate);
+  const datebefore = GetyyyyMMddJpFromDate(addDays(basedate, -1));
+  const dateafter = GetyyyyMMddJpFromDate(addDays(basedate, 1));
 
   const isSunday = date.getDay() === 0;
   const isSatday = date.getDay() === 6;
@@ -116,7 +125,7 @@ const zstPageViewDay = (props: propTypes) => {
       </div>
       <ZstDDayTitles
         className={className}
-        zstPosts={thisZstPosts}
+        zstPosts={zstPosts}
         date={basedate}
       ></ZstDDayTitles>
     </div>
@@ -124,9 +133,3 @@ const zstPageViewDay = (props: propTypes) => {
 };
 
 export default zstPageViewDay;
-function formatTz(arg0: Date, arg1: string) {
-  throw new Error("Function not implemented.");
-}
-function utcToZonedTime(arg0: Date, arg1: string) {
-  throw new Error("Function not implemented.");
-}

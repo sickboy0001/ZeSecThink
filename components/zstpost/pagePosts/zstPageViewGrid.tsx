@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 
 import { User } from "@/app/types/user";
 import UserContext from "@/components/user/UserContext";
+import { getPosts } from "@/app/actions/zstPosts/posts";
 
 interface propTypes {
   rows: number;
@@ -21,11 +22,13 @@ interface propTypes {
   basedate: Date;
   dates: Date[];
   zstPosts: TypeZstPost[];
+  fromAt: Date;
+  toAt: Date;
 }
 const ZstPageViewGrid = (props: propTypes) => {
-  const { rows, cols, basedate, dates, zstPosts } = props;
+  const { rows, cols, basedate, dates, fromAt, toAt } = props;
+  const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
   const user = useContext(UserContext);
-  const [nowUser, setNowUser] = useState<User | null>(user);
   // console.log("ZstPageViewGrid:start");
 
   const basedateafter = GetyyyyMMddJpFromDate(addDays(basedate, rows * cols));
@@ -34,6 +37,15 @@ const ZstPageViewGrid = (props: propTypes) => {
   const basedatetoday = GetyyyyMMddJpFromDate(new Date());
   let nowRows = rows;
   let nowCols = cols;
+
+  useEffect(() => {
+    // console.log("zstPosts has changed:", zstPosts.slice(0, 2));
+    const fetch = async () => {
+      const ThisZstPosts = await getPosts(user?.userid, fromAt, toAt);
+      setZstPosts(ThisZstPosts);
+    };
+    fetch();
+  }, [, fromAt, toAt]);
 
   return (
     // <UserContext.Provider value={nowUser}>
