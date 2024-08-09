@@ -48,6 +48,7 @@ const ZstModalEdit = (props: propTypes) => {
     });
     const datebase = GetyyyyMMddJpFromDate(formData.current_at);
     router.push(`/zstPosts/view/day/?date=${datebase}`);
+    window.location.reload(); // ページを再読み込みして最新のデータを取得する
     showModal(false);
   }
 
