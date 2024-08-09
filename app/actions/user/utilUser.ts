@@ -8,7 +8,7 @@ export const getUtilUser = async (): Promise<User | null> => {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
   if (error || !data) {
-    console.log(
+    console.error(
       "Session error:",
       error?.message || "No session data found",
       data
@@ -46,7 +46,7 @@ const getUserNameComment = async (
     .eq("delete_flg", false)
     .single();
 
-  console.log(res);
+  // console.log(res);
   if (res === null) {
     if (email === undefined) {
       return ["nanashi", "nanashi"];
@@ -79,7 +79,7 @@ const InsertMailToId = async (email: string) => {
 };
 
 const getUserIdInserted = async (email: string) => {
-  console.log("getUserId:start");
+  // console.log("const getUserIdInserted:start");
   const supabase = createClient();
   const { data: res, error } = await supabase
     .from("mail_to_id")
@@ -104,7 +104,7 @@ const getUserId = async (email: string) => {
     InsertMailToId(email);
     const insertUserId = await getUserIdInserted(email);
     if (insertUserId == null) {
-      console.log("");
+      console.error("const getUserId:getUserIdInserted:faild");
     } else {
       user_id = insertUserId;
     }

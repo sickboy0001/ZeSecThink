@@ -1,9 +1,7 @@
 "use client";
 import { TypeZstPost } from "@/app/types/zstTypes";
 import React, { useContext, useEffect, useState } from "react";
-import WordCloud from "react-d3-cloud";
-import { GetDateTimeFormat } from "@/lib/utilsDate";
-import { OUTPUTOVERCOUNTER } from "@/constants/d3Cloud";
+import Image from "next/image";
 import {
   getTokenAnalyseKeywordGoo,
   getTokenAnalyseTextGoo,
@@ -52,7 +50,7 @@ const WeekSummaryd3cloud = (props: propsType) => {
   const [d3data, setD3data] = useState<any[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [isExistImageFile, setIsExistImageFile] = useState(true);
-
+  const [existImageUrl, setExistImageUrl] = useState("");
   useEffect(() => {
     // クライアントサイドでのマウント後にフラグをtrueに設定
     const fetch = async () => {
@@ -87,6 +85,7 @@ const WeekSummaryd3cloud = (props: propsType) => {
       console.log("const WeekSummaryd3cloud : filepathname:", filepathname);
       const path = await uploadedPublicUrl(filepathname);
       console.log("const WeekSummaryd3cloud : urlpath:", path);
+      setExistImageUrl(path);
 
       // setIsExistImageFile(true);
     };
@@ -122,7 +121,18 @@ const WeekSummaryd3cloud = (props: propsType) => {
           toAtString={toAtString}
         />
       ) : (
-        <div>existfile</div>
+        <div>
+          {existImageUrl ? (
+            <Image
+              src={existImageUrl}
+              alt="Supabase Image"
+              width={500}
+              height={500}
+            />
+          ) : (
+            "Loading..."
+          )}
+        </div>
       )}
     </div>
   );

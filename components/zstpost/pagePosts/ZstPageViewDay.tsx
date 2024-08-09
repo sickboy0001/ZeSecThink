@@ -34,11 +34,11 @@ const zstPageViewDay = (props: propTypes) => {
   let basedate = date;
   const now = toZonedTime(new Date(), "Asia/Tokyo"); // UTCを日本時間に変換
   const nowstring = format(now, "yyyyMMdd");
-  console.log("const zstPageViewDay:nowstring", nowstring);
+  // console.log("const zstPageViewDay:nowstring", nowstring);
   if (!basedate) {
     basedate = GetDateFromyyyyMMdd2(nowstring);
   }
-  console.log("const zstPageViewDay:basedate", basedate);
+  // console.log("const zstPageViewDay:basedate", basedate);
   const datebefore = GetyyyyMMddJpFromDate(addDays(basedate, -1));
   const dateafter = GetyyyyMMddJpFromDate(addDays(basedate, 1));
 

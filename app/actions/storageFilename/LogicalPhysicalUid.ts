@@ -78,8 +78,8 @@ const deleteData = async (logical_filename: string) => {
 // return : { logical_filename: 'goolabtext-1-1-20240728-20240803' }
 const selectLogical = async (logical_filename: string) => {
   const supabase = createClient();
-  // console.log("selectLogical:start");
-  // console.log("selectLogicalPhysicalUid:logical_filename:", logical_filename);
+  console.log("selectLogical:start");
+  console.log("selectLogicalPhysicalUid:logical_filename:", logical_filename);
   try {
     const { data: res, error } = await supabase
       .from("logical_physical_uid")
@@ -87,7 +87,6 @@ const selectLogical = async (logical_filename: string) => {
       .eq("domain", domain)
       .eq("dir", dir)
       .eq("logical_filename", logical_filename)
-      .limit(1)
       .single();
 
     if (error) {

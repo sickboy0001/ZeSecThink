@@ -69,6 +69,7 @@ const ClientWordCloud = (props: propsType) => {
       if (wordCloudRef.current) {
         const uuid = uuidv4();
         //Insert  logical_physical_uid
+        console.log("captureAndUploadImage s-e", fromAtString, toAtString);
         const logical_filename = getLogicalFilename(
           apiType,
           publicFlg,

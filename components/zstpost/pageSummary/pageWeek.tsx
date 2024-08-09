@@ -151,13 +151,17 @@ const ZstPageSummaryWeekPage = (props: propType) => {
                   </div>
                 </div>
                 <div className="">
-                  <WeekSummaryd3cloud
-                    data={zstPosts}
-                    publicFlg={defPublicFlg}
-                    userid={user?.userid || 0}
-                    fromAtString={GetyyyyMMddJpFromDate(fromAt)}
-                    toAtString={GetyyyyMMddJpFromDate(toAt)}
-                  ></WeekSummaryd3cloud>
+                  {fromAt !== toAt ? (
+                    <WeekSummaryd3cloud
+                      data={zstPosts}
+                      publicFlg={defPublicFlg}
+                      userid={user?.userid || 0}
+                      fromAtString={GetyyyyMMddJpFromDate(fromAt)}
+                      toAtString={GetyyyyMMddJpFromDate(toAt)}
+                    ></WeekSummaryd3cloud>
+                  ) : (
+                    "loading..."
+                  )}
                 </div>
               </div>
 

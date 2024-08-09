@@ -5,8 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 export async function uploadImage(filePath: string, base64Data: string) {
   const supabase = createClient();
   const propsdata = Buffer.from(base64Data, "base64");
-  console.log("uploadImageZstPosts:", filePath);
-  // console.log("screenshotBuffer Length:", screenshotBuffer.length);
+  // console.log("uploadImage:filePath:", filePath);
   const { data, error } = await supabase.storage
     .from("zstposts")
     .upload(filePath, propsdata, {
@@ -17,7 +16,7 @@ export async function uploadImage(filePath: string, base64Data: string) {
     throw new Error(error.message);
   }
 
-  console.log("File uploaded successfully:", data);
+  // console.log("File uploaded successfully:", data);
   return data;
 }
 
