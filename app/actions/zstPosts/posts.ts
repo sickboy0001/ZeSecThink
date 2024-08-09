@@ -15,7 +15,9 @@ export const getPosts = async (
   to_at: Date
 ) => {
   const startTime = new Date();
-
+  const thisFromAt = getJpTimeZoneFromUtc(from_at);
+  const thisToAt = getJpTimeZoneFromUtc(to_at);
+  console.log("export const getPosts ", thisFromAt + "-" + thisToAt);
   if (user_id === undefined) {
     user_id = 0;
   }
@@ -25,9 +27,9 @@ export const getPosts = async (
     .from("zst_post")
     .select("*")
     .eq("user_id", user_id)
-    .gte("current_at", getJpTimeZoneFromUtc(from_at))
+    .gte("current_at", thisFromAt)
     // .gte("current_at", GetDateTimeFormat(from_at))
-    .lte("current_at", getJpTimeZoneFromUtc(to_at))
+    .lte("current_at", thisToAt)
     // .lte("current_at", GetDateTimeFormat(to_at))
     .order("current_at", { ascending: false }) // 最初のソート条件: true 昇順
     .order("write_start_at", { ascending: false }) // 次のソート条件: false 降順;
