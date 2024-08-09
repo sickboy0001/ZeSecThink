@@ -14,7 +14,7 @@ import ModalCore from "./modalCore";
 import { ModalType } from "./modal/modalType";
 import { User } from "@/app/types/user";
 import { useState } from "react";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { CaretDownIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 const Navigation = ({ user }: { user: User | null }) => {
   const pathname = usePathname();
@@ -75,7 +75,7 @@ const Navigation = ({ user }: { user: User | null }) => {
                   className="px-3 py-2  items-center text-xs  font-bold leading-snug  hover:opacity-75"
                   href="/zstPosts/view/grid"
                 >
-                  post/view
+                  post
                 </a>
               </li>
               <li className="nav-item">
@@ -91,33 +91,36 @@ const Navigation = ({ user }: { user: User | null }) => {
                 <li className="nav-item">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button
-                        className="font-medium text-blue-500  hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
-                        variant="ghost"
-                      >
-                        {user.username !== undefined ? (
-                          <div>{user.username}</div>
-                        ) : (
-                          <div>nanasi</div>
-                        )}
-                      </Button>
+                      <a className="px-3 py-1  items-center text-xs  font-bold leading-snug  hover:opacity-75">
+                        <div className="flex flex-warap items-center">
+                          {user.username !== undefined ? (
+                            <label>{user.username}</label>
+                          ) : (
+                            <label>nanasi</label>
+                          )}
+                          <CaretDownIcon className="h-4 w-4" />
+                        </div>
+                      </a>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
-                      <DropdownMenuLabel> {user.email}</DropdownMenuLabel>
+                      <DropdownMenuLabel className="text-gray-500">
+                        {user.email}
+                      </DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>
                         <a
-                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                          className="items-center text-xs  font-bold leading-snug  hover:opacity-75"
                           href="/profile/edit"
                         >
                           Edit
                         </a>
                       </DropdownMenuItem>
+
                       <DropdownMenuSeparator />
 
                       <DropdownMenuItem>
                         <a
-                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                          className="items-center text-xs  font-bold leading-snug  hover:opacity-75"
                           href="/importdata/selectfile"
                         >
                           CSV-import
@@ -126,7 +129,7 @@ const Navigation = ({ user }: { user: User | null }) => {
 
                       <DropdownMenuItem>
                         <Link
-                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                          className="items-center text-xs  font-bold leading-snug  hover:opacity-75"
                           href="/test/textanalyse"
                         >
                           test-API-TextAnalyse
@@ -134,7 +137,7 @@ const Navigation = ({ user }: { user: User | null }) => {
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <Link
-                          className="font-medium text-blue-500 hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+                          className="items-center text-xs  font-bold leading-snug  hover:opacity-75"
                           href="/test/storagetest"
                         >
                           Supabase Storage Test

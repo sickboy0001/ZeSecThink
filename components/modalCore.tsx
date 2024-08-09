@@ -37,37 +37,10 @@ const ModalCore = ({ modalType }: Props) => {
   }
   return (
     <>
-      {/* <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          className="w-full"
-          variant="outline"
-          onClick={() => setShowEdit(true)}
-        >
-          <Pencil2Icon className="h-5 w-5" /> add
-        </Button>
-      </DialogTrigger>
-      {showEdit ? (
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Add ({GetDateTimeFormat(date, "M/dd")})</DialogTitle>
-            <DialogDescription></DialogDescription>
-            <div className="p-4 md:p-5">
-              <ZstModalNew showModal={setShowEdit} date={date}></ZstModalNew>
-            </div>
-          </DialogHeader>
-          <DialogFooter className="sm:justify-start"></DialogFooter>
-        </DialogContent>
-      ) : null}
-    </Dialog> */}
       <Dialog>
         <DialogTrigger asChild>
           <a
-            // className="w-full"
-            // variant="outline"
-            // className="text-gray-600 hover:text-blue-600"
-            // className="px-3 py-1 items-center text-xs  font-bold leading-snug    hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
-            className="px-3 text-xs  font-bold leading-snug  hover:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500"
+            className="px-3 py-1  items-center text-xs  font-bold leading-snug  hover:opacity-75"
             onClick={() => setShowModal(true)}
           >
             {headerButton}

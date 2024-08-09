@@ -22,42 +22,43 @@ import { toZonedTime } from "date-fns-tz";
 import { getPosts } from "@/app/actions/zstPosts/posts";
 
 interface propTypes {
-  date: Date;
-  // zstPosts: TypeZstPost[];
+  datestring: string;
   className: string;
 }
 const zstPageViewDay = (props: propTypes) => {
-  const { className, date } = props;
+  const { className, datestring } = props;
   const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
   const [showEdit, setShowEdit] = useState(false);
   const user = useContext(UserContext);
 
+  // console.log("const zstPageViewDay:date", date);
   // const zstPosts = await getPosts(user?.userid, date, date);
 
   // console.log("ZstPageViewGrid:start");
-  let basedate = date;
-  const now = toZonedTime(new Date(), "Asia/Tokyo"); // UTCを日本時間に変換
-  const nowstring = format(now, "yyyyMMdd");
+  // const now = toZonedTime(new Date(), "Asia/Tokyo"); // UTCを日本時間に変換
+  // const nowstring = format(now, "yyyyMMdd");
   // console.log("const zstPageViewDay:nowstring", nowstring);
-  if (!basedate) {
-    basedate = GetDateFromyyyyMMdd2(nowstring);
-  }
+  // if (!basedate) {
+  //   basedate = GetDateFromyyyyMMdd2(nowstring);
+  // }
+  // console.log("const zstPageViewDay:basedate", basedate);
 
   useEffect(() => {
     // console.log("zstPosts has changed:", zstPosts.slice(0, 2));
     const fetch = async () => {
-      const ThisZstPosts = await getPosts(user?.userid, date, date);
+      const thisdt = GetDateFromyyyyMMdd(datestring);
+      const ThisZstPosts = await getPosts(user?.userid, thisdt, thisdt);
       setZstPosts(ThisZstPosts);
     };
     fetch();
-  }, [basedate]);
+  }, [datestring]);
 
-  // console.log("const zstPageViewDay:basedate", basedate);
+  const basedate = GetDateFromyyyyMMdd(datestring);
   const datebefore = GetyyyyMMddJpFromDate(addDays(basedate, -1));
   const dateafter = GetyyyyMMddJpFromDate(addDays(basedate, 1));
 
-  const isSunday = date.getDay() === 0;
-  const isSatday = date.getDay() === 6;
+  const isSunday = basedate.getDay() === 0;
+  const isSatday = basedate.getDay() === 6;
 
   return (
     <div className="px-3 py-3">
@@ -69,7 +70,7 @@ const zstPageViewDay = (props: propTypes) => {
                 isSatday ? "text-blue-500" : ""
               }`}
             >
-              {GetDateTimeFormat(date, "yyyy/M/d(E)")}
+              {GetDateTimeFormat(basedate, "yyyy/M/d(E)")}
             </div>
           </div>
           <div className="px-3 text-gray-500 font-semibold ">
@@ -78,7 +79,7 @@ const zstPageViewDay = (props: propTypes) => {
               zstPosts.filter(
                 (f) =>
                   String(new Date(f.current_at).toDateString()) ===
-                    String(date.toDateString()) && !f.delete_flg
+                    String(basedate.toDateString()) && !f.delete_flg
               ).length
             )}
             /10]
@@ -109,7 +110,7 @@ const zstPageViewDay = (props: propTypes) => {
         <div className="flex flex-row-reverse ">
           <div>
             <Button className="" variant="outline" size="icon">
-              <a href={`/zstPosts/view/grid/?date=${nowstring}`}>
+              <a href={`/zstPosts/view/grid/`}>
                 <GridIcon className="h-4 w-4" />
               </a>
             </Button>
