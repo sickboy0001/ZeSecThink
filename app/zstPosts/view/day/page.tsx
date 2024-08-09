@@ -33,7 +33,8 @@ const ViewDay = async ({ searchParams }: propsType) => {
   // const nowstring = GetyyyyMMddJpFromDate(new Date());
   if (!datestring) {
     // date = nowstring;
-    const nowstring = format(new Date(), "yyyyMMdd");
+    const now = toZonedTime(new Date(), "Asia/Tokyo"); // UTCを日本時間に変換
+    const nowstring = format(now, "yyyyMMdd");
     console.log("const ViewDay nowstring", nowstring);
     datestring = nowstring;
   }
