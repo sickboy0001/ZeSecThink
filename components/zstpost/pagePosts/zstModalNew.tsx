@@ -64,7 +64,9 @@ const ZstModalNew = (props: propTypes) => {
     setFormData({
       id: 0,
       user_id: user?.userid || 0, // nowUserがnullでないことを確認 nullでも０で作ること
-      current_at: new Date(format(date, "yyyy-MM-dd 00:00:00000")),
+      current_at: new Date(
+        format(toZonedTime(date, timeZone), "yyyy-MM-dd 00:00:00000")
+      ),
       title: "",
       content: "",
       second: 120,
