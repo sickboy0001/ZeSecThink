@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import UserContext from "@/components/user/UserContext";
 import { format as formatTz, toZonedTime } from "date-fns-tz";
+import { format } from "date-fns";
 
 interface propTypes {
   date: Date;
@@ -63,7 +64,7 @@ const ZstModalNew = (props: propTypes) => {
     setFormData({
       id: 0,
       user_id: user?.userid || 0, // nowUserがnullでないことを確認 nullでも０で作ること
-      current_at: new Date(thisDate),
+      current_at: new Date(format(date, "yyyy-MM-dd 00:00:00000")),
       title: "",
       content: "",
       second: 120,
