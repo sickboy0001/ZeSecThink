@@ -39,7 +39,6 @@ const ZstModalNew = (props: propTypes) => {
 
   const user = useContext(UserContext);
 
-  // console.log("const ZstModalNew = (props: propTypes) start", user);
   useEffect(() => {
     window.setInterval(() => {
       const elapsedTimeMs = new Date().getTime() - openTime.getTime();
@@ -48,6 +47,11 @@ const ZstModalNew = (props: propTypes) => {
 
       const dotString = ["", ".", "..", "...", "...."];
       const currentDots = dotString[new Date().getSeconds() % dotString.length];
+      console.log("const ZstModalNew setInterval date:", date);
+      console.log(
+        "const ZstModalNew setInterval date:",
+        format(date, "yyyy-MM-dd 00:00:00000")
+      );
 
       setTimestring("[" + String(interval) + "sec" + currentDots + "]");
     }, 1000);
@@ -64,9 +68,10 @@ const ZstModalNew = (props: propTypes) => {
     setFormData({
       id: 0,
       user_id: user?.userid || 0, // nowUserがnullでないことを確認 nullでも０で作ること
-      current_at: new Date(
-        format(toZonedTime(date, timeZone), "yyyy-MM-dd 00:00:00000")
-      ),
+      // current_at: new Date(
+      //   format(toZonedTime(date, timeZone), "yyyy-MM-dd 00:00:00000")
+      // ),
+      current_at: date,
       title: "",
       content: "",
       second: 120,
