@@ -128,6 +128,7 @@ const WeekSummaryd3cloud = (props: propsType) => {
               alt="Supabase Image"
               width={500}
               height={500}
+              priority
             />
           ) : (
             "Loading..."

@@ -12,7 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { createZstPost } from "@/app/actions/zstPosts/posts";
-import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import {
+  GetDateTimeFormat,
+  GetFormatTz,
+  GetyyyyMMddJpFromDate,
+} from "@/lib/utilsDate";
 import { Button } from "@/components/ui/button";
 import UserContext from "@/components/user/UserContext";
 
@@ -23,6 +27,9 @@ interface propTypes {
 
 const ZstModalNew = (props: propTypes) => {
   const { showModal, date } = props;
+  const [timestring, setTimestring] = useState("");
+  const [openTime, setOpenTIme] = useState(new Date());
+
   const router = useRouter();
 
   // const [nowUser, setNowUser] = useState<User | null>(null);
@@ -31,12 +38,23 @@ const ZstModalNew = (props: propTypes) => {
   const user = useContext(UserContext);
 
   // console.log("const ZstModalNew = (props: propTypes) start", user);
+  useEffect(() => {
+    window.setInterval(() => {
+      const elapsedTimeMs = new Date().getTime() - openTime.getTime();
+      // 経過時間を秒に変換し、10秒単位で丸める
+      const interval = Math.floor(elapsedTimeMs / 1000 / 10) * 10;
 
+      const dotString = ["", ".", "..", "...", "...."];
+      const currentDots = dotString[new Date().getSeconds() % dotString.length];
+
+      setTimestring("[" + String(interval) + "sec" + currentDots + "]");
+    }, 1000);
+  });
   useEffect(() => {
     setFormData({
       id: 0,
       user_id: user?.userid || 0, // nowUserがnullでないことを確認 nullでも０で作ること
-      current_at: date,
+      current_at: new Date(GetFormatTz(date)),
       title: "",
       content: "",
       second: 120,
@@ -148,6 +166,7 @@ const ZstModalNew = (props: propTypes) => {
         <div>
           <Button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
             更新
+            <span className="px-2 w-6 text-left font-mono">{timestring}</span>
           </Button>
         </div>
       </form>

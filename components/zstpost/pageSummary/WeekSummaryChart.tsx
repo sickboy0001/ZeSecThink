@@ -23,6 +23,8 @@ import {
   GetWeekChartSummary,
   TypeDayChartSummary,
 } from "@/service/zstPost/Summary";
+import CustomYAxis from "./CustomYAxis";
+import CustomXAxis from "./CustomXAxis";
 // import XAxis from "./XAxis";
 // import CustomXAxis from "./CustomXAxis"; // カスタム XAxis をインポート
 // import CustomYAxis from "./CustomYAxis"; // カスタム YAxis をインポート
@@ -109,16 +111,16 @@ const WeekSummaryChart = (prop: propType) => {
         style={{ height: CHART_HEIGHT, width: CHART_WIDTH }}
       >
         <ComposedChart accessibilityLayer data={dayChartSummarys}>
-          <XAxis
+          <CustomXAxis
             dataKey="date"
             tickLine={false}
             tickMargin={10}
             axisLine={false}
             tickFormatter={(value) => GetDateTimeFormat(value, "MM-dd")}
           />
-          <YAxis yAxisId="left" width={30} />
-          <YAxis yAxisId="postCountLeft" width={30} orientation="left" />
-          <YAxis yAxisId="left4" width={30} orientation="left" />
+          <CustomYAxis yAxisId="left" width={30} />
+          <CustomYAxis yAxisId="postCountLeft" width={30} orientation="left" />
+          <CustomYAxis yAxisId="left4" width={30} orientation="left" />
 
           <ChartTooltip content={<ChartTooltipContent />} />
           <Bar
