@@ -19,6 +19,7 @@ import {
 } from "@/lib/utilsDate";
 import { Button } from "@/components/ui/button";
 import UserContext from "@/components/user/UserContext";
+import { format as formatTz, toZonedTime } from "date-fns-tz";
 
 interface propTypes {
   date: Date;
@@ -51,10 +52,18 @@ const ZstModalNew = (props: propTypes) => {
     }, 1000);
   });
   useEffect(() => {
+    const timeZone = "Asia/Tokyo";
+    const thisDate = formatTz(
+      toZonedTime(date, timeZone),
+      "yyyy-MM-dd 00:00:00000",
+      {
+        timeZone,
+      }
+    );
     setFormData({
       id: 0,
       user_id: user?.userid || 0, // nowUserがnullでないことを確認 nullでも０で作ること
-      current_at: new Date(GetFormatTz(date)),
+      current_at: new Date(thisDate),
       title: "",
       content: "",
       second: 120,
