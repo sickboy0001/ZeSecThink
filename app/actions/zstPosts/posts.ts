@@ -154,12 +154,8 @@ export const createZstPost = async ({
   const { ZstPost } = params;
   // console.log("createZstPost", ZstPost);
   // 日本時間に変換
-  const current_at = GetStringPosgreDateTime(ZstPost.current_at);
-  //GetFormatTz
-  // 無理やり０９を省く
-  //getJpTimeZoneFromUtc(ZstPost.current_at);
-  //これやると、時間が９時間プラスされる　2024-07-01 00:00:00 -> 2024-07-01 09:00:00
-  //日付に関しては差分不要
+  // const current_at = GetStringPosgreDateTime(ZstPost.current_at);
+  const current_at = getJpTimeZoneFromUtc(ZstPost.current_at);
   const write_start_at = getJpTimeZoneFromUtc(ZstPost.write_start_at);
   const write_end_at = getJpTimeZoneFromUtc(ZstPost.write_end_at);
   const create_at = getJpTimeZoneFromUtc(ZstPost.create_at);
