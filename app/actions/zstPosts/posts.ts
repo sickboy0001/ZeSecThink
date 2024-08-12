@@ -89,7 +89,7 @@ export const updateFlgZstPost = async (
   columnname: string,
   checked: boolean
 ) => {
-  console.log("updateFlgZstPost start ");
+  // console.log("updateFlgZstPost start ");
   const update_at = getJpTimeZoneFromUtc(new Date());
 
   const supabase = createClient();
@@ -103,7 +103,7 @@ export const updateFlgZstPost = async (
     .select()
     .single();
   if (putError) {
-    console.log("■■■■データの登録失敗", putError);
+    console.log("updateFlgZstPost:update faild", putError);
   }
   // console.log("updateFlgZstPost", res);
   return res;
@@ -118,7 +118,7 @@ export const deleteZstPost = async (id: number) => {
     .delete()
     .eq("id", id.toString());
   if (putError) {
-    console.log("■■■■データの登録失敗", putError);
+    console.log("deleteZstPost faild:", putError);
   }
   // console.log("updateFlgZstPost", res);
   return res;
@@ -141,7 +141,7 @@ export const updateZstPost = async ({
     })
     .eq("id", ZstPost.id.toString());
   if (putError) {
-    console.log("■■■■データの登録失敗", putError);
+    console.log("updateZstPost:faild:", putError);
   }
   return;
 };

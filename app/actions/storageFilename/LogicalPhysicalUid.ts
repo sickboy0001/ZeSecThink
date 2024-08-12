@@ -2,14 +2,44 @@
 
 import { getJpTimeZoneFromUtc } from "@/lib/utilsDate";
 import { createClient } from "@/utils/supabase/server";
+import { deleteFile, uploadedPublicUrl } from "../storage/upload";
 
 const domain = "zstposts";
 const dir = "images";
+
+export const deleteLogiclPhysicalUidWithFile = async (
+  logicalFilepath: string
+) => {
+  //Table登録されているかの確認
+  const thisUid = await GetLogicalPhysicalUid(logicalFilepath);
+
+  if (!thisUid) {
+    console.error(
+      "Logical to physical UID mapping not found[delete].",
+      logicalFilepath
+    );
+    return;
+  }
+  console.log(thisUid.create_at);
+
+  const filepathname = thisUid.dir + "/" + thisUid.physical_filename;
+  const path = await uploadedPublicUrl(filepathname);
+
+  await deleteFile(path);
+  await deleteLogicalPhysicalUid(logicalFilepath);
+};
 
 export const GetLogicalPhysicalUid = async (logical_filename: string) => {
   // console.log("GetLogicalPhysicalUid:start");
   const result = await selectLogical(logical_filename);
   console.log("GetLogicalPhysicalUid:end", result);
+  return result;
+};
+
+export const deleteLogicalPhysicalUid = async (logical_filename: string) => {
+  // console.log("GetLogicalPhysicalUid:start");
+  const result = await deleteLogical(logical_filename);
+  console.log("deleteLogicalPhysicalUid:end", result);
   return result;
 };
 
@@ -97,5 +127,29 @@ const selectLogical = async (logical_filename: string) => {
     return res;
   } catch (error) {
     console.log("deleteLogicalPhysicalUid:error", error);
+  }
+};
+
+const deleteLogical = async (logical_filename: string) => {
+  const supabase = createClient();
+
+  try {
+    const { error } = await supabase
+      .from("logical_physical_uid")
+      .delete()
+      .eq("domain", domain)
+      .eq("dir", dir)
+      .eq("logical_filename", logical_filename);
+
+    if (error) {
+      console.log("deleteLogical:error", error.message);
+      return false;
+    }
+
+    console.log("deleteLogical:success");
+    return true;
+  } catch (error) {
+    console.log("deleteLogical:catch error", error);
+    return false;
   }
 };

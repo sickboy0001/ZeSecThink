@@ -24,7 +24,7 @@ const ResetPassword = () => {
       }
       setIsSend(true);
     } catch (error) {
-      console.log(error);
+      console.log("ResetPassword", error);
     }
   };
 

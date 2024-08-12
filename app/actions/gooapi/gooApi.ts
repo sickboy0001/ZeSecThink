@@ -14,7 +14,7 @@ interface TypeCloudWord {
 }
 
 const analyseTextGoo = async (text: string) => {
-  //   console.log(API_KEY);
+  console.log("const analyseTextGoo:", text);
   try {
     const response = await fetch(API_URL, {
       method: "POST",
@@ -30,6 +30,7 @@ const analyseTextGoo = async (text: string) => {
     });
 
     if (!response.ok) {
+      console.log(text);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const result = await response.json();
@@ -73,16 +74,28 @@ export const getTokenAnalyseTextGoo = async (text: string) => {
   const result = await analyseTextGoo(text);
 
   const wordCount: { [key: string]: number } = {};
-  result.word_list.forEach((wordArray: any) => {
-    wordArray.forEach((wordInfo: any) => {
+  // result.word_list.forEach((wordArray: any) => {
+  //   wordArray.forEach((wordInfo: any) => {
+  //     const word = wordInfo[0];
+  //     if (wordCount[word]) {
+  //       wordCount[word]++;
+  //     } else {
+  //       wordCount[word] = 1;
+  //     }
+  //   });
+  // });
+  for (let i = 0; i < result.word_list.length; i++) {
+    const wordArray = result.word_list[i];
+    for (let j = 0; j < wordArray.length; j++) {
+      const wordInfo = wordArray[j];
       const word = wordInfo[0];
       if (wordCount[word]) {
         wordCount[word]++;
       } else {
         wordCount[word] = 1;
       }
-    });
-  });
+    }
+  }
   //   const sortedWordCount = Object.entries(wordCount).sort((a, b) => b[1] - a[1]);
 
   const sortedWordCount: TypeCloudWord[] = Object.entries(wordCount)

@@ -70,12 +70,8 @@ const ViewGrid = async ({ searchParams }: propsType) => {
   const zstPosts = await getPosts(user?.userid, from_at, to_at);
 
   const endtime = new Date();
-
-  console.log(
-    "const ViewDay getPostsTime msec :",
-    endtime.getTime() - starttime.getTime()
-  );
-
+  const msec = endtime.getTime() - starttime.getTime();
+  console.log("const ViewDay getPostsTime msec :", msec);
   return (
     <>
       <ZstPageViewGrid

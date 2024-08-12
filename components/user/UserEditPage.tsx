@@ -18,9 +18,9 @@ export default function UserEditPage() {
     setComment(user?.comment || "");
   }, [user]);
 
-  console.log("export default function UserEditPage:", user);
+  // console.log("export default function UserEditPage:", user);
   const actionForm = (formData: FormData) => {
-    console.log("const actionForm = ()");
+    // console.log("const actionForm = ()");
     const username = formData.get("name") as string;
     const mail = formData.get("mail") as string;
     const comment = formData.get("comment") as string;
@@ -28,7 +28,7 @@ export default function UserEditPage() {
     const log = `userid:${String(
       user?.userid
     )} mail:${mail} username:${username} comment:${comment} `;
-    console.log(log);
+    // console.log(log);
 
     try {
       registUserInfo(user?.userid ?? 0, username, comment);

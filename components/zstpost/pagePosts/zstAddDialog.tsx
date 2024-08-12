@@ -40,7 +40,7 @@ const ZstAddDialog = ({ date, showEdit, setShowEdit }: propTypes) => {
             <DialogTitle className="text-left">
               Add
               <label className="text-gray-500 px-2">
-                [Date:{GetDateTimeFormat(date, "M/d")}]
+                [{GetDateTimeFormat(date, "M月d日")}]
               </label>
             </DialogTitle>
             <DialogDescription></DialogDescription>

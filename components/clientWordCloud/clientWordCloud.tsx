@@ -17,6 +17,8 @@ interface propsType {
   fromAtString: string;
   toAtString: string;
   userid: number;
+  isExistImageFile: boolean;
+  setCreateImageAt: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 export const getLogicalFilename = (
@@ -53,16 +55,20 @@ const localUploadImage = async (current: HTMLDivElement, uuid: string) => {
 };
 
 const ClientWordCloud = (props: propsType) => {
-  const { data, apiType, publicFlg, userid, fromAtString, toAtString } = props;
+  const {
+    data,
+    apiType,
+    publicFlg,
+    userid,
+    fromAtString,
+    toAtString,
+    isExistImageFile,
+    setCreateImageAt,
+  } = props;
   const wordCloudRef = useRef<HTMLDivElement>(null);
   // console.log("LocalWordCloud(props):", props);
 
   const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    // クライアントサイドでのマウント後にフラグをtrueに設定
-    setIsClient(true);
-  }, []);
 
   useEffect(() => {
     const captureAndUploadImage = async () => {
@@ -83,6 +89,7 @@ const ClientWordCloud = (props: propsType) => {
         await registLogicalPhysicaluid(logical_filename, physical_filename);
         //UploadImage
         await localUploadImage(wordCloudRef.current, uuid);
+        setCreateImageAt(new Date());
       }
     };
 
@@ -104,6 +111,11 @@ const ClientWordCloud = (props: propsType) => {
     }
   }, [isClient]);
 
+  useEffect(() => {
+    // クライアントサイドでのマウント後にフラグをtrueに設定
+    setIsClient(true);
+  }, []);
+
   if (!isClient) {
     return null;
   }
@@ -111,7 +123,7 @@ const ClientWordCloud = (props: propsType) => {
   return (
     <div
       ref={wordCloudRef}
-      className={`w-[500px] min-w-[380px] h-[500px] min-h-[380px]`}
+      className={`w-[500px] min-w-[380px] h-[400x] min-h-[300px]`}
     >
       <WordCloud data={data} fontSize={fontSizeMapper} font={fontFamily} />
     </div>

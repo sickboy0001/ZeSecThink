@@ -33,6 +33,20 @@ export const uploadedPublicUrl = async (filePath: string) => {
   return imageUrl;
 };
 
+export const deleteFile = async (filePath: string) => {
+  const supabase = createClient();
+
+  const { error } = await supabase.storage.from("zstposts").remove([filePath]);
+
+  if (error) {
+    console.error("Error deleting file:", error.message);
+    return false;
+  }
+
+  console.log("File deleted successfully");
+  return true;
+};
+
 // export const uploadImageZstPosts = async (
 //   filePath: string,
 //   screenshotBuffer: Buffer

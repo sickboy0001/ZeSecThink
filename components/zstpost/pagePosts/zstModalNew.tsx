@@ -47,11 +47,11 @@ const ZstModalNew = (props: propTypes) => {
 
       const dotString = ["", ".", "..", "...", "...."];
       const currentDots = dotString[new Date().getSeconds() % dotString.length];
-      console.log("const ZstModalNew setInterval date:", date);
-      console.log(
-        "const ZstModalNew setInterval date:",
-        format(date, "yyyy-MM-dd 00:00:00000")
-      );
+      // console.log("const ZstModalNew setInterval date:", date);
+      // console.log(
+      //   "const ZstModalNew setInterval date:",
+      //   format(date, "yyyy-MM-dd 00:00:00000")
+      // );
 
       setTimestring("[" + String(interval) + "sec" + currentDots + "]");
     }, 1000);

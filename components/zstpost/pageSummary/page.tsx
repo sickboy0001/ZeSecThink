@@ -51,7 +51,7 @@ const ZstPageSummaryPageWeek = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      console.log(fromAt, toAt);
+      // console.log(fromAt, toAt);
       const nowZstPosts = await getDataLocal(user?.userid || 0, fromAt, toAt);
 
       setZstPosts(nowZstPosts);

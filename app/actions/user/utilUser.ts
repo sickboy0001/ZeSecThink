@@ -66,7 +66,7 @@ const getUserNameComment = async (
 };
 
 const InsertMailToId = async (email: string) => {
-  console.log("updateUserId:start");
+  // console.log("updateUserId:start");
   const supabase = createClient();
   const { data: res, error } = await supabase.from("mail_to_id").insert([
     {
@@ -74,7 +74,7 @@ const InsertMailToId = async (email: string) => {
     },
   ]);
   if (error) {
-    console.log("■■■■データの登録失敗", error);
+    console.log("InsertMailToId:isert faild", error);
   }
 };
 

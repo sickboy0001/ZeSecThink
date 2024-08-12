@@ -1,34 +1,45 @@
 "use client";
 import { TypeZstPost } from "@/app/types/zstTypes";
-import React, { useContext, useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import {
   getTokenAnalyseKeywordGoo,
   getTokenAnalyseTextGoo,
 } from "@/app/actions/gooapi/gooApi";
-import { TypeWordCount } from "@/app/types/wordCloud";
 import LocalWordCloud, {
   getLogicalFilename,
 } from "@/components/clientWordCloud/clientWordCloud";
 import { getTokenAnalyseKuromoji } from "@/lib/token";
-import { GetLogicalPhysicalUid } from "@/app/actions/storageFilename/LogicalPhysicalUid";
-import { uploadedPublicUrl } from "@/app/actions/storage/upload";
+import { deleteLogiclPhysicalUidWithFile } from "@/app/actions/storageFilename/LogicalPhysicalUid";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import ExistImageFile from "./existImageFile";
+import { DEFD3TEXT } from "@/constants/d3Cloud";
 
-const thisApiType = "goolabtext"; //kuromoji / goolabtext / goolabkeyword
-interface propsType {
-  data: TypeZstPost[];
-  publicFlg: number;
-  fromAtString: string;
-  toAtString: string;
-  userid: number;
-}
+const getD3Data = async (
+  data: TypeZstPost[],
+  thisApiType: string,
+  publicFlg: number
+) => {
+  let text = data.reduce((acc, each) => {
+    if (each.public_flg) {
+      return acc + each.title + "\n" + each.content + "\n";
+    } else {
+      if (publicFlg === 1) {
+        //対象(each.public_flg=false)がプライベートで、
+        //分析対象の文面も公開(publicFlg=1)なら
+        //分析対象から省く
+        return acc;
+      } else {
+        //非公開対象も対象(publicFlg=0)なら、加える
+        return acc + each.title + "\n" + each.content + "\n";
+      }
+    }
+  }, "");
+  if (text.trim().length === 0) {
+    text = DEFD3TEXT;
+  }
 
-const getD3Data = async (data: TypeZstPost[], thisApiType: string) => {
-  // 効率的な文字列結合
-  const text = data.reduce(
-    (acc, each) => acc + each.title + "\n" + each.content + "\n",
-    ""
-  );
+  // console.log("getD3Data", data, data.length, text);
   const nowApiType: string = thisApiType;
   if (nowApiType === "kuromoji") {
     const newDataD3data = await getTokenAnalyseKuromoji(text);
@@ -44,97 +55,104 @@ const getD3Data = async (data: TypeZstPost[], thisApiType: string) => {
   }
 };
 
+interface propsType {
+  data: TypeZstPost[];
+  apiType: string;
+  publicFlg: number;
+  fromAtString: string;
+  toAtString: string;
+  userid: number;
+}
+
 const WeekSummaryd3cloud = (props: propsType) => {
-  const { data, publicFlg, fromAtString, toAtString, userid } = props;
+  const { data, apiType, publicFlg, fromAtString, toAtString, userid } = props;
   // const data = prop.data;
   const [d3data, setD3data] = useState<any[]>([]);
   const [isClient, setIsClient] = useState(false);
   const [isExistImageFile, setIsExistImageFile] = useState(true);
-  const [existImageUrl, setExistImageUrl] = useState("");
+  const [createImageAt, setCreateImageAt] = useState(new Date());
   useEffect(() => {
-    // クライアントサイドでのマウント後にフラグをtrueに設定
-    const fetch = async () => {
-      const logical_filename = getLogicalFilename(
-        thisApiType,
-        publicFlg,
-        userid,
-        fromAtString,
-        toAtString
-      );
-      console.log(
-        "WeekSummaryd3cloud:logical_filename:start:",
-        logical_filename
-      );
-      //Table登録されているかの確認
-      const thisLogicalPhysicalUid = await GetLogicalPhysicalUid(
-        logical_filename
-      );
-      console.log("WeekSummaryd3cloud:", thisLogicalPhysicalUid);
-
-      if (!thisLogicalPhysicalUid) {
-        console.error("Logical to physical UID mapping not found.");
-        setIsExistImageFile(false);
-        return;
-      }
-
-      //Storageあるかどうかの確認
-      const filepathname =
-        thisLogicalPhysicalUid.dir +
-        "/" +
-        thisLogicalPhysicalUid.physical_filename;
-      console.log("const WeekSummaryd3cloud : filepathname:", filepathname);
-      const path = await uploadedPublicUrl(filepathname);
-      console.log("const WeekSummaryd3cloud : urlpath:", path);
-      setExistImageUrl(path);
-
-      // setIsExistImageFile(true);
-    };
-    fetch();
     setIsClient(true);
   }, []);
+
+  const createD3Data = async () => {
+    const newData = await getD3Data(data, apiType, publicFlg);
+    setD3data(newData);
+  };
+
+  useEffect(() => {
+    setIsExistImageFile(true);
+  }, [apiType, publicFlg, fromAtString, toAtString, userid]);
 
   useEffect(() => {
     const fetch = async () => {
       if (data.length == 0) {
         return;
       }
-      const newData = await getD3Data(data, thisApiType);
-      setD3data(newData);
+      if (isExistImageFile) {
+        return;
+      }
+      createD3Data();
     };
     fetch();
-  }, [data]);
+  }, [data, isExistImageFile]);
+
+  // 削除処理を行う関数
+  const deleteItem = () => {
+    const fetch = async () => {
+      // ここに削除処理のロジックを実装します
+      // 例えば、APIリクエストを送ってデータを削除したり、状態を更新したりします
+      console.log("deleteItem start");
+      const logicalFilepath = getLogicalFilename(
+        apiType,
+        publicFlg,
+        userid,
+        fromAtString,
+        toAtString
+      );
+
+      await deleteLogiclPhysicalUidWithFile(logicalFilepath);
+
+      setIsExistImageFile(false);
+      console.log("deleteItem end", data.length, isExistImageFile);
+      // createD3Data();
+    };
+
+    fetch();
+  };
 
   if (!isClient) {
     // サーバーサイドレンダリング中またはクライアントサイドでのマウント前はnullを返す
     return null;
   }
-
   return (
     <div>
       {!isExistImageFile ? (
         <LocalWordCloud
           data={d3data}
-          apiType={thisApiType}
+          apiType={apiType}
           publicFlg={publicFlg}
           userid={userid}
           fromAtString={fromAtString}
           toAtString={toAtString}
+          isExistImageFile={isExistImageFile}
+          setCreateImageAt={setCreateImageAt}
         />
       ) : (
         <div>
-          {existImageUrl ? (
-            <Image
-              src={existImageUrl}
-              alt="Supabase Image"
-              width={500}
-              height={500}
-              priority
-            />
-          ) : (
-            "Loading..."
-          )}
+          <ExistImageFile
+            thisApiType={apiType}
+            publicFlg={publicFlg}
+            userid={userid}
+            fromAtString={fromAtString}
+            toAtString={toAtString}
+            setIsExistImageFile={setIsExistImageFile}
+            setCreateImageAt={setCreateImageAt}
+          ></ExistImageFile>
         </div>
       )}
+      <Button onClick={deleteItem}>reload</Button>
+      Create at : {format(createImageAt, "yyyy-MM-dd HH:mm:ss")}
     </div>
   );
 };

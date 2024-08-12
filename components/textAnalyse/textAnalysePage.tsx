@@ -63,15 +63,15 @@ const TextAnalysePage = () => {
       return "";
     }
     setText(text);
-    const newTextData = await getTokenAnalyseTextGoo(text);
-    // setResult(JSON.stringify(newResult, null, 2));
-    setDataTextAnalyse(newTextData);
+    // const newTextData = await getTokenAnalyseTextGoo(text);
+    // // setResult(JSON.stringify(newResult, null, 2));
+    // setDataTextAnalyse(newTextData);
 
-    const newKeywordData = await getTokenAnalyseKeywordGoo(text);
-    setDataKeywordAnalyse(newKeywordData);
+    // const newKeywordData = await getTokenAnalyseKeywordGoo(text);
+    // setDataKeywordAnalyse(newKeywordData);
 
-    const newDataD3data = await getTokenAnalyseKuromoji(text);
-    setDataKuromoji(newDataD3data);
+    // const newDataD3data = await getTokenAnalyseKuromoji(text);
+    // setDataKuromoji(newDataD3data);
 
     // setResult(JSON.stringify(newKeywordData, null, 2));
   };
