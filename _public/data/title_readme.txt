@@ -1,0 +1,1 @@
+https://nanoha-log.com/zerosecond-thinking-title/

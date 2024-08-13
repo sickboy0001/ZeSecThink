@@ -53,19 +53,19 @@ export function ListDataTable<TData, TValue>({
   return (
     <>
       <div className="flex items-center py-4">
-        <Input
+        {/* <Input
           placeholder="Filter Title..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-        />
-        {/* <Input
+        /> */}
+        <Input
           placeholder="Filter all..."
           // value={(table.globalfilter() as string) ?? ""}
           onChange={(e) => table.setGlobalFilter(e.target.value)}
-        /> */}
+        />
       </div>
       <div className="rounded-md border">
         <Table>
@@ -117,7 +117,7 @@ export function ListDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {/* <pre>
+      <pre>
         {JSON.stringify(
           {
             columnFilters: table.getState().columnFilters,
@@ -126,7 +126,7 @@ export function ListDataTable<TData, TValue>({
           null,
           2
         )}
-      </pre> */}
+      </pre>
     </>
   );
 }
