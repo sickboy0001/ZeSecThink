@@ -71,7 +71,7 @@ interface propType {
   data: string[];
 }
 
-const List = (props: propType) => {
+const PageList = () => {
   const data = datasample as TypeZstTitle[]; // props.data;
   return (
     <div>
@@ -81,4 +81,4 @@ const List = (props: propType) => {
   );
 };
 
-export default List;
+export default PageList;
