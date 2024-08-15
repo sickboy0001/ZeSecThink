@@ -14,8 +14,7 @@ export interface TypeZstUserTitle {
 }
 
 export interface TypeImportTitle {
-  isSelected?: boolean; // チェックボックスの状態を保持
-  edit: string;
+  isConvert?: boolean;
   state: string;
   title: string;
   create_at: string;

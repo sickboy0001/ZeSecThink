@@ -1,6 +1,6 @@
 export const MENULOGIN = [
   { displayName: `post`, url: `/zstPosts/view/grid` },
-  { displayName: `day`, url: `/zstPosts/view/day` },
+  { displayName: `today`, url: `/zstPosts/view/day` },
   { displayName: `Summary`, url: `/zstPosts/summary/week` },
 ];
 

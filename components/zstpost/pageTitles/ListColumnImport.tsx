@@ -1,10 +1,17 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Table } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypeImportTitle } from "@/app/types/title";
 import { useEffect, useRef, useState } from "react";
+
+// チェックされた行を取得する関数
+export function getSelectedRows(table: Table<TypeImportTitle>) {
+  const selectedRows = table.getSelectedRowModel().rows;
+  console.log(" getSelectedRows:", selectedRows);
+  return selectedRows.map((row) => row.original);
+}
 
 export const columnsImport: ColumnDef<TypeImportTitle>[] = [
   {
