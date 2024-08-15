@@ -24,7 +24,7 @@ const ImprotTable = (props: propsType) => {
           <TableHead className="w-[50px]">Insert</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Title</TableHead>
-          <TableHead className="text-right">CreateAt</TableHead>
+          <TableHead>CreateAt</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

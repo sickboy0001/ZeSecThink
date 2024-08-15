@@ -32,11 +32,14 @@ const ImportTableRow = (props: propsType) => {
           checked={isChecked}
           defaultChecked={true}
           onCheckedChange={handleCheckboxChange}
+          disabled={data.isInserted}
         />
       </TableCell>
-      <TableCell>登録済 </TableCell>
+      <TableCell>{data.isInserted ? "登録済" : ""} </TableCell>
       <TableCell>{data.title}</TableCell>
-      <TableCell>{format(new Date(), "yyyy-MM-dd HH:mm:ss")}</TableCell>
+      <TableCell>
+        {data.create_at ? format(data.create_at, "yyyy-MM-dd HH:mm:ss") : ""}
+      </TableCell>
     </TableRow>
   );
 };

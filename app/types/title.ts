@@ -15,7 +15,7 @@ export interface TypeZstUserTitle {
 
 export interface TypeImportTitle {
   isConvert?: boolean;
-  state: string;
+  isInserted?: boolean;
   title: string;
-  create_at: string;
+  create_at: Date;
 }

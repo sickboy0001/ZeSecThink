@@ -13,6 +13,7 @@ export const MENUADMINSUBMENU = [
   { displayName: `tutorial`, url: `/tutorial/` },
   { displayName: `StatPage`, url: `/startPosts/list` },
   { displayName: `titles-import`, url: `/titlessample/import` },
+  { displayName: `titles-quotation`, url: `/titlessample/quotation` },
   { displayName: `[test]csv-import`, url: `/importdata/selectfile` },
   { displayName: `[test]API-TextAnalyse`, url: `/test/textanalyse` },
   { displayName: `[test]Supabase Storage `, url: `/test/storagetest` },

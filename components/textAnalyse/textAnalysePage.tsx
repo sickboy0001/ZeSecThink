@@ -15,12 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import {
-  getTokenAnalyseKeywordGoo,
-  getTokenAnalyseTextGoo,
-} from "@/app/actions/gooapi/gooApi";
 import {
   Collapsible,
   CollapsibleContent,
@@ -29,8 +24,6 @@ import {
 import { TypeZstPost } from "@/app/types/zstTypes";
 import { getPosts } from "@/app/actions/zstPosts/posts";
 import Result from "./result";
-import { getTokenAnalyseKuromoji } from "@/lib/token";
-import { TypeWordCount } from "@/app/types/wordCloud";
 
 const USER_ID = 1;
 const FormSchema = z.object({

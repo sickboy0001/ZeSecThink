@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypeZstTitle } from "@/app/types/title";
+import { format } from "date-fns";
 
 export const columns: ColumnDef<TypeZstTitle>[] = [
   {
@@ -33,7 +34,7 @@ export const columns: ColumnDef<TypeZstTitle>[] = [
     },
     cell: ({ row }) => {
       const original = row.original;
-      return <>{String(row.getValue("create_at"))}</>;
+      return <>{format(row.getValue("create_at"), "yyyy-MM-dd HH:mm:ss")}</>;
     },
   },
 ];

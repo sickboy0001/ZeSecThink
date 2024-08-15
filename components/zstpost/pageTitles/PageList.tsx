@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { ListDataTable } from "./ListDataTable";
 import { columns } from "./ListColumnDef";
 import { TypeZstTitle } from "@/app/types/title";
 import { format } from "date-fns/format";
+import { selectAllTitleSample } from "@/app/actions/zstPosts/titleSample";
 
 const datasample = [
   {
@@ -72,7 +74,17 @@ interface propType {
 }
 
 const PageList = () => {
-  const data = datasample as TypeZstTitle[]; // props.data;
+  const [data, setData] = useState<TypeZstTitle[]>([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const thisData = await selectAllTitleSample();
+      setData(thisData);
+    };
+    fetch();
+  }, []);
+
+  // const data = datasample as TypeZstTitle[]; // props.data;
   return (
     <div>
       <div></div>

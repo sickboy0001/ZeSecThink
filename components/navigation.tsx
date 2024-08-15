@@ -49,6 +49,7 @@ const Navigation = ({ user }: { user: User | null }) => {
                 type="button"
                 onClick={() => setNavbarOpen(!navbarOpen)}
                 variant="outline"
+                className=" cursor-pointer"
                 size="icon"
               >
                 <HamburgerMenuIcon className="h-5 w-5" />
@@ -80,11 +81,13 @@ const Navigation = ({ user }: { user: User | null }) => {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <a className="px-3 py-1  items-center text-xs  font-bold leading-snug  hover:opacity-75">
-                          <div className="flex flex-warap items-center">
+                          <div className="flex flex-warap items-center  ">
                             {user.username !== undefined ? (
-                              <label>{user.username}</label>
+                              <label className="cursor-pointer">
+                                {user.username}
+                              </label>
                             ) : (
-                              <label>nanasi</label>
+                              <label className="cursor-pointer">nanasi</label>
                             )}
                             <CaretDownIcon className="h-4 w-4" />
                           </div>
