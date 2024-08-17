@@ -7,13 +7,20 @@ import QuotationList from "./QuotationList";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon, Cross1Icon } from "@radix-ui/react-icons";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface propType {
   data: string[];
 }
 
 const PageQuotation = () => {
-  const [data, setData] = useState<TypeZstTitle[]>([]);
   const [text, setText] = useState<string>("");
   const [isShowQuotationList, setIsShowQuotationList] =
     useState<boolean>(false);
@@ -21,9 +28,10 @@ const PageQuotation = () => {
     setText(e.target.value);
   };
 
+  const [open, setOpen] = useState(false);
+
   const defuserid = 1;
 
-  // const data = datasample as TypeZstTitle[]; // props.data;
   return (
     <div className="">
       <div className="flex">
@@ -37,27 +45,33 @@ const PageQuotation = () => {
           onChange={handleChange}
         />
         <div>
-          <Button
-            type="button"
-            onClick={() => setIsShowQuotationList(true)}
-            variant="outline"
-            size="icon"
-          >
-            <ChevronDownIcon className="h-4 w-4" />
-          </Button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                // onClick={() => setIsShowQuotationList(true)}
+                variant="outline"
+                size="icon"
+              >
+                <ChevronDownIcon className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Quoattion</DialogTitle>
+              </DialogHeader>
+              <QuotationList
+                userid={0}
+                setText={setText}
+                setOpen={setOpen}
+              ></QuotationList>
+              <DialogFooter>
+                <Button type="submit">Save changes</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
-      {isShowQuotationList ? (
-        <div>
-          <QuotationList
-            userid={defuserid}
-            setText={setText}
-            setIsShowQuotationList={setIsShowQuotationList}
-          ></QuotationList>
-        </div>
-      ) : (
-        ""
-      )}
     </div>
   );
 };
