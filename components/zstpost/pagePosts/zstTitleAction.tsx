@@ -40,23 +40,15 @@ const zstTitleAction = (props: propTypes) => {
 
   const router = useRouter();
 
-  // console.log(zstPost.title, zstPost.delete_flg);
-  // console.log(
-  //   "GetDateTimeFormat(nowZstPost.create_at)",
-  //   nowZstPost.create_at,
-  //   GetDateTimeFormat(nowZstPost.create_at)
-  // );
   async function update_deletepublic_flg(
     fullid: string | undefined,
     checked: boolean
   ) {
     const columnname = fullid?.split("_")[0] + "_" + fullid?.split("_")[1];
     const id = parseInt(fullid?.split("_")[2] ?? "0");
-    // console.log("--------------handleSubmit");
     const data = await updateFlgZstPost(id, columnname, checked);
     data[columnname] = checked;
     setNowZstPost(data);
-    // console.log("todo:Update", columnname, id, checked);
   }
 
   const handleSwitchPublicChange = (checked: boolean) => {
@@ -94,7 +86,6 @@ const zstTitleAction = (props: propTypes) => {
       <ZstTitle zstPost={nowZstPost} isDispDetail={true}>
         <div>
           <div className="text-gray-600/70 ">
-            {/* todo:20240729 */}
             <QuoteCollapseible
               inputText={detailinfo}
               length={10}

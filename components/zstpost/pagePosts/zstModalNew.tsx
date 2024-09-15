@@ -166,7 +166,7 @@ const ZstModalNew = (props: propTypes) => {
               type="title"
               name="title"
               id="title"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="タイトル"
               value={formData.title}
               onChange={handleChange}
@@ -179,6 +179,7 @@ const ZstModalNew = (props: propTypes) => {
                   className="mx-1"
                   variant="outline"
                   size="icon"
+                  tabIndex={-1}
                 >
                   <ChevronDownIcon className="h-4 w-4" />
                 </Button>
@@ -209,7 +210,7 @@ const ZstModalNew = (props: propTypes) => {
           <Textarea
             name="content"
             id="content"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             placeholder="内容"
             value={formData.content}
             onChange={handleChange}
