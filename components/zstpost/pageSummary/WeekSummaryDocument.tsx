@@ -1,17 +1,10 @@
 "use client";
 import { TypeZstPost } from "@/app/types/zstTypes";
-import React, { useContext, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 import { GetDateTimeFormat } from "@/lib/utilsDate";
-import {
-  ChartContainer,
-  ChartConfig,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { Bar, BarChart, Line, LineChart, XAxis, YAxis } from "recharts";
-import { Box } from "lucide-react";
+import { ChartConfig } from "@/components/ui/chart";
 import { Label } from "@radix-ui/react-label";
+
 // import XAxis from "./XAxis";
 // import CustomXAxis from "./CustomXAxis"; // カスタム XAxis をインポート
 // import CustomYAxis from "./CustomYAxis"; // カスタム YAxis をインポート

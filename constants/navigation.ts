@@ -2,6 +2,7 @@ export const MENULOGIN = [
   { displayName: `post`, url: `/zstPosts/view/grid` },
   { displayName: `today`, url: `/zstPosts/view/day` },
   { displayName: `Summary`, url: `/zstPosts/summary/week` },
+  { displayName: `UserTitle`, url: `/zstPosts/usersampletitle` },
 ];
 
 export const MENULOGINSUBMENU = [
