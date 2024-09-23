@@ -23,7 +23,10 @@ export const selectUserTitle = async (user_id: number) => {
 export const registUserTitle = async (
   user_id: number,
   name: string,
-  auto_create_flg: number
+  auto_create_flg: number,
+  invalid_flg: number,
+  public_flg: number
+  //    ? await registUserTitle(userid, name, auto_create_flg,invalid_flg , public_flg)
 ) => {
   //すでにあるかどうかの確認
   const existUserTile = await isExistUserTitle(user_id, name);
@@ -32,14 +35,44 @@ export const registUserTitle = async (
     //あった場合はカウントを追加
   } else {
     //なかったら追加
-    insertUserSampleTitle(user_id, name);
+    insertUserSampleTitle(
+      user_id,
+      name,
+      auto_create_flg,
+      invalid_flg,
+      public_flg
+    );
   }
   return;
 
   const this_atuo_create_flg = auto_create_flg !== 0 ? 0 : 1;
 };
 
-export const insertUserSampleTitle = async (user_id: number, name: string) => {
+export const removeUserTitle = async (id: number) => {
+  const supabase = createClient();
+  try {
+    const { data, error } = await supabase
+      .from("zst_user_sample_title")
+      .delete()
+      .eq("id", id); // 指定されたIDで削除
+
+    if (error) {
+      console.log("removeUserTitle: failed", error);
+    } else {
+      console.log("removeUserTitle: success", data);
+    }
+  } catch (error) {
+    console.log("removeUserTitle: failed", error);
+  }
+};
+
+export const insertUserSampleTitle = async (
+  user_id: number,
+  name: string,
+  auto_create_flg: number,
+  invalid_flg: number,
+  public_flg: number
+) => {
   const supabase = createClient();
 
   const create_at = getJpTimeZoneFromUtc(new Date());
@@ -50,8 +83,10 @@ export const insertUserSampleTitle = async (user_id: number, name: string) => {
         {
           user_id: user_id,
           name: name,
-          auto_create_flg: 0,
+          auto_create_flg: auto_create_flg,
           create_at: create_at,
+          invalid_flg: invalid_flg,
+          public_flg: public_flg,
         },
       ]);
     if (error) {
@@ -59,6 +94,30 @@ export const insertUserSampleTitle = async (user_id: number, name: string) => {
     }
   } catch (error) {
     console.log("insertUserSampleTitle:faild", error);
+  }
+};
+
+export const updateUserSampleTitle = async (
+  id: number,
+  columnname: string,
+  value: number
+) => {
+  const supabase = createClient();
+
+  try {
+    const { data: res, error } = await supabase
+      .from("zst_user_sample_title")
+      .update({
+        [columnname]: value,
+      })
+      .eq("id", id.toString())
+      .select()
+      .single();
+    if (error) {
+      console.log("updateUserSampleTitle:faild", error);
+    }
+  } catch (error) {
+    console.log("updateUserSampleTitle:faild", error);
   }
 };
 

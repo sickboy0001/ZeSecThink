@@ -20,6 +20,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -117,16 +129,6 @@ export function ListDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {/* <pre>
-        {JSON.stringify(
-          {
-            columnFilters: table.getState().columnFilters,
-            globalFilter: table.getState().globalFilter,
-          },
-          null,
-          2
-        )}
-      </pre> */}
     </>
   );
 }
