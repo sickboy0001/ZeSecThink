@@ -20,9 +20,20 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO anon;
 GRANT USAGE ON SEQUENCE zst_user_sample_title_id_seq TO anon;
 GRANT USAGE ON SEQUENCE zst_user_sample_title_id_seq TO authenticated;
 
+ CREATE VIEW random_zst_user_sample_title AS 
+ SELECT * FROM zst_user_sample_title ORDER BY random()
+
+
+GRANT SELECT ON random_zst_user_sample_title TO authenticated;
+GRANT SELECT ON random_zst_user_sample_title  TO anon;
 
 /*
-SELECT sequence_name
-FROM information_schema.sequences
-WHERE sequence_schema = 'public';
+select 
+  * 
+from random_zst_user_sample_title
+where 
+  user_id = 1  
+  and invalid_flg = 0 
+  and auto_create_flg = 0 
+limit 10
 */

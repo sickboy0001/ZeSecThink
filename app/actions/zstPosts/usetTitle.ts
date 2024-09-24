@@ -136,6 +136,30 @@ export const isExistUserTitle = async (user_id: number, name: string) => {
   return res?.length ? true : false;
 };
 
+export const selectRandomUserSampleTitle = async (
+  count: number,
+  userid: number
+) => {
+  // console.log("selectSampleTitle:", title);
+  const supabase = createClient();
+  const { data: res, error } = await supabase
+    .from("random_zst_user_sample_title")
+    .select("*")
+    .eq("user_id", userid)
+    .eq("invalid_flg", 0)
+    .eq("auto_create_flg", 0)
+    .limit(count);
+  // user_id = 1
+  // and invalid_flg = 0
+  // and auto_create_flg = 0
+  if (error) {
+    console.log(error);
+    return [];
+  }
+  // console.log("selectSampleTitle:", res);
+  return res;
+};
+
 // interface insertTitleSampleType {
 //     title: string;
 // }

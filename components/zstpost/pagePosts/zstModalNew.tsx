@@ -16,7 +16,7 @@ import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { Button } from "@/components/ui/button";
 import UserContext from "@/components/user/UserContext";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import QuotationList from "../pageTitles/QuotationList";
+import ModalQuotationList from "../pageTitles/ModalQuotationList";
 import {
   Dialog,
   DialogContent,
@@ -190,11 +190,11 @@ const ZstModalNew = (props: propTypes) => {
                     <DialogTitle>Title Quotation</DialogTitle>
                   </DialogHeader>
                   <DialogDescription></DialogDescription>
-                  <QuotationList
+                  <ModalQuotationList
                     userid={user?.userid ?? 0}
                     setText={setText}
                     setOpen={setOpen}
-                  ></QuotationList>
+                  ></ModalQuotationList>
                 </DialogContent>
               )}
             </Dialog>

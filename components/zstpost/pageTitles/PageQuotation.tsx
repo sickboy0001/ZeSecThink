@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { TypeZstTitle } from "@/app/types/title";
-import { selectRandomTitleSample } from "@/app/actions/zstPosts/titleSample";
 
-import QuotationList from "./QuotationList";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon, Cross1Icon } from "@radix-ui/react-icons";
@@ -15,10 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-interface propType {
-  data: string[];
-}
+import ModalQuotationList from "./ModalQuotationList";
 
 const PageQuotation = () => {
   const [text, setText] = useState<string>("");
@@ -60,11 +54,11 @@ const PageQuotation = () => {
               <DialogHeader>
                 <DialogTitle>Quoattion</DialogTitle>
               </DialogHeader>
-              <QuotationList
+              <ModalQuotationList
                 userid={0}
                 setText={setText}
                 setOpen={setOpen}
-              ></QuotationList>
+              ></ModalQuotationList>
               <DialogFooter>
                 <Button type="submit">Save changes</Button>
               </DialogFooter>

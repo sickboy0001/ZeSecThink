@@ -19,3 +19,10 @@ export interface TypeImportTitle {
   title: string;
   create_at: Date;
 }
+
+export interface TypeZstUserTitleSample {
+  id: number;
+  userid: number;
+  name: string;
+  create_at: string;
+}

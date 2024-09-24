@@ -96,7 +96,7 @@ const PageUserSampleTitle = () => {
           </div>
         </form>
       </div>
-      <Separator className="my-4" />x
+      <Separator className="my-4" />
       <ListUserSampleTitle
         userSampleTitles={userSampleTitles}
         fetchUserSampleTitles={fetchUserSampleTitles}
