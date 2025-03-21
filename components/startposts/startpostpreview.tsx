@@ -1,11 +1,13 @@
 import React from "react";
 import StartTitle from "./startTitle";
+import StartLink from "./startLink";
 import { getStartPagePostManyStartPage } from "@/app/actions/startPage";
 import { TypeStartPost } from "@/app/types/types";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 
+// toppage
 const contents = [
   {
     title: "動機(Iincentive)なぜ作ろうと思ったか",
@@ -38,6 +40,7 @@ const StartPagePreview = async () => {
   return (
     <div>
       <StartTitle></StartTitle>
+      <StartLink></StartLink>
       <section>
         <div className="flex flex-col w-full max-w-3xl mx-auto prose text-left prose-blue">
           <div className="w-full mx-auto">

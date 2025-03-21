@@ -2,7 +2,7 @@ import React from "react";
 
 const StartTitle = () => {
   return (
-    <div className="relative items-center w-full px-5 py-12 mx-auto md:px-12 lg:px-16 max-w-7xl lg:py-24">
+    <div className="relative items-center w-full px-5 py-6 mx-auto md:px-12 lg:px-8 max-w-7xl lg:py-12">
       <div className="flex w-full mx-auto text-left">
         <div className="relative inline-flex items-center mx-auto align-middle">
           <div className="text-center">
