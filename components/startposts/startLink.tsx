@@ -9,7 +9,7 @@ const startLink = () => {
       <div className="relative items-center w-full px-5 py-5 ">
         <div className="flex w-full mx-auto text-left">
           <div className="relative inline-flex items-center mx-auto align-middle">
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto items-center">
+            <ul className="flex flex-row list-none items-center lg:ml-auto">
               {MENULOGIN.map((each, key) => (
                 <li className="nav-item mx-2" key={key}>
                   <Button variant="outline" className="px-3 py-2">

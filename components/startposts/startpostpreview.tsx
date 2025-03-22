@@ -2,6 +2,7 @@ import React from "react";
 import StartTitle from "./startTitle";
 import StartLink from "./startLink";
 import { getStartPagePostManyStartPage } from "@/app/actions/startPage";
+import getIncludelLinkHtmlFromText from "@/lib/Html";
 import { TypeStartPost } from "@/app/types/types";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -37,6 +38,25 @@ async function getData(): Promise<TypeStartPost[]> {
 
 const StartPagePreview = async () => {
   const data = await getData();
+
+  let url = "URLは、http://www.wings.msn.to/1b6692c29cbe810f9a6cec4131a8e68e";
+  url +=
+    "と、HTTP://www.web-deli.com/12344適当にhttps://www.notion.so/1b6692c29cbe810f9a6cec4131a8e68e?pvs=4 ";
+  url +=
+    "と、https://www.youtube.com/watch?v=xS8LA56k6Ng&t=864s&ab_channel=%E3%82%AA%E3%82%AB%E3%83%AB%E3%83%88%E3%82%B9%E3%82%A4%E3%83%BC%E3%83%91%E3%83%BC%E3%82%BA";
+
+  let contents =
+    "手書きの紙はメリット大きいと思います。ただお手軽に、ということを追求した時、今の時代だとスマホやpcでこなせば、使うメリットが大きいと思います。。スマホでできればで電車の中、パッと思いついた時にできる。ＰＣだと、仕事中や作業中、ぱっと思い浮かんだときにすぐ書ける。わざわざA4の紙準備する必要ない 他にもデータとして蓄積されること。後で読み返しの簡単さなど考えると、メリット大きいと考えています。";
+  // URLは、http://www.wings.msn.to/と、HTTP://www.web-deli.com/
+
+  console.log("url:");
+  console.log(url);
+  console.log("ShortUrl:");
+  console.log(getIncludelLinkHtmlFromText(url, 30));
+
+  // console.log(contents);
+  // console.log(getIncludelLinkHtmlFromText(contents, 30));
+
   return (
     <div>
       <StartTitle></StartTitle>

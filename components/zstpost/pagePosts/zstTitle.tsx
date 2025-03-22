@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import getIncludelLinkHtmlFromText from "@/lib/Html";
 
 interface propTypes {
   zstPost: TypeZstPost;
@@ -85,9 +86,18 @@ const ZstTitle = (props: propTypes) => {
               ) : null}
             </Dialog>
           </div>
+          {/* todo:add ShortLink Url */}
           <AccordionContent>
             <Label className="text-black text-lg whitespace-pre-wrap break-words">
-              {zstPost.content}
+              {/* {zstPost.content} */}
+              {/* // テストデータ http over data
+              // http://localhost:3000/zstPosts/view/day?date=20250316  */}
+              {/* {getIncludelLinkHtmlFromText(zstPost.content, 30)} */}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: getIncludelLinkHtmlFromText(zstPost.content, 30),
+                }}
+              />
             </Label>
             {children}
           </AccordionContent>
