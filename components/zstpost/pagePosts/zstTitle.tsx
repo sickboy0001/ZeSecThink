@@ -117,7 +117,7 @@ const ZstTitle = (props: propTypes) => {
                     <ClipboardCopyIcon className="h-5 w-5" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent>のコピー</TooltipContent>
+                <TooltipContent>タイトルのコピー</TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
