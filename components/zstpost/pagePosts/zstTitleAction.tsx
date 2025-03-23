@@ -8,7 +8,7 @@ import { GetDateTimeFormat, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { deleteZstPost, updateFlgZstPost } from "@/app/actions/zstPosts/posts";
 import ZstTitle from "./zstTitle";
 import { Button } from "@/components/ui/button";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { ClipboardCopyIcon, TrashIcon } from "@radix-ui/react-icons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,6 +22,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
 import { QuoteCollapseible } from "@/components/ui/QuoteCollapseible";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 interface propTypes {
   zstPost: TypeZstPost;
   isDispDetail?: boolean;
@@ -80,6 +86,15 @@ const zstTitleAction = (props: propTypes) => {
   )}-${GetDateTimeFormat(nowZstPost.write_end_at)}] [create:${GetDateTimeFormat(
     nowZstPost.create_at
   )}/update:${GetDateTimeFormat(nowZstPost.update_at)}]`;
+
+  const copyClipBoard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // alert("コピーしました！"); // ユーザーに通知（不要なら削除）
+    } catch (err) {
+      console.error("クリップボードへのコピーに失敗しました", err);
+    }
+  };
 
   return (
     <>

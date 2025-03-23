@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import QuatationCommon from "./QuatationCommon";
 import QuatationUser from "./QuatationUser";
+import QuatationRecent from "./QuatationRecent";
 
 const DEFCOUNT = 10;
 
@@ -37,6 +38,7 @@ const ModalQuotationList = (props: propsType) => {
           <TabsList>
             <TabsTrigger value="common">common</TabsTrigger>
             <TabsTrigger value="user">user</TabsTrigger>
+            <TabsTrigger value="recent">recent</TabsTrigger>
           </TabsList>
         </div>
         <TabsContent value="common">
@@ -57,6 +59,15 @@ const ModalQuotationList = (props: propsType) => {
             ></QuatationUser>
           </div>
         </TabsContent>
+        <TabsContent value="recent">
+          <div>
+            <QuatationRecent
+              userid={userid}
+              setText={setText}
+              setOpen={setOpen}
+            ></QuatationRecent>
+          </div>
+        </TabsContent>{" "}
       </Tabs>
     </div>
   );

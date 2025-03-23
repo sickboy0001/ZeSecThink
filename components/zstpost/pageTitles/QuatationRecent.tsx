@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { TypeZstUserTitleSample } from "@/app/types/title";
+import { TypeRecentTitle, TypeZstUserTitleSample } from "@/app/types/title";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { selectRandomUserSampleTitle } from "@/app/actions/zstPosts/usetTitle";
+import { selectRececntPostTitles } from "@/app/actions/zstPosts/recentPostTitles";
 
-const DEFCOUNT = 10;
+const DEFCOUNT = 15;
 
 interface propsType {
   userid: number;
@@ -14,39 +15,32 @@ interface propsType {
   // setIsShowQuotationList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const getRandomUserSampleTitle = async (count: number, userid: number) => {
+const getTitles = async (count: number, userid: number, days: number = 21) => {
   console.log(userid);
-  const result = userid ? await selectRandomUserSampleTitle(count, userid) : [];
+  const result = userid
+    ? await selectRececntPostTitles(count, 1, undefined, days)
+    : [];
   console.log(result);
   return result;
 };
 
 const QuatationUser = (props: propsType) => {
   const { userid, setText, setOpen } = props; //, setIsShowQuotationList, handleChange
-  const [data, setData] = useState<TypeZstUserTitleSample[]>([]);
+  const [data, setData] = useState<TypeRecentTitle[]>([]);
 
   useEffect(() => {
     const fetch = async () => {
-      // console.log("const QuotationList start");
       if (data.length === 0) {
-        const thisData = await getRandomUserSampleTitle(DEFCOUNT, userid);
-        setData(thisData);
+        const thisData = await getTitles(DEFCOUNT, userid);
+        if (thisData != null) {
+          setData(thisData);
+          console.log(thisData);
+        }
       }
-      // console.log("const QuotationList end");
     };
     fetch();
   }, []); // 依存関係を空配列に変更
 
-  function handleCliclReload(): void {
-    console.log("handleCliclReload", userid);
-    const fetch = async () => {
-      const thisData = await getRandomUserSampleTitle(DEFCOUNT, userid);
-      setData(thisData);
-    };
-    fetch();
-  }
-
-  // const data = datasample as TypeZstTitle[]; // props.data;
   return (
     <div className="flex items-center  justify-center">
       <div>
@@ -57,22 +51,14 @@ const QuatationUser = (props: propsType) => {
               className="underline my-1 mx-1 px-1 py-1 text-gray-800 cursor-pointer"
               key={key}
               onClick={() => {
-                setText(each.name);
+                setText(each.title);
                 setOpen(false);
               }}
             >
-              {each.name}
+              {each.title}
             </a>
           );
         })}
-        <Button
-          type="button"
-          onClick={handleCliclReload}
-          variant="outline"
-          size="icon"
-        >
-          <ReloadIcon className="h-3 w-3" />
-        </Button>
       </div>
     </div>
   );

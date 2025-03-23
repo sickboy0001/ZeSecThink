@@ -3,63 +3,63 @@
 import { createClient } from "@/utils/supabase/server";
 import { format as formatTz, toZonedTime } from "date-fns-tz";
 
-export const getRececntPostTitles = async (
+export const selectRececntPostTitles = async (
+  count: number,
   user_id: number | undefined,
-  now: Date,
+  nowDate: Date = new Date(),
   days: number
 ) => {
-  const startTime = new Date();
   const timeZone = "Asia/Tokyo";
-  const thisFromAt = formatTz(
-    toZonedTime(now.setDate(now.getDate() - days), timeZone),
-    "yyyy-MM-dd 00:00:00000",
-    {
-      timeZone,
-    }
-  );
+
   const thisToAt = formatTz(
-    toZonedTime(now, timeZone),
+    toZonedTime(nowDate, timeZone),
     "yyyy-MM-dd 00:00:00000",
     {
       timeZone,
     }
   ); // getJpTimeZoneFromUtc(to_at);
 
-  console.log("export const getPosts ", thisFromAt + "-" + thisToAt);
+  nowDate.setDate(nowDate.getDate() - days); // `days` 日前に設定
+  const thisFromAt = formatTz(
+    toZonedTime(nowDate, timeZone),
+    "yyyy-MM-dd 00:00:00000",
+    {
+      timeZone,
+    }
+  );
   if (user_id === undefined) {
     user_id = 0;
   }
-  return null;
+  console.log("export const getPosts From-To", thisFromAt + "-" + thisToAt);
 
-  //Todo:group NG GAIにきくべし。
   const supabase = createClient();
-  //   const { data: res, error } = await supabase
-  //     .from("zst_post")
-  //     .select("title, count:id")
-  //     .eq("user_id", user_id)
-  //     .gte("current_at", "2025-02-28 00:00:00")
-  //     .lte("current_at", "2025-03-22 00:00:00")
-  //     .eq("delete_flg", false)
-  //     .group("title")
-  //     .order("count", { ascending: false });
-  //   if (error) {
-  //     console.log(error);
-  //     return [];
-  //   }
 
-  //   // 日時フィールドをDateオブジェクトに変換
-  //   const posts = res.map((item: any) => ({
-  //     ...item,
-  //     current_at: item.current_at,
-  //     write_start_at: item.write_start_at,
-  //     write_end_at: item.write_end_at,
-  //     create_at: item.create_at,
-  //     update_at: item.update_at,
-  //   }));
+  const { data, error } = await supabase
+    .from("zst_post")
+    .select("title, id")
+    .eq("user_id", user_id)
+    .gte("current_at", thisFromAt)
+    .lte("current_at", thisToAt)
+    .eq("delete_flg", false);
 
-  //   const endTime = new Date();
+  if (error) {
+    console.error("Error fetching post counts:", error);
+    return null;
+  }
 
-  //   // console.log("zstposts/posts/getPosts infostring:", infostring);
+  // JavaScript で手動 `GROUP BY`
+  const groupedData = data.reduce((acc: Record<string, number>, post) => {
+    acc[post.title] = (acc[post.title] || 0) + 1;
+    return acc;
+  }, {});
 
-  //   return posts;
+  const result = Object.entries(groupedData)
+    .map(([title, count]) => ({
+      title,
+      count,
+    }))
+    .sort((a, b) => b.title.length - a.title.length)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, count);
+  return result;
 };

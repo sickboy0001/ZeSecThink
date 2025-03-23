@@ -1,7 +1,11 @@
 "use client";
 
 import { TypeZstPost } from "@/app/types/zstTypes";
-import { Pencil1Icon, LockClosedIcon } from "@radix-ui/react-icons";
+import {
+  Pencil1Icon,
+  LockClosedIcon,
+  ClipboardCopyIcon,
+} from "@radix-ui/react-icons";
 import React, { useState } from "react";
 import ZstModalEdit from "./zstModalEdit";
 import {
@@ -21,6 +25,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import getIncludelLinkHtmlFromText from "@/lib/Html";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface propTypes {
   zstPost: TypeZstPost;
@@ -33,10 +43,20 @@ const ZstTitle = (props: propTypes) => {
   // const [nowZstPost, setNowZstPost] = useState<TypeZstPost>(zstPost);
   const itemkey = 0;
   const [showEdit, setShowEdit] = useState(false);
+  const [showCopyButton, setShowCopyButton] = useState(false);
   const formElement = (
     <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
   );
   const dispword = isDispDetail ? "" : "1";
+
+  const copyClipBoard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // alert("コピーしました！"); // ユーザーに通知（不要なら削除）
+    } catch (err) {
+      console.error("クリップボードへのコピーに失敗しました", err);
+    }
+  };
 
   return (
     <div
@@ -85,10 +105,28 @@ const ZstTitle = (props: propTypes) => {
                 </DialogContent>
               ) : null}
             </Dialog>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="mx-1"
+                    onClick={() => copyClipBoard(zstPost.title)}
+                  >
+                    <ClipboardCopyIcon className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>のコピー</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           {/* todo:add ShortLink Url */}
           <AccordionContent>
-            <Label className="text-black text-lg whitespace-pre-wrap break-words">
+            <div
+              className="text-black text-lg whitespace-pre-wrap break-words relative"
+              onClick={() => setShowCopyButton((prev) => !prev)}
+            >
               {/* {zstPost.content} */}
               {/* // テストデータ http over data
               // http://localhost:3000/zstPosts/view/day?date=20250316  */}
@@ -98,7 +136,24 @@ const ZstTitle = (props: propTypes) => {
                   __html: getIncludelLinkHtmlFromText(zstPost.content, 30),
                 }}
               />
-            </Label>
+              {showCopyButton && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute bottom-0 right-0 mx-1"
+                        onClick={() => copyClipBoard(zstPost.content)}
+                      >
+                        <ClipboardCopyIcon className="h-5 w-5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>本文のコピー</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+            </div>
             {children}
           </AccordionContent>
         </AccordionItem>
