@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { TypeRecentTitle, TypeZstUserTitleSample } from "@/app/types/title";
-import { ReloadIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
-import { selectRandomUserSampleTitle } from "@/app/actions/zstPosts/usetTitle";
+import { TypeRecentTitle } from "@/app/types/title";
 import { selectRececntPostTitles } from "@/app/actions/zstPosts/recentPostTitles";
 
 const DEFCOUNT = 15;

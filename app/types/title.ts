@@ -26,3 +26,8 @@ export interface TypeZstUserTitleSample {
   name: string;
   create_at: string;
 }
+
+export interface TypeRecentTitle {
+  title: string;
+  count: number;
+}
