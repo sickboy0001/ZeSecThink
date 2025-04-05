@@ -44,9 +44,9 @@ const ZstTitle = (props: propTypes) => {
   const itemkey = 0;
   const [showEdit, setShowEdit] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
-  const formElement = (
-    <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
-  );
+  // const formElement = (
+  //   <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
+  // );
   const dispword = isDispDetail ? "" : "1";
 
   const copyClipBoard = async (text: string) => {
@@ -100,7 +100,12 @@ const ZstTitle = (props: propTypes) => {
                   <DialogHeader>
                     <DialogTitle className="text-left">Edit </DialogTitle>
                   </DialogHeader>
-                  <div className="">{formElement}</div>
+                  <div className="">
+                    <ZstModalEdit
+                      showModal={setShowEdit}
+                      zstPost={zstPost}
+                    ></ZstModalEdit>
+                  </div>
                   <DialogFooter className="sm:justify-start"></DialogFooter>
                 </DialogContent>
               ) : null}
@@ -127,10 +132,6 @@ const ZstTitle = (props: propTypes) => {
               className="text-black text-lg whitespace-pre-wrap break-words relative"
               onClick={() => setShowCopyButton((prev) => !prev)}
             >
-              {/* {zstPost.content} */}
-              {/* // テストデータ http over data
-              // http://localhost:3000/zstPosts/view/day?date=20250316  */}
-              {/* {getIncludelLinkHtmlFromText(zstPost.content, 30)} */}
               <div
                 dangerouslySetInnerHTML={{
                   __html: getIncludelLinkHtmlFromText(zstPost.content, 30),

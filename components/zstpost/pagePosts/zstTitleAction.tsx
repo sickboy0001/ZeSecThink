@@ -22,12 +22,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
 import { QuoteCollapseible } from "@/components/ui/QuoteCollapseible";
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@/components/ui/tooltip";
 interface propTypes {
   zstPost: TypeZstPost;
   isDispDetail?: boolean;
@@ -48,7 +42,7 @@ const zstTitleAction = (props: propTypes) => {
 
   async function update_deletepublic_flg(
     fullid: string | undefined,
-    checked: boolean
+    checked: boolean,
   ) {
     const columnname = fullid?.split("_")[0] + "_" + fullid?.split("_")[1];
     const id = parseInt(fullid?.split("_")[2] ?? "0");
@@ -80,11 +74,11 @@ const zstTitleAction = (props: propTypes) => {
   };
 
   const detailinfo = `[${String(
-    nowZstPost.second
+    nowZstPost.second,
   )}sec] [writing start-end:${GetDateTimeFormat(
-    nowZstPost.write_start_at
+    nowZstPost.write_start_at,
   )}-${GetDateTimeFormat(nowZstPost.write_end_at)}] [create:${GetDateTimeFormat(
-    nowZstPost.create_at
+    nowZstPost.create_at,
   )}/update:${GetDateTimeFormat(nowZstPost.update_at)}]`;
 
   const copyClipBoard = async (text: string) => {
