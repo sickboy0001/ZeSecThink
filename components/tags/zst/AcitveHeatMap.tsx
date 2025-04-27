@@ -2,8 +2,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import HeatMap from "@uiw/react-heat-map";
 //@uiw/react-heat-map https://github.com/uiwjs/react-heat-map
-import UserContext from "@/components/user/UserContext";
-import { readPostsCountByDate } from "@/app/actions/zstPosts/posts";
 import { Tooltip } from "react-tooltip";
 import { TypeHeatMapData } from "@/app/types/TypeHeatMap";
 
@@ -41,13 +39,14 @@ const AcitveHeatMap = (props: PropsActiveTagHeatMap) => {
   if (color === "gray") {
     panelcolor = grayColors;
   }
+
   return (
     <>
       {heatMapData.length > 0 ? (
         <>
           <HeatMap
             value={heatMapData}
-            width={750}
+            width={725}
             weekLabels={["", "Mon", "", "Wed", "", "Fri", ""]}
             startDate={new Date(from_at_string)}
             endDate={new Date(to_at_string)}

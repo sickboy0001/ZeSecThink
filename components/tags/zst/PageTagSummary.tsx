@@ -6,7 +6,6 @@ import { TypeTagMas } from "@/app/types/tagTypes";
 import SummaryTagId from "./SummaryTagId";
 import TagHoverable from "../TagHoverable";
 import SummaryList from "./SummaryList";
-import SummaryTest from "./SummaryTest";
 import Summary from "./SummaryGen";
 
 const PageTagSummary = () => {
@@ -49,42 +48,59 @@ const PageTagSummary = () => {
   };
 
   return (
-    <div className="p-4 flex">
-      {/* 左ペイン: AllTagMass のリスト */}
-      <div className="w-1/4 pr-4 border-r">
+    <div className="p-4 flex flex-col lg:flex-row w-full">
+      <div className="w-full lg:flex-grow lg:pr-4 lg:border-r lg:border-b-0 border-b mb-4 lg:mb-0 min-w-0">
         <h2 className="text-lg font-semibold mb-2">Tag-List</h2>
-        <ul>
-          <li
+        <div className="flex flex-row lg:flex-col mb-2">
+          {" "}
+          {/* lg以上で縦、それ以外で横 */}
+          <div
             key="summary"
-            className={`py-1 cursor-pointer ${
-              selectedType === "summary" ? "font-bold text-blue-500" : ""
-            }`}
             onClick={() => {
               setSelectedTagMas(undefined);
               setSelectedType("summary");
             }}
           >
-            Summary
-          </li>
-          <li
+            <div className="flex flex-wrap items-center ">
+              <TagHoverable
+                key={"summary_Tag"}
+                tag={null}
+                type={"sel"}
+                tagName="summary"
+                tooltipName="summary"
+                tooltipDescription="summary"
+                isSelected={selectedType === "summary"}
+                addpreSharp={false}
+              />
+            </div>
+          </div>
+          <div
             key="all"
-            className={`py-1 cursor-pointer ${
-              selectedType === "all" ? "font-bold  text-blue-500" : ""
-            }`}
             onClick={() => {
               setSelectedTagMas(undefined);
               setSelectedType("all");
             }}
           >
-            List
-          </li>
+            <div className="flex flex-wrap items-center ">
+              <TagHoverable
+                key={"all_Tag"}
+                tag={null}
+                type={"sel"}
+                tagName="List"
+                tooltipName="List"
+                tooltipDescription="List"
+                isSelected={selectedType === "all"}
+                addpreSharp={false}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap lg:block border-t pt-2 mt-2">
           {allTagMass &&
             allTagMass.map((tag) => (
-              <li
+              <div
                 key={tag.id}
-                className={`py-1 cursor-pointer ${
-                  selectedTagMas?.id === tag.id ? "italic  text-blue-500" : ""
-                }`}
+                className={`py-1 cursor-pointer`}
                 onClick={() => {
                   const found = allTagMass.find((t) => t.id === tag.id);
                   setSelectedTagMas(found);
@@ -99,13 +115,12 @@ const PageTagSummary = () => {
                     isSelected={selectedTagMas?.id === tag.id}
                   />
                 </div>
-              </li>
+              </div>
             ))}
-        </ul>
+        </div>
       </div>
 
-      {/* 右ペイン: 選択されたタグの詳細 */}
-      <div className="w-3/4 pl-4">
+      <div className="w-[750px] flex-shrink-0 pl-4">
         {selectedType === "tag" && selectedTagMas ? (
           <SummaryTagId
             selectedTagMas={selectedTagMas}

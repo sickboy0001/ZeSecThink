@@ -10,11 +10,15 @@ import {
 } from "../ui/tooltip";
 
 interface HoverableBadgeProps {
-  tag: TypeTagMas;
+  tag: TypeTagMas | null;
   type: string;
   isSelected?: boolean;
   handelRemove?: (tag: TypeTagMas) => void;
   afterIconType?: string;
+  tagName?: string;
+  tooltipName?: string;
+  tooltipDescription?: string;
+  addpreSharp?: boolean;
 }
 
 const TagHoverable: React.FC<HoverableBadgeProps> = ({
@@ -23,6 +27,10 @@ const TagHoverable: React.FC<HoverableBadgeProps> = ({
   isSelected = false, // ★ デフォルト値を false に設定
   handelRemove,
   afterIconType,
+  tagName = "",
+  tooltipName = "",
+  tooltipDescription = "",
+  addpreSharp = true,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -40,6 +48,20 @@ const TagHoverable: React.FC<HoverableBadgeProps> = ({
   const badgeClassName = `${baseClassName} ${colorClassName} ${selectedClassName} ${
     isHovering ? hoverClassName : ""
   }`;
+  const badgeKey = tag !== null ? tag.id : tagName;
+  const badgeTagName =
+    (addpreSharp ? "#" : "") + (tag !== null ? tag.tag_name : tagName);
+  const badgeTooltipName = tag !== null ? tag.name : tooltipName;
+  const badgeTooltipDescription =
+    tag !== null ? tag.description : tooltipDescription;
+
+  // クリックハンドラーを定義
+  const handleClick = () => {
+    // tag と handelRemove の両方が存在する場合のみ handelRemove を呼び出す
+    if (tag && handelRemove) {
+      handelRemove(tag);
+    }
+  };
 
   return (
     <div>
@@ -49,13 +71,13 @@ const TagHoverable: React.FC<HoverableBadgeProps> = ({
             <div style={{ display: "inline-block" }}>
               <Badge
                 variant="outline"
-                key={tag.id} // key はここで指定
+                key={badgeKey} // key はここで指定
                 className={badgeClassName}
-                onClick={() => handelRemove?.(tag)} // handelRemove が null の可能性を考慮
+                onClick={handleClick}
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
               >
-                #{tag.tag_name}
+                {badgeTagName}
                 {afterIconType === "plus" ? (
                   <PlusIcon className="h-4 w-4" />
                 ) : afterIconType === "minus" ? (
@@ -66,10 +88,10 @@ const TagHoverable: React.FC<HoverableBadgeProps> = ({
           </TooltipTrigger>
 
           <TooltipContent>
-            {tag.name}
-            {tag.description && (
+            {badgeTooltipName}
+            {badgeTooltipDescription && (
               <div className="text-sm text-muted-foreground">
-                {tag.description}
+                {badgeTooltipDescription}
               </div>
             )}
           </TooltipContent>
