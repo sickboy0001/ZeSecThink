@@ -7,7 +7,7 @@ import SummaryTagId from "./SummaryTagId";
 import TagHoverable from "../TagHoverable";
 import SummaryList from "./SummaryList";
 import SummaryTest from "./SummaryTest";
-import Summary from "./Summary";
+import Summary from "./SummaryGen";
 
 const PageTagSummary = () => {
   const [selectedTagMas, setSelectedTagMas] = useState<TypeTagMas | undefined>(
