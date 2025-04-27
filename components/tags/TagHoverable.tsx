@@ -12,6 +12,7 @@ import {
 interface HoverableBadgeProps {
   tag: TypeTagMas;
   type: string;
+  isSelected?: boolean;
   handelRemove?: (tag: TypeTagMas) => void;
   afterIconType?: string;
 }
@@ -19,22 +20,24 @@ interface HoverableBadgeProps {
 const TagHoverable: React.FC<HoverableBadgeProps> = ({
   tag,
   type,
+  isSelected = false, // ★ デフォルト値を false に設定
   handelRemove,
   afterIconType,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
   const colorMap: { [key: string]: string } = {
-    fav: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 ",
-    sel: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 ",
-    nor: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 ",
+    fav: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-sm",
+    sel: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-sm",
+    nor: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 text-sm",
   };
 
-  const baseClassName = "mr-1 rounded-full cursor-pointer";
+  const baseClassName = "my-1 mx-0.5 rounded-full cursor-pointer";
   const colorClassName = colorMap[type] || "border-gray-500";
+  const selectedClassName = isSelected ? "ring-2 ring-ring " : "";
   const hoverClassName = "opacity-75"; // マウスオーバー時のスタイル例 (透明度を下げる)
   // 他にも、背景色や文字色を変更するクラスを追加できます
-  const badgeClassName = `${baseClassName} ${colorClassName} ${
+  const badgeClassName = `${baseClassName} ${colorClassName} ${selectedClassName} ${
     isHovering ? hoverClassName : ""
   }`;
 

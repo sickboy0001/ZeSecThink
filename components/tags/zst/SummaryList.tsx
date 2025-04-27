@@ -22,9 +22,10 @@ const SummaryList = (props: propsSummaryList) => {
     favoriteTagMass,
     normalTagMass,
   } = props;
-  console.log("SummaryList rendered");
+  // console.log("SummaryList rendered");
 
   const [heatMapData, setHeatMapData] = useState<TypeHeatMapData[]>([]);
+  const [listDatePostAtString, setListDatePostString] = useState<string>("");
 
   let to_at = new Date();
   let from_at = new Date();
@@ -53,7 +54,9 @@ const SummaryList = (props: propsSummaryList) => {
     });
     setHeatMapData(nowHeatMapDataRaw);
   };
-
+  const onDateClick = (date: string, count: number) => {
+    setListDatePostString(date);
+  };
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">list</h2>
@@ -66,11 +69,13 @@ const SummaryList = (props: propsSummaryList) => {
           tooltipId={`heatmapIdSummary`}
           key="summary-heatmap"
           color=""
+          onDateClick={onDateClick}
         ></AcitveHeatMap>
       </div>
       <ListDatePosts
         favoriteTagMass={favoriteTagMass}
         normalTagMass={normalTagMass}
+        listDatePostAtString={listDatePostAtString}
       ></ListDatePosts>{" "}
     </div>
   );

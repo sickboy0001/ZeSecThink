@@ -13,10 +13,18 @@ interface PropsActiveTagHeatMap {
   to_at_string: string;
   tooltipId: string;
   color?: string;
+  onDateClick?: (date: string, count: number) => void;
 }
 
 const AcitveHeatMap = (props: PropsActiveTagHeatMap) => {
-  const { heatMapData, from_at_string, to_at_string, tooltipId, color } = props;
+  const {
+    heatMapData,
+    from_at_string,
+    to_at_string,
+    tooltipId,
+    color,
+    onDateClick,
+  } = props;
   const [tooltipData, setTooltipData] = useState<string>("");
 
   const greenColors = ["#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"];
@@ -33,9 +41,6 @@ const AcitveHeatMap = (props: PropsActiveTagHeatMap) => {
   if (color === "gray") {
     panelcolor = grayColors;
   }
-  const onDateClick = (date: string, count: number) => {
-    console.log("onDateClick", date, count);
-  };
   return (
     <>
       {heatMapData.length > 0 ? (

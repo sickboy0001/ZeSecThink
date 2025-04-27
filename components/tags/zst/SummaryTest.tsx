@@ -15,7 +15,7 @@ interface propsSummaryList {
 
 const SummaryTest = (props: propsSummaryList) => {
   const { favoriteTagMass, normalTagMass } = props;
-  console.log("SummaryList rendered");
+  // console.log("SummaryList rendered");
 
   const [heatMapData, setHeatMapData] = useState<TypeHeatMapData[]>([]);
 

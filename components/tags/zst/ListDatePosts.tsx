@@ -16,63 +16,73 @@ import { readPostsWithTags } from "@/app/actions/zstPosts/postswithtag";
 interface propsListDatePost {
   favoriteTagMass: TypeTagMas[];
   normalTagMass: TypeTagMas[];
+  listDatePostAtString: string;
 }
 
 const ListDatePosts = (props: propsListDatePost) => {
-  const { favoriteTagMass, normalTagMass } = props;
+  const { favoriteTagMass, normalTagMass, listDatePostAtString } = props;
   const [zstPosts, setZstPosts] = useState<TypeZstPostWithTags[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false); // ローディング状態を追加
+  const dayCount = 14; // 日付移動の間隔
+  // --- ↓↓↓ 日付計算ヘルパー関数を修正 --- ↓↓↓
+  const calculateDateRange = (baseDateString: string | null | undefined) => {
+    // null や undefined も考慮
+    let targetDate: Date = new Date();
+    let isValidDateString = false;
 
-  const dayCount = 14;
-  const nowDate = new Date();
-  const before2Week = new Date();
-  before2Week.setDate(before2Week.getDate() - dayCount);
+    // baseDateString が有効な文字列かチェック
+    if (
+      baseDateString &&
+      typeof baseDateString === "string" &&
+      baseDateString.trim() !== ""
+    ) {
+      try {
+        // yyyy/MM/dd 形式をパースできるようにハイフンに置換
+        const parsedDate = new Date(baseDateString.replace(/\//g, "-"));
+        // getTime() が NaN でないことを確認
+        if (!isNaN(parsedDate.getTime())) {
+          targetDate = parsedDate;
+          isValidDateString = true;
+        }
+      } catch (e) {
+        // パース中にエラーが発生した場合 (通常は起こりにくい)
+        console.error("Error parsing date string:", baseDateString, e);
+      }
+    }
+
+    // 有効な日付文字列が渡されなかった場合 (空文字列を含む) は、現在の日付を基準にする
+    if (!isValidDateString) {
+      targetDate = new Date(); // デフォルトは今日
+    }
+
+    const toDate = new Date(targetDate);
+    const fromDate = new Date(targetDate);
+    // 基準日から dayCount 日前を計算
+    fromDate.setDate(fromDate.getDate() - dayCount);
+    // 時刻を 00:00:00 に設定
+    fromDate.setHours(0, 0, 0, 0);
+    toDate.setHours(0, 0, 0, 0);
+    return { fromDate, toDate };
+  };
+  // --- ↑↑↑ 日付計算ヘルパー関数を修正 --- ↑↑↑
+
+  useEffect(() => {
+    console.log("listDatePostAtString changed:", listDatePostAtString);
+    const { fromDate, toDate } = calculateDateRange(listDatePostAtString);
+    setFromAt(fromDate);
+    setToAt(toDate);
+    // この state 更新が fetchPostsData の再実行をトリガーする
+  }, [listDatePostAtString]);
+  // --- ↑↑↑ listDatePostAtString 変更時に fromAt, toAt を更新 --- ↑↑↑
 
   const [postsWithTags, setPostsWithTags] = useState<TypeZstPostWithTags[]>([]);
   const [isPostsLoading, setIsPostsLoading] = useState<boolean>(false);
 
-  const [toAt, setToAt] = useState<Date>(nowDate);
-  const [fromAt, setFromAt] = useState<Date>(before2Week);
-
+  const initialDates = calculateDateRange(listDatePostAtString);
+  const [fromAt, setFromAt] = useState<Date>(initialDates.fromDate);
+  const [toAt, setToAt] = useState<Date>(initialDates.toDate);
   const user = useContext(UserContext);
 
-  // console.log("ListDatePost rendered", fromAt, toAt); // レンダリング確認
-
-  // const fectchGetPosts = async () => {
-  //   if (fromAt && toAt && user?.userid) {
-  //     // user?.userid もチェック
-  //     setIsLoading(true); // データ取得開始前にローディングを true に
-  //     setZstPosts([]); // 既存の投稿をクリア（任意：ローディング中に古いリストを表示したくない場合）
-  //     console.log("fetchGetPosts start", fromAt, toAt);
-  //     try {
-  //       const ThisZstPostsResult = await getPosts(user.userid, fromAt, toAt);
-  //       setZstPosts(ThisZstPostsResult);
-  //       console.log("fetchGetPosts success", ThisZstPostsResult.length);
-  //     } catch (error) {
-  //       console.error("投稿データの取得に失敗しました:", error);
-  //       setZstPosts([]); // エラー時も空にする
-  //     } finally {
-  //       setIsLoading(false); // データ取得完了後（成功・失敗問わず）ローディングを false に
-  //       console.log("fetchGetPosts end");
-  //     }
-  //   } else {
-  //     // fromAt, toAt, user?.userid のいずれかが未定義の場合は何もしないか、初期状態にする
-  //     setZstPosts([]);
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     fectchGetPosts();
-  //   };
-
-  //   fetchData();
-  //   return () => {
-  //     console.log("ListDatePost unmounting or dependency changed");
-  //   };
-  // }, [toAt, fromAt]);
-  // ... userId チェック ...
   const userId = user?.userid || 0;
   const fetchPostsData = useCallback(async () => {
     setIsPostsLoading(true);
@@ -85,7 +95,7 @@ const ListDatePosts = (props: propsListDatePost) => {
     } finally {
       setIsPostsLoading(false);
     }
-  }, [fromAt, toAt, userId]);
+  }, [listDatePostAtString, userId]);
 
   useEffect(() => {
     fetchPostsData();

@@ -13,7 +13,7 @@ const PageTagSummary = () => {
   const [selectedTagMas, setSelectedTagMas] = useState<TypeTagMas | undefined>(
     undefined,
   );
-  const [selectedType, setSelectedType] = useState<string>("summary");
+  const [selectedType, setSelectedType] = useState<string>("all");
 
   const [allTagMass, setAllTagMass] = useState<TypeTagMas[]>();
   const [favoriteTagMass, setFavoriteTagMass] = useState<TypeTagMas[]>([]);
@@ -69,7 +69,7 @@ const PageTagSummary = () => {
           <li
             key="all"
             className={`py-1 cursor-pointer ${
-              selectedType === "all" ? "font-bold text-blue-500" : ""
+              selectedType === "all" ? "font-bold  text-blue-500" : ""
             }`}
             onClick={() => {
               setSelectedTagMas(undefined);
@@ -78,26 +78,12 @@ const PageTagSummary = () => {
           >
             List
           </li>
-
-          <li
-            key="test"
-            className={`py-1 cursor-pointer ${
-              selectedType === "test" ? "font-bold text-blue-500" : ""
-            }`}
-            onClick={() => {
-              setSelectedTagMas(undefined);
-              setSelectedType("test");
-            }}
-          >
-            Test
-          </li>
-
           {allTagMass &&
             allTagMass.map((tag) => (
               <li
                 key={tag.id}
                 className={`py-1 cursor-pointer ${
-                  selectedTagMas?.id === tag.id ? "font-bold text-blue-500" : ""
+                  selectedTagMas?.id === tag.id ? "italic  text-blue-500" : ""
                 }`}
                 onClick={() => {
                   const found = allTagMass.find((t) => t.id === tag.id);
@@ -105,9 +91,13 @@ const PageTagSummary = () => {
                   setSelectedType("tag");
                 }}
               >
-                <div className="flex flex-wrap">
-                  #{tag.tag_name}
-                  <TagHoverable key={tag.id} tag={tag} type={"sel"} />
+                <div className="flex flex-wrap items-center ">
+                  <TagHoverable
+                    key={tag.id}
+                    tag={tag}
+                    type={"sel"}
+                    isSelected={selectedTagMas?.id === tag.id}
+                  />
                 </div>
               </li>
             ))}
@@ -129,11 +119,6 @@ const PageTagSummary = () => {
             favoriteTagMass={favoriteTagMass}
             normalTagMass={normalTagMass}
           ></SummaryList>
-        ) : selectedType === "test" && allTagMass ? (
-          <SummaryTest
-            favoriteTagMass={favoriteTagMass}
-            normalTagMass={normalTagMass}
-          ></SummaryTest>
         ) : (
           ""
         )}

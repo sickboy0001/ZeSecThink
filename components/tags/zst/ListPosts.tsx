@@ -31,11 +31,6 @@ const ListPosts = (props: propsListPosts) => {
   const before2Week = new Date();
   before2Week.setDate(before2Week.getDate() - dayCount);
 
-  if (postWithTags !== undefined) {
-    console.log("postWithTags.length", postWithTags.length);
-  } else {
-    console.log("postWithTags==undefined");
-  }
   // console.log("ListDatePost rendered", fromAt, toAt); // レンダリング確認
 
   return (
