@@ -31,6 +31,7 @@ const Navigation = ({ user }: { user: User | null }) => {
   if (user === null && pathname?.includes("/profile")) {
     router.push("/");
   }
+  // test
   // console.log("const Navigation:", user, user !== null);
   const [navbarOpen, setNavbarOpen] = useState(false);
   return (
