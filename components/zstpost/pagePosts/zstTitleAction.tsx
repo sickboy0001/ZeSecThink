@@ -81,15 +81,6 @@ const zstTitleAction = (props: propTypes) => {
     nowZstPost.create_at,
   )}/update:${GetDateTimeFormat(nowZstPost.update_at)}]`;
 
-  const copyClipBoard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      // alert("コピーしました！"); // ユーザーに通知（不要なら削除）
-    } catch (err) {
-      console.error("クリップボードへのコピーに失敗しました", err);
-    }
-  };
-
   return (
     <>
       <ZstTitle zstPost={nowZstPost} isDispDetail={true}>

@@ -58,3 +58,15 @@ export const GetDateTimeFormat = (date: Date, formatstring?: string) => {
     locale: ja,
   });
 };
+export function formatDateToMMDDWeekFromDate(date: Date): {
+  formattedDate: string;
+  weekdayIndex: number;
+} {
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+  const weekdayIndex = date.getDay();
+  const weekday = weekdays[weekdayIndex];
+
+  return { formattedDate: `${month}/${day}(${weekday})`, weekdayIndex };
+}

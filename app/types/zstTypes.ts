@@ -25,3 +25,6 @@ export interface TypeZstPost {
   create_at: Date;
   update_at: Date;
 }
+export type TypeZstPostWithTags = TypeZstPost & {
+  tagIds: number[] | null;
+};

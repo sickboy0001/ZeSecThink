@@ -1,43 +1,55 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { TypeZstDay, TypeZstPost } from "@/app/types/zstTypes";
 import {
-  GetDateTimeFormat,
-  getJpTimeZoneFromUtc,
-  GetStringPosgreDateTime,
-} from "@/lib/utilsDate";
-import { Identifier } from "typescript";
-import { format } from "date-fns/format";
+  TypeZstDay,
+  TypeZstPost,
+  TypeZstPostWithTags,
+} from "@/app/types/zstTypes";
+import { GetDateTimeFormat, getJpTimeZoneFromUtc } from "@/lib/utilsDate";
 import { format as formatTz, toZonedTime } from "date-fns-tz";
+
+const getToZonedTime = (argdatetime: Date) => {
+  const timeZone = "Asia/Tokyo";
+  return formatTz(
+    toZonedTime(argdatetime, timeZone),
+    "yyyy-MM-dd 00:00:00000",
+    {
+      timeZone,
+    },
+  );
+};
 
 export const getPosts = async (
   user_id: number | undefined,
   from_at: Date,
-  to_at: Date
+  to_at: Date,
 ) => {
+  console.log("getPosts", user_id);
   const startTime = new Date();
   // const thisFromAt = getJpTimeZoneFromUtc(from_at);
   // const thisToAt = getJpTimeZoneFromUtc(to_at);
   // const thisFromAt = format(from_at, "yyyy-MM-dd 00:00:00000");
   // const thisToAt = format(to_at, "yyyy-MM-dd 00:00:00000"); // getJpTimeZoneFromUtc(to_at);
-  const timeZone = "Asia/Tokyo";
-  const thisFromAt = formatTz(
-    toZonedTime(from_at, timeZone),
-    "yyyy-MM-dd 00:00:00000",
-    {
-      timeZone,
-    }
-  );
-  const thisToAt = formatTz(
-    toZonedTime(to_at, timeZone),
-    "yyyy-MM-dd 00:00:00000",
-    {
-      timeZone,
-    }
-  ); // getJpTimeZoneFromUtc(to_at);
+  // const timeZone = "Asia/Tokyo";
+  // const thisFromAt = formatTz(
+  //   toZonedTime(from_at, timeZone),
+  //   "yyyy-MM-dd 00:00:00000",
+  //   {
+  //     timeZone,
+  //   },
+  // );
+  // const thisToAt = formatTz(
+  //   toZonedTime(to_at, timeZone),
+  //   "yyyy-MM-dd 00:00:00000",
+  //   {
+  //     timeZone,
+  //   },
+  // ); // getJpTimeZoneFromUtc(to_at);
+  const thisFromAt = getToZonedTime(from_at);
+  const thisToAt = getToZonedTime(to_at);
 
-  console.log("export const getPosts ", thisFromAt + "-" + thisToAt);
+  // console.log("export const getPosts ", thisFromAt + "-" + thisToAt);
   if (user_id === undefined) {
     user_id = 0;
   }
@@ -76,7 +88,7 @@ export const getPosts = async (
     (endTime.getTime() - startTime.getTime()) / 1000
   } sec ]start ${GetDateTimeFormat(
     startTime,
-    "HH:mm:ss"
+    "HH:mm:ss",
   )} end ${GetDateTimeFormat(endTime, "HH:mm:ss")}`;
 
   // console.log("zstposts/posts/getPosts infostring:", infostring);
@@ -84,10 +96,160 @@ export const getPosts = async (
   return posts;
 };
 
+function aggregatePostsByDate(posts: { current_at: any }[]) {
+  const counts: { [date: string]: number } = {};
+  for (const post of posts) {
+    const date = post.current_at.split("T")[0]; // 日付部分のみ抽出
+    counts[date] = (counts[date] || 0) + 1;
+  }
+  return Object.entries(counts).map(([date, count]) => ({
+    current_at: date,
+    count,
+  }));
+}
+
+function aggregateViewDailyPublicCounts(
+  viewDailyPublicCounts: {
+    current_at: string;
+    public_flg: boolean;
+    count: number;
+  }[],
+) {
+  // console.log("aggregateViewDailyPublicCounts", viewDailyPublicCounts);
+  const dailyTotals: { [date: string]: number } = {};
+
+  for (const item of viewDailyPublicCounts) {
+    const date = item.current_at.split("T")[0]; // 日付部分のみ抽出
+    const countAsNumber = Number(item.count); // 明示的に数値に変換
+    dailyTotals[date] = (dailyTotals[date] || 0) + countAsNumber;
+  }
+
+  return Object.entries(dailyTotals).map(([date, totalCount]) => ({
+    current_at: date,
+    count: totalCount,
+  }));
+}
+
+export async function readPostsCountByDate(
+  userId: number,
+  thisFromAt: Date,
+  thisToAt: Date,
+  tag_id?: number,
+) {
+  // const allPosts = await readDateCount(userId, thisFromAt, thisToAt);
+  const viewDailyPublicCounts = await readViewDailyPublicCounts(
+    userId,
+    thisFromAt,
+    thisToAt,
+    tag_id,
+  );
+  // console.log("viewDailyPublicCounts:", viewDailyPublicCounts);
+  const aggregatedData = aggregateViewDailyPublicCounts(viewDailyPublicCounts);
+  // console.log("aggregatedData:", aggregatedData);
+
+  return aggregatedData;
+}
+
+export const readViewDailyPublicCounts = async (
+  user_id: number | undefined,
+  from_at: Date,
+  to_at: Date,
+  tag_id?: number,
+) => {
+  // console.log("readViewDailyPublicCounts", user_id);
+  const thisFromAt = getToZonedTime(from_at);
+  const thisToAt = getToZonedTime(to_at);
+  if (user_id === undefined) {
+    user_id = 0;
+  }
+
+  const supabase = createClient();
+
+  if (!thisFromAt || !thisToAt) {
+    console.error("error_readViewDailyPublicCounts");
+    return [];
+  }
+  try {
+    let query = supabase
+      .from(
+        tag_id !== null && tag_id !== undefined
+          ? "view_zst_post_daily_public_tag_count"
+          : "view_zst_post_daily_public_count",
+      )
+      .select("*")
+      .gte("current_at", thisFromAt)
+      .lte("current_at", thisToAt)
+      .order("current_at", { ascending: false });
+
+    // tag_id が null でない場合に tag_id によるフィルタを追加
+    if (tag_id !== null && tag_id !== undefined) {
+      query = query.eq("tag_id", tag_id);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Supabase query error:", error);
+      return [];
+    }
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.error("error_readViewDailyPublicCounts:", error);
+    return [];
+  }
+};
+export const readDateCount = async (
+  user_id: number | undefined,
+  from_at: Date,
+  to_at: Date,
+) => {
+  const thisFromAt = getToZonedTime(from_at);
+  const thisToAt = getToZonedTime(to_at);
+  if (user_id === undefined) {
+    user_id = 0;
+  }
+
+  const supabase = createClient();
+
+  const pageSize = 1000; // 1ページあたりの取得件数
+  let page = 0;
+  let allData: { current_at: string }[] = [];
+  let hasMore = true;
+
+  while (hasMore) {
+    const from = page * pageSize;
+    const to = (page + 1) * pageSize - 1;
+
+    const { data: res, error } = await supabase
+      .from("zst_post")
+      .select("current_at")
+      .eq("user_id", user_id)
+      .gte("current_at", thisFromAt)
+      .lte("current_at", thisToAt)
+      .order("current_at", { ascending: false })
+      .range(from, to);
+
+    if (error) {
+      console.error("Supabase query error:", error);
+      break;
+    }
+
+    if (res && res.length > 0) {
+      allData = [...allData, ...res];
+      page++;
+    } else {
+      hasMore = false; // 取得できるデータがなくなった
+    }
+  }
+
+  console.log("Total number of posts fetched:", allData.length);
+  return allData;
+};
 export const updateFlgZstPost = async (
   id: number,
   columnname: string,
-  checked: boolean
+  checked: boolean,
 ) => {
   // console.log("updateFlgZstPost start ");
   const update_at = getJpTimeZoneFromUtc(new Date());
@@ -128,29 +290,32 @@ export const updateZstPost = async ({
   params,
 }: {
   params: { ZstPost: TypeZstPost };
-}) => {
+}): Promise<TypeZstPost | null> => {
   const { ZstPost } = params;
   const supabase = createClient();
   const update_at = getJpTimeZoneFromUtc(new Date());
-  const { error: putError } = await supabase
+  const { data: res, error } = await supabase
     .from("zst_post")
     .update({
       title: ZstPost.title,
       content: ZstPost.content,
       update_at: update_at,
     })
-    .eq("id", ZstPost.id.toString());
-  if (putError) {
-    console.log("updateZstPost:faild:", putError);
+    .eq("id", ZstPost.id.toString())
+    .select() // 挿入後のデータを取得
+    .single(); // 1件のみ返すことを期待;
+  if (error) {
+    console.log("updateZstPost:faild:", error);
+    return null;
   }
-  return;
+  return res as TypeZstPost;
 };
 
 export const createZstPost = async ({
   params,
 }: {
   params: { ZstPost: TypeZstPost };
-}) => {
+}): Promise<TypeZstPost | null> => {
   const { ZstPost } = params;
   // console.log("createZstPost", ZstPost);
   // 日本時間に変換
@@ -162,27 +327,34 @@ export const createZstPost = async ({
   const update_at = getJpTimeZoneFromUtc(ZstPost.update_at);
   const supabase = createClient();
   try {
-    const { data: res, error } = await supabase.from("zst_post").insert([
-      {
-        user_id: ZstPost.user_id,
-        current_at: current_at,
-        title: ZstPost.title,
-        content: ZstPost.content,
-        second: ZstPost.second,
-        public_flg: ZstPost.public_flg,
-        public_content_flg: ZstPost.public_content_flg,
-        delete_flg: ZstPost.delete_flg,
-        write_start_at: write_start_at,
-        write_end_at: write_end_at,
-        create_at: create_at,
-        update_at: update_at,
-      },
-    ]);
+    const { data: res, error } = await supabase
+      .from("zst_post")
+      .insert([
+        {
+          user_id: ZstPost.user_id,
+          current_at: current_at,
+          title: ZstPost.title,
+          content: ZstPost.content,
+          second: ZstPost.second,
+          public_flg: ZstPost.public_flg,
+          public_content_flg: ZstPost.public_content_flg,
+          delete_flg: ZstPost.delete_flg,
+          write_start_at: write_start_at,
+          write_end_at: write_end_at,
+          create_at: create_at,
+          update_at: update_at,
+        },
+      ])
+      .select() // 挿入後のデータを取得
+      .single(); // 1件のみ返すことを期待;
     if (error) {
       console.log("■■■■データの登録失敗", error);
+      return null;
     }
+    return res as TypeZstPost;
   } catch (error) {
     console.log("■■■■データの登録失敗", error);
+    return null;
   }
 };
 

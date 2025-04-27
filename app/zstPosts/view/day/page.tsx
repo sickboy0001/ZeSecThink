@@ -1,11 +1,5 @@
 import React, { useContext } from "react";
-import { getPosts } from "@/app/actions/zstPosts/posts";
-import {
-  GetDateFromyyyyMMdd,
-  GetDateFromyyyyMMdd2,
-  GetyyyyMMddJpFromDate,
-} from "@/lib/utilsDate";
-import ZstPageViewDay from "@/components/zstpost/pagePosts/ZstPageViewDay";
+import PageZstViewDay from "@/components/zstpost/pagePosts/PageZstViewDay";
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import UserContext, { UserProvider } from "@/components/user/UserContext";
 import { User } from "@/app/types/user";
@@ -37,11 +31,11 @@ const ViewDay = async ({ searchParams }: propsType) => {
 
   return (
     <>
-      <ZstPageViewDay
+      <PageZstViewDay
         className={""}
         datestring={datestring}
         // zstPosts={zstPosts}
-      ></ZstPageViewDay>
+      ></PageZstViewDay>
     </>
   );
 };

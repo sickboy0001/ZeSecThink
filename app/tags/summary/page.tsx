@@ -1,19 +1,17 @@
 "use server";
-import React from "react";
+import React, { StrictMode } from "react";
 
 import { getUtilUser } from "@/app/actions/user/utilUser";
-import { UserProvider } from "@/components/user/UserContext";
-import { User } from "@/app/types/user";
-import PageQuotation from "@/components/zstpost/pageTitles/PageQuotation";
+import PageTagSummary from "@/components/tags/zst/PageTagSummary";
 const Page = async () => {
   // console.log(searchParams);
 
   // searchParams.basedateの取得
-  const user = await getUtilUser();
-
   return (
     <>
-      <UserProvider user={user as User}>test tags-summary</UserProvider>
+      <StrictMode>
+        <PageTagSummary></PageTagSummary>
+      </StrictMode>
     </>
   );
 };

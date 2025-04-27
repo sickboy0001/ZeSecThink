@@ -4,9 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { getPosts } from "@/app/actions/zstPosts/posts";
 import UserContext from "@/components/user/UserContext";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
-import { Label } from "@/components/ui/label";
 
-import WeekSummaryd3cloud from "./WeekSummaryd3cloud";
 import WeekSummaryChart from "./WeekSummaryChart";
 import { subDays } from "date-fns";
 import WeekSummaryDocument from "./WeekSummaryDocument";
@@ -22,14 +20,8 @@ import {
   GetWeekChartSummary,
   TypeDayChartSummary,
 } from "@/service/zstPost/Summary";
-import { Button } from "@/components/ui/button";
-import {
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from "@radix-ui/react-icons";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
 import D3ColudCondition from "./d3CloudCondition";
+import HeatMapPost from "./HeatMapPost";
 
 const startSunday = 0; //0:sunday 1:monday
 
@@ -39,7 +31,7 @@ const defApiType = "goolabtext"; //kuromoji / goolabtext / goolabkeyword
 async function getDataLocal(
   userid: number,
   from_at: Date,
-  to_at: Date
+  to_at: Date,
 ): Promise<TypeZstPost[]> {
   const result = await getPosts(userid, from_at, to_at);
   return result;
@@ -95,7 +87,7 @@ const ZstPageSummaryWeekPage = (props: propType) => {
         return;
       }
       const thisDaySummarys = GetWeekChartSummary(
-        zstPosts
+        zstPosts,
       ) as TypeDayChartSummary[];
       setDaySummarys(thisDaySummarys);
     };
@@ -104,6 +96,15 @@ const ZstPageSummaryWeekPage = (props: propType) => {
 
   return (
     <div>
+      <div></div>
+      <div className="grid max-w-lg gap-5 mx-auto lg:grid-cols-1 lg:max-w-none py-1">
+        <div className="flex flex-col overflow-hidden rounded-lg shadow-md">
+          <div className="flex flex-col justify-between flex-1 p-4 bg-white">
+            <div className="text-lg">HeatMap</div>
+            <HeatMapPost></HeatMapPost>
+          </div>
+        </div>
+      </div>
       <div>
         {/* <div>{infostring}</div> */}
         <div className="grid max-w-lg gap-5 mx-auto lg:grid-cols-1 lg:max-w-none py-1">
@@ -118,54 +119,6 @@ const ZstPageSummaryWeekPage = (props: propType) => {
                 apiType={apiType}
                 setApiType={setApiType}
               ></D3ColudCondition>
-              {/* <div className="flex   flex-wrap items-center mt-3">
-                <Button className="" variant="outline" size="icon">
-                  <a href={`/zstPosts/summary/week/?date=${datebeforeString}`}>
-                    <DoubleArrowLeftIcon className="h-4 w-4" />
-                  </a>
-                </Button>
-                <Label className="font-extrabold px-3">
-                  {fromAt.toLocaleDateString()} ～{toAt.toLocaleDateString()}
-                </Label>
-                <Button className="" variant="outline" size="icon">
-                  <a href={`/zstPosts/summary/week/?date=${dateafterString}`}>
-                    <DoubleArrowRightIcon className="h-4 w-4" />
-                  </a>
-                </Button>
-
-                <div className="flex flex-wrap px-4">
-                  <RadioGroup
-                    defaultValue="option-one"
-                    className="flex flex-wrap items-center"
-                  >
-                    <div className="flex items-center space-x-1">
-                      <RadioGroupItem value="option-one" id="option-one" />
-                      <Label htmlFor="option-one">goo lab </Label>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <RadioGroupItem value="option-two" id="option-two" />
-                      <Label htmlFor="option-two">goo lab keyword</Label>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <RadioGroupItem value="option-three" id="option-three" />
-                      <Label htmlFor="option-three">kuromoji</Label>
-                    </div>
-                  </RadioGroup>
-                  <div className="flex ml-4 items-center space-x-2">
-                    <Switch
-                      id={`delete_flg_`}
-                      checked={true} //{isCheckedDelete}
-                      // ref={switchDeleteRef}
-                      // onCheckedChange={(value) => {
-                      //   handleSwitchDeleteChange(value);
-                      // }}
-                    />
-                    <Label className="" htmlFor={`delete_flg_`}>
-                      public
-                    </Label>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
@@ -189,7 +142,7 @@ const ZstPageSummaryWeekPage = (props: propType) => {
                     ></WeekSummaryChart>
                   </div>
                 </div>
-                <div className="">
+                {/* <div className="">
                   {fromAt !== toAt ? (
                     <WeekSummaryd3cloud
                       data={zstPosts}
@@ -202,7 +155,7 @@ const ZstPageSummaryWeekPage = (props: propType) => {
                   ) : (
                     "loading..."
                   )}
-                </div>
+                </div>*/}
               </div>
 
               <Accordion type="single" collapsible className="w-full">

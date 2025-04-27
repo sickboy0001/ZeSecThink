@@ -1,7 +1,5 @@
+"use server";
 import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
 import StartPagePreview from "@/components/startposts/startpostpreview";
 
 export default async function Index() {

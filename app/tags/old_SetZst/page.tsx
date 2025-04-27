@@ -1,10 +1,10 @@
-"use server";
+"use client";
 import React from "react";
 
 import { getUtilUser } from "@/app/actions/user/utilUser";
 import { UserProvider } from "@/components/user/UserContext";
 import { User } from "@/app/types/user";
-import PageQuotation from "@/components/zstpost/pageTitles/PageQuotation";
+import PageSetZst from "@/components/tags/SetZst/PageSetZst";
 const Page = async () => {
   // console.log(searchParams);
 
@@ -13,7 +13,9 @@ const Page = async () => {
 
   return (
     <>
-      <UserProvider user={user as User}>test tags-state</UserProvider>
+      <UserProvider user={user as User}>
+        <PageSetZst></PageSetZst>
+      </UserProvider>
     </>
   );
 };

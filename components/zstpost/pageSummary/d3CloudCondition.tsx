@@ -37,7 +37,7 @@ const EnumApiType = [
 async function getDataLocal(
   userid: number,
   from_at: Date,
-  to_at: Date
+  to_at: Date,
 ): Promise<TypeZstPost[]> {
   const result = await getPosts(userid, from_at, to_at);
   return result;
@@ -103,7 +103,7 @@ const D3ColudCondition = (props: propType) => {
       </Button>
 
       <div className="flex flex-wrap px-4">
-        <RadioGroup
+        {/* <RadioGroup
           defaultValue={apiType}
           onValueChange={(value) => {
             // event.targetをHTMLInputElementとしてキャスト
@@ -118,7 +118,7 @@ const D3ColudCondition = (props: propType) => {
               <Label htmlFor={each.name}>{each.displayname}</Label>
             </div>
           ))}
-        </RadioGroup>
+        </RadioGroup> */}
         <div className="flex ml-4 items-center space-x-2">
           <Switch
             id={`public_flg`}

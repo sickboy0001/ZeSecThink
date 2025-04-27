@@ -1,36 +1,32 @@
 "use client";
-
+import { TypeZstPostWithTags } from "@/app/types/zstTypes";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { updateZstPost } from "@/app/actions/zstPosts/posts";
 
 import { useRouter } from "next/navigation";
-import { TypeTagMas } from "@/app/types/tagTypes";
-// import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
+import { GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 
 interface propTypes {
-  tagMas: TypeTagMas;
+  zstPost: TypeZstPostWithTags;
   showModal: Dispatch<SetStateAction<boolean>>;
+  putZstPosts?: (posts: TypeZstPostWithTags, actionType: string) => void;
 }
 
-const ModalEdit = (props: propTypes) => {
-  const { showModal, tagMas } = props;
-  //   const [showEdit, setShowEdit] = useSFtate(false);
-  const router = useRouter();
+const ModalZstPostEdit = (props: propTypes) => {
+  const { showModal, zstPost, putZstPosts } = props;
 
-  const [formData, setFormData] = useState<TypeTagMas>({
+  const [formData, setFormData] = useState<TypeZstPostWithTags>({
     // 初期値を指定
-    ...tagMas, //上書き
+    ...zstPost, //上書き
   });
-
-  const propsstring = JSON.stringify({ formData }, null, 2);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     // 変更された入力値
-    console.log(e.target.name + e.target.value);
     const { name, value } = e.target;
     // 入力フォーム情報にセットする
     setFormData((prevFormData) => ({
@@ -42,16 +38,30 @@ const ModalEdit = (props: propTypes) => {
   async function handleSubmit(event: any) {
     event.preventDefault();
     console.log("--------------handleSubmit");
-    // update data
-    // updateZstPost({
-    //   params: {
-    //     ZstPost: formData,
-    //   },
-    // });
-    // const datebase = GetyyyyMMddJpFromDate(formData.current_at);
-    // router.push(`/zstPosts/view/day/?date=${datebase}`);
-    // window.location.reload(); // ページを再読み込みして最新のデータを取得する
+    const updatedPost = await updateZstPost({
+      params: {
+        ZstPost: formData,
+      },
+    });
     showModal(false);
+    // ★ updateZstPost が成功し、有効なデータを返した場合
+    if (updatedPost) {
+      // ★ putZstPosts が渡されていれば実行
+      if (putZstPosts) {
+        // ★ TypeZstPostWithTags 型に変換して渡す (元の tagIds を引き継ぐ)
+        const postToUpdateState: TypeZstPostWithTags = {
+          ...updatedPost, // updateZstPost から返された最新の基本情報
+          tagIds: zstPost.tagIds, // ★ 元の zstPost prop から tagIds を取得して追加
+        };
+        console.log("Calling putZstPosts with:", postToUpdateState);
+        putZstPosts(postToUpdateState, "update"); // ★ 変換後のデータを渡す
+      }
+      showModal(false); // 成功時にモーダルを閉じる
+    } else {
+      // ★ updateZstPost が null や undefined を返した場合のエラー処理
+      console.error("Update failed: updateZstPost returned null or undefined.");
+      // 必要に応じてユーザーにエラーメッセージを表示
+    }
   }
 
   return (
@@ -61,30 +71,15 @@ const ModalEdit = (props: propTypes) => {
           // htmlFor="email"
           className="block mb-1 text-sm font-medium text-gray-900"
         >
-          tagName
+          タイトル
         </Label>
         <Input
-          type="tagName"
-          name="tagName"
-          id="tagName"
+          type="title"
+          name="title"
+          id="title"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="タイトル"
-          value={formData.tagName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className="py-1">
-        <Label className="block mb-1 text-sm font-medium text-gray-900">
-          name
-        </Label>
-        <Input
-          type="name"
-          name="name"
-          id="name"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="タイトル"
-          value={formData.name}
+          value={formData.title}
           onChange={handleChange}
           required
         />
@@ -94,14 +89,14 @@ const ModalEdit = (props: propTypes) => {
           // htmlFor="email"
           className="block mb-1 text-sm font-medium text-gray-900"
         >
-          tagName
+          内容
         </Label>
         <Textarea
-          name="description"
-          id="description"
+          name="content"
+          id="content"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="説明"
-          value={formData.description}
+          placeholder="内容"
+          value={formData.content}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
             handleChange(event)
           }
@@ -119,4 +114,4 @@ const ModalEdit = (props: propTypes) => {
   );
 };
 
-export default ModalEdit;
+export default ModalZstPostEdit;

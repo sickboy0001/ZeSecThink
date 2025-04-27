@@ -11,10 +11,10 @@ const startLink = () => {
       <div className="relative items-center w-full px-5 py-5 ">
         <div className="flex w-full mx-auto text-left">
           <div className="relative inline-flex items-center mx-auto align-middle">
-            <ul className="flex flex-row list-none items-center lg:ml-auto">
+            <ul className="flex flex-row flex-wrap   list-none items-center lg:ml-auto">
               {MENULOGIN.map((each, key) => (
-                <li className="nav-item mx-1" key={key}>
-                  <Button variant="outline" className="px-3 py-2">
+                <li className="nav-item" key={key}>
+                  <Button variant="outline" className="px-3 py-2 my-1 mx-1">
                     <Link
                       className="px-1 py-2  items-center  font-bold leading-snug hover:opacity-75"
                       href={each.url}
@@ -27,14 +27,14 @@ const startLink = () => {
             </ul>
           </div>
         </div>
-        <div className="flex w-full mx-auto text-left my-3">
+        <div className="flex w-full mx-auto text-left my-3 ">
           <div className="relative inline-flex items-center mx-auto align-middle">
-            <ul className="flex flex-row list-none items-center lg:ml-auto">
+            <ul className="flex flex-row flex-wrap  list-none items-center  lg:ml-auto">
               {MENUADMINSUBMENU.map((each, key) => (
-                <li className="nav-item mx-1" key={key}>
-                  <Button variant="outline" className="px-3 py-2">
+                <li className="nav-item" key={key}>
+                  <Button variant="outline" className="px-3 py-2 my-1 mx-1">
                     <Link
-                      className="px-1 py-2  items-center  font-bold leading-snug hover:opacity-75"
+                      className="px-1 py-2 items-center  font-bold leading-snug hover:opacity-75"
                       href={each.url}
                     >
                       {each.displayName}

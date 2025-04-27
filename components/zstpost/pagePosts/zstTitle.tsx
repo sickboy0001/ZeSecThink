@@ -40,13 +40,9 @@ interface propTypes {
 
 const ZstTitle = (props: propTypes) => {
   const { zstPost, isDispDetail, children } = props;
-  // const [nowZstPost, setNowZstPost] = useState<TypeZstPost>(zstPost);
   const itemkey = 0;
   const [showEdit, setShowEdit] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
-  // const formElement = (
-  //   <ZstModalEdit showModal={setShowEdit} zstPost={zstPost}></ZstModalEdit>
-  // );
   const dispword = isDispDetail ? "" : "1";
 
   const copyClipBoard = async (text: string) => {

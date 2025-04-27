@@ -25,23 +25,11 @@ interface propTypes {
   datestring: string;
   className: string;
 }
-const zstPageViewDay = (props: propTypes) => {
+const PageZstiewDay = (props: propTypes) => {
   const { className, datestring } = props;
   const [zstPosts, setZstPosts] = useState<TypeZstPost[]>([]);
   const [showEdit, setShowEdit] = useState(false);
   const user = useContext(UserContext);
-
-  // console.log("const zstPageViewDay:date", date);
-  // const zstPosts = await getPosts(user?.userid, date, date);
-
-  // console.log("ZstPageViewGrid:start");
-  // const now = toZonedTime(new Date(), "Asia/Tokyo"); // UTCを日本時間に変換
-  // const nowstring = format(now, "yyyyMMdd");
-  // console.log("const zstPageViewDay:nowstring", nowstring);
-  // if (!basedate) {
-  //   basedate = GetDateFromyyyyMMdd2(nowstring);
-  // }
-  // console.log("const zstPageViewDay:basedate", basedate);
 
   useEffect(() => {
     // console.log("zstPosts has changed:", zstPosts.slice(0, 2));
@@ -51,7 +39,7 @@ const zstPageViewDay = (props: propTypes) => {
       // thisdt.setHours(0, 0, 0);
       // console.log("zstPageViewDay.fetch.thisdt", thisdt);
       const thisdttz = toZonedTime(thisdt, "Asia/Tokyo");
-      console.log("zstPageViewDay.fetch.thisdttz", thisdttz);
+      // console.log("zstPageViewDay.fetch.thisdttz", thisdttz);
       const ThisZstPosts = await getPosts(user?.userid, thisdttz, thisdttz);
       setZstPosts(ThisZstPosts);
     };
@@ -65,6 +53,7 @@ const zstPageViewDay = (props: propTypes) => {
   const isSunday = basedate.getDay() === 0;
   const isSatday = basedate.getDay() === 6;
 
+  console.log("PageZstViewDay", zstPosts);
   return (
     <div className="px-3 py-3">
       <div className="flex py-3  w-full">
@@ -84,8 +73,8 @@ const zstPageViewDay = (props: propTypes) => {
               zstPosts.filter(
                 (f) =>
                   String(new Date(f.current_at).toDateString()) ===
-                    String(basedate.toDateString()) && !f.delete_flg
-              ).length
+                    String(basedate.toDateString()) && !f.delete_flg,
+              ).length,
             )}
             /10]
           </div>
@@ -138,4 +127,4 @@ const zstPageViewDay = (props: propTypes) => {
   );
 };
 
-export default zstPageViewDay;
+export default PageZstiewDay;

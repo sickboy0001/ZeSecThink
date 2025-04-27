@@ -1,7 +1,7 @@
 "use server";
 import React, { useEffect, useState } from "react";
 import { getPosts, getPostsDummy } from "@/app/actions/zstPosts/posts";
-import ZstPageViewGrid from "@/components/zstpost/pagePosts/zstPageViewGrid";
+import PageZstViewGrid from "@/components/zstpost/pagePosts/PageZstViewGrid";
 import { GetDateFromyyyyMMdd, GetyyyyMMddJpFromDate } from "@/lib/utilsDate";
 import { addDays } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
@@ -30,7 +30,6 @@ interface propsType {
 
 const ViewGrid = async ({ searchParams }: propsType) => {
   // console.log(searchParams);
-
   // searchParams.basedateの取得
   let paramdate = String(searchParams.basedate || "");
   // console.log("paramdate", paramdate);
@@ -40,7 +39,7 @@ const ViewGrid = async ({ searchParams }: propsType) => {
 
   // 今日の日付をyyyyMMdd形式で取得
   const nowstring = GetyyyyMMddJpFromDate(
-    toZonedTime(new Date(), "Asia/Tokyo")
+    toZonedTime(new Date(), "Asia/Tokyo"),
   );
 
   // paramdateがundefinedまたはnullまたは空文字列の場合にnowstringを代入
@@ -74,7 +73,7 @@ const ViewGrid = async ({ searchParams }: propsType) => {
   console.log("const ViewDay getPostsTime msec :", msec);
   return (
     <>
-      <ZstPageViewGrid
+      <PageZstViewGrid
         rows={rows}
         cols={cols}
         basedate={basedate}
@@ -82,7 +81,7 @@ const ViewGrid = async ({ searchParams }: propsType) => {
         zstPosts={zstPosts}
         fromAt={from_at}
         toAt={to_at}
-      ></ZstPageViewGrid>
+      ></PageZstViewGrid>
     </>
   );
 };

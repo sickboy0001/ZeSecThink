@@ -33,7 +33,7 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
 
   const datestr = GetyyyyMMddJpFromDate(date);
 
-  // console.log("zstDayTItle:start:");
+  console.log("zstDayTItle:start:");
 
   return (
     <>
@@ -61,8 +61,8 @@ const ZstDayTitles = ({ className, zstPosts, date, ...props }: propTypes) => {
                       zstPosts.filter(
                         (f) =>
                           String(new Date(f.current_at).toDateString()) ===
-                            String(date.toDateString()) && !f.delete_flg
-                      ).length
+                            String(date.toDateString()) && !f.delete_flg,
+                      ).length,
                     )}
                     /10]
                   </div>

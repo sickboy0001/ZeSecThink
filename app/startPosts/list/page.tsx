@@ -4,6 +4,7 @@ import PostList from "@/components/startposts/postList";
 import StartPagePreview from "@/components/startposts/startpostpreview";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import React from "react";
 
 async function getData(): Promise<TypeStartPost[]> {

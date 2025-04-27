@@ -103,6 +103,37 @@ VERCEL:OK:
 thisday.setHours(0, 0, 0);
 export const getPosts 2024-08-09 00:00:00000-2024-08-12 00:00:00000
 ```
+### 生成AI用のスクリプト
+以下の環境で実装からデプロイまでしています。
+ローカル環境：VSCODE
+言語：TypeScript
+フレームワーク：React(18.2),NextJS(14.2.5)
+CSS：Tailwindcss
+Addon:Shadcn-ui
+icon:radix-ui/react-icons import {FrameIcon} from "@radix-ui/react-icons";
+ソース管理：github
+デプロイ環境:vercel
+データベース：Supabase
+#### CreateTableScript
+CreateTableScriptは以下です。
+``` sql
+CREATE TABLE public.zst_tag_link (
+    id serial PRIMARY KEY,
+    post_id INTEGER,
+    tag_id INTEGER,
+    display_order INTEGER,
+    create_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+grant usage on schema "public" to anon;
+grant usage on schema "public" to authenticated;
+
+GRANT SELECT, INSERT, UPDATE , DELETE  ON ALL TABLES IN SCHEMA "public" TO authenticated;
+GRANT SELECT, INSERT, UPDATE , DELETE ON ALL TABLES IN SCHEMA "public" TO anon;
+
+GRANT USAGE ON SEQUENCE zst_tag_link_id_seq TO anon;
+GRANT USAGE ON SEQUENCE zst_tag_link_id_seq TO authenticated;
+```
 
 ### Vercel でのログの確認
 

@@ -7,6 +7,8 @@ import { TypeStartPost } from "@/app/types/types";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 // toppage
 const contents = [
@@ -41,7 +43,6 @@ const StartPagePreview = async () => {
 
   return (
     <div>
-      <StartTitle></StartTitle>
       <StartLink></StartLink>
       <section>
         <div className="flex flex-col w-full max-w-3xl mx-auto prose text-left prose-blue">
