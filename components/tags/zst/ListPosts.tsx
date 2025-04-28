@@ -23,8 +23,9 @@ const ListPosts = (props: propsListPosts) => {
     zstPosts,
     postWithTags,
     putZstPosts,
+    isLoading,
   } = props;
-  const [isLoading, setIsLoading] = useState<boolean>(false); // ローディング状態を追加
+  // const [isLoading, setIsLoading] = useState<boolean>(false); // ローディング状態を追加
 
   const dayCount = 14;
   const nowDate = new Date();

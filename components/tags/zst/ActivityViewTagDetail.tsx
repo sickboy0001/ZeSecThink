@@ -9,13 +9,13 @@ import { TypeZstPost, TypeZstPostWithTags } from "@/app/types/zstTypes";
 import { readPostsWithTagConditionTagId } from "@/app/actions/zstPosts/postswithtag";
 import ZstTitleAction from "@/components/zstpost/Posts/zstTitleAction";
 
-interface propsTagIdSummary {
+interface propsActivityViewTagDetail {
   selectedTagMas: TypeTagMas;
   favoriteTagMass: TypeTagMas[];
   normalTagMass: TypeTagMas[];
 }
 
-const SummaryTagId = (props: propsTagIdSummary) => {
+const ActivityViewTagDetail = (props: propsActivityViewTagDetail) => {
   const { selectedTagMas, favoriteTagMass, normalTagMass } = props;
   const [zstPosts, setZstPosts] = useState<TypeZstPostWithTags[]>([]);
 
@@ -114,6 +114,7 @@ const SummaryTagId = (props: propsTagIdSummary) => {
                 normalTagMass={normalTagMass}
                 titlePreYmd={true}
                 putZstPosts={putZstPosts}
+                visibleTagLink={false}
               ></ZstTitleAction>
             </div>
           ))}
@@ -122,4 +123,4 @@ const SummaryTagId = (props: propsTagIdSummary) => {
   );
 };
 
-export default SummaryTagId;
+export default ActivityViewTagDetail;

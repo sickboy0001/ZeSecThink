@@ -84,8 +84,9 @@ const ListDatePosts = (props: propsListDatePost) => {
   const user = useContext(UserContext);
 
   const userId = user?.userid || 0;
-  const fetchPostsData = useCallback(async () => {
-    setIsPostsLoading(true);
+
+  const fetchPostsData = async () => {
+    setIsLoading(true);
     try {
       const result = await readPostsWithTags(userId, fromAt, toAt); // ★ ここで呼び出す
       setPostsWithTags(result);
@@ -93,13 +94,13 @@ const ListDatePosts = (props: propsListDatePost) => {
     } catch (error) {
       /* ... */
     } finally {
-      setIsPostsLoading(false);
+      setIsLoading(false);
     }
-  }, [listDatePostAtString, userId]);
+  };
 
   useEffect(() => {
     fetchPostsData();
-  }, [fetchPostsData]);
+  }, [userId, fromAt, toAt]);
 
   const putZstPosts = (post: TypeZstPostWithTags, actionType: string) => {
     console.log(actionType, post);

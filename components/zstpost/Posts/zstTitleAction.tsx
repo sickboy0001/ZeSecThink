@@ -28,6 +28,7 @@ interface propTypes {
   favoriteTagMass: TypeTagMas[];
   normalTagMass: TypeTagMas[];
   titlePreYmd?: boolean;
+  visibleTagLink?: boolean;
 }
 import ZstTitle from "./zstTitle";
 import { TypeTagMas } from "@/app/types/tagTypes";
@@ -41,7 +42,9 @@ const zstTitleAction = (props: propTypes) => {
     favoriteTagMass,
     normalTagMass,
     titlePreYmd,
+    visibleTagLink = true,
   } = props;
+  // console.log("zstTitleAction", visibleTagLink);
   const [nowZstPost, setNowZstPost] = useState<TypeZstPostWithTags>(zstPost);
   const [isCheckedDelete, setIsCheckedDelete] = useState(nowZstPost.delete_flg);
   const [isCheckedPublic, setIsCheckedPublic] = useState(nowZstPost.public_flg);
@@ -108,6 +111,7 @@ const zstTitleAction = (props: propTypes) => {
         favoriteTagMass={favoriteTagMass}
         normalTagMass={normalTagMass}
         titlePreYmd={titlePreYmd}
+        visibleTagLink={visibleTagLink}
       >
         <div>
           <div className="text-gray-600/70 ">

@@ -3,16 +3,17 @@ import UserContext from "@/components/user/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { getTagMasOrder } from "../GetTagMasOrder";
 import { TypeTagMas } from "@/app/types/tagTypes";
-import SummaryTagId from "./SummaryTagId";
 import TagHoverable from "../TagHoverable";
-import SummaryList from "./SummaryList";
-import Summary from "./SummaryGen";
+import ActivityViewTagDetail from "./ActivityViewTagDetail";
+import ActivityViewDashboard from "./ActivityViewDashboard";
+import ActivityViewTimeline from "./ActivityViewTimeline";
 
 const PageTagSummary = () => {
   const [selectedTagMas, setSelectedTagMas] = useState<TypeTagMas | undefined>(
     undefined,
   );
-  const [selectedType, setSelectedType] = useState<string>("all");
+  const [selectedType, setSelectedType] = useState<string>("timeline");
+  const [selectedPostsDateAt, setSelectedPostsDateAt] = useState<string>("");
 
   const [allTagMass, setAllTagMass] = useState<TypeTagMas[]>();
   const [favoriteTagMass, setFavoriteTagMass] = useState<TypeTagMas[]>([]);
@@ -46,6 +47,26 @@ const PageTagSummary = () => {
     setFavoriteTagMass(sortedTagMas);
     setNormalTagMass(normalTagMas);
   };
+  const handleTagClickFromDashboard = (tag: TypeTagMas) => {
+    // allTagMass から最新のタグ情報を見つける (必須ではないが、念のため)
+    const found = allTagMass?.find((t) => t.id === tag.id);
+    if (found) {
+      setSelectedTagMas(found);
+      setSelectedType("tag"); // ★ 表示タイプを 'tag' (詳細表示) に切り替え
+    } else {
+      // 見つからない場合も、渡されたタグ情報で設定するフォールバック
+      setSelectedTagMas(tag);
+      setSelectedType("tag");
+    }
+  };
+
+  const handlePostHeatmapClickFromDashboard = (date: string, count: number) => {
+    console.log("handlePostHeatmapClickFromDashboard", date, count);
+    // 2025/3/16 12
+    setSelectedPostsDateAt(date);
+    setSelectedTagMas(undefined);
+    setSelectedType("timeline");
+  };
 
   return (
     <div className="p-4 flex flex-col lg:flex-row w-full">
@@ -65,8 +86,8 @@ const PageTagSummary = () => {
               <TagHoverable
                 key={"summary_Tag"}
                 tag={null}
-                type={"sel"}
-                tagName="summary"
+                type={"fav"}
+                tagName="Dashboard"
                 tooltipName="summary"
                 tooltipDescription="summary"
                 isSelected={selectedType === "summary"}
@@ -75,18 +96,18 @@ const PageTagSummary = () => {
             </div>
           </div>
           <div
-            key="all"
+            key="timeline"
             onClick={() => {
               setSelectedTagMas(undefined);
-              setSelectedType("all");
+              setSelectedType("timeline");
             }}
           >
             <div className="flex flex-wrap items-center ">
               <TagHoverable
                 key={"all_Tag"}
                 tag={null}
-                type={"sel"}
-                tagName="List"
+                type={"fav"}
+                tagName="Timeline"
                 tooltipName="List"
                 tooltipDescription="List"
                 isSelected={selectedType === "all"}
@@ -122,18 +143,23 @@ const PageTagSummary = () => {
 
       <div className="w-[750px] flex-shrink-0 pl-4">
         {selectedType === "tag" && selectedTagMas ? (
-          <SummaryTagId
+          <ActivityViewTagDetail
             selectedTagMas={selectedTagMas}
             favoriteTagMass={favoriteTagMass}
             normalTagMass={normalTagMass}
-          ></SummaryTagId>
+          ></ActivityViewTagDetail>
         ) : selectedType === "summary" && allTagMass ? (
-          <Summary tagMass={allTagMass}></Summary>
-        ) : selectedType === "all" && allTagMass ? (
-          <SummaryList
+          <ActivityViewDashboard
+            tagMass={allTagMass}
+            onTagClick={handleTagClickFromDashboard}
+            onPostHeatmapClick={handlePostHeatmapClickFromDashboard}
+          ></ActivityViewDashboard>
+        ) : selectedType === "timeline" && allTagMass ? (
+          <ActivityViewTimeline
             favoriteTagMass={favoriteTagMass}
             normalTagMass={normalTagMass}
-          ></SummaryList>
+            selectedPostsDateAt={selectedPostsDateAt}
+          ></ActivityViewTimeline>
         ) : (
           ""
         )}

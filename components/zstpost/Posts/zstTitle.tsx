@@ -67,6 +67,7 @@ interface propTypes {
   favoriteTagMass: TypeTagMas[];
   normalTagMass: TypeTagMas[];
   titlePreYmd?: boolean;
+  visibleTagLink?: boolean;
 }
 //タイトルの表示
 //  クリップボードへのコピー、編集画面へボタン、タグの表示、編集など
@@ -79,6 +80,7 @@ const ZstTitle = (props: propTypes) => {
     favoriteTagMass,
     normalTagMass,
     titlePreYmd,
+    visibleTagLink = true,
   } = props;
   const itemkey = 0;
   const [nowZstPost, setNowZstPost] = useState<TypeZstPostWithTags>(zstPost);
@@ -135,7 +137,7 @@ const ZstTitle = (props: propTypes) => {
       : dateInfo.weekdayIndex === 0
         ? "text-red-500" // 日曜日
         : ""; // 平日は色なし
-
+  // console.log("ZstTitle", visibleTagLink);
   return (
     <div
       className={`py-1 ${zstPost.delete_flg && !isDispDetail ? "hidden" : ""}`}
@@ -203,13 +205,17 @@ const ZstTitle = (props: propTypes) => {
             </Dialog>
 
             {/* tags-mnt */}
-            <TagLink
-              zstPost={nowZstPost}
-              selectedTagMass={selectedTagMass}
-              setSelectedTagMass={setSelectedTagMass}
-              favoriteTagMass={favoriteTagMass}
-              normalTagMass={normalTagMass}
-            ></TagLink>
+            {visibleTagLink ? (
+              <TagLink
+                zstPost={nowZstPost}
+                selectedTagMass={selectedTagMass}
+                setSelectedTagMass={setSelectedTagMass}
+                favoriteTagMass={favoriteTagMass}
+                normalTagMass={normalTagMass}
+              ></TagLink>
+            ) : (
+              ""
+            )}
 
             <TooltipProvider>
               <Tooltip>
@@ -229,7 +235,7 @@ const ZstTitle = (props: propTypes) => {
           </div>
 
           <AccordionContent>
-            {selectedTagMass.length > 0 ? (
+            {visibleTagLink && selectedTagMass.length > 0 ? (
               <div className="text-sm  flex items-center">
                 <TagBadgeList
                   tags={selectedTagMass}
