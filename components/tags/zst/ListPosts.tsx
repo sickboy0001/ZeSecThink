@@ -10,7 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton"; // Skeletonコンポーネ�
 interface propsListPosts {
   favoriteTagMass: TypeTagMas[];
   normalTagMass: TypeTagMas[];
-  zstPosts: TypeZstPostWithTags[];
   postWithTags: TypeZstPostWithTags[];
   putZstPosts?: (posts: TypeZstPostWithTags, actionType: string) => void;
   isLoading: boolean;
@@ -20,7 +19,6 @@ const ListPosts = (props: propsListPosts) => {
   const {
     favoriteTagMass,
     normalTagMass,
-    zstPosts,
     postWithTags,
     putZstPosts,
     isLoading,

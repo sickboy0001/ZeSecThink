@@ -103,18 +103,20 @@ const ListDatePosts = (props: propsListDatePost) => {
   }, [userId, fromAt, toAt]);
 
   const putZstPosts = (post: TypeZstPostWithTags, actionType: string) => {
-    console.log(actionType, post);
+    console.log("putZstPosts", actionType, post);
     switch (actionType.toLowerCase()) {
       case "update":
-        setZstPosts((prevPosts) =>
+        setPostsWithTags((prevPosts) =>
           prevPosts.map((p) => (p.id === post.id ? post : p)),
         );
         break;
       case "insert":
-        setZstPosts((prevPosts) => [post, ...prevPosts]);
+        setPostsWithTags((prevPosts) => [post, ...prevPosts]);
         break;
       case "delete":
-        setZstPosts((prevPosts) => prevPosts.filter((p) => p.id !== post.id));
+        setPostsWithTags((prevPosts) =>
+          prevPosts.filter((p) => p.id !== post.id),
+        );
         break;
       default:
       // console.warn(`Unknown action type: ${actionType}`);
@@ -167,7 +169,6 @@ const ListDatePosts = (props: propsListDatePost) => {
         </Button>
       </div>
       <ListPosts
-        zstPosts={zstPosts}
         postWithTags={postsWithTags}
         favoriteTagMass={favoriteTagMass}
         normalTagMass={normalTagMass}

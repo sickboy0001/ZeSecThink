@@ -1,7 +1,9 @@
 export const MENULOGIN = [
-  { displayName: `post`, url: `/zstPosts/view/grid` },
-  { displayName: `today`, url: `/zstPosts/view/day` },
+  { displayName: `post`, url: `/zstPosts/view/PostsGrid` },
+  { displayName: `today`, url: `/zstPosts/view/PostsDay` },
   { displayName: `Summary`, url: `/zstPosts/summary/week` },
+  { displayName: `Tags`, url: `/tags/summary` },
+  { displayName: `TagEdit`, url: `/tags/list` },
   { displayName: `UserTitle`, url: `/zstPosts/usersampletitle` },
 ];
 
@@ -16,8 +18,8 @@ export const MENUADMINSUBMENU = [
   // { displayName: `titles-quotation`, url: `/titlessample/quotation` },
   { displayName: `TagEdit`, url: `/tags/list` },
   { displayName: `TagSummary`, url: `/tags/summary` },
-  { displayName: `PostsDay`, url: `/zstPosts/view/PostsDay` },
-  { displayName: `PostsGrid`, url: `/zstPosts/view/PostsGrid` },
+  // { displayName: `PostsDay`, url: `/zstPosts/view/PostsDay` },
+  // { displayName: `PostsGrid`, url: `/zstPosts/view/PostsGrid` },
   // { displayName: `tutorial`, url: `/tutorial/` },
   // { displayName: `Tag-SetZst`, url: `/tags/SetZst` },
   // { displayName: `Tag-Sate`, url: `/tags/state` },

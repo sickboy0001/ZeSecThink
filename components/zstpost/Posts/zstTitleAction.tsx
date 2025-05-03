@@ -56,7 +56,7 @@ const zstTitleAction = (props: propTypes) => {
 
   useEffect(() => {
     setNowZstPost(zstPost);
-  }, []);
+  }, [zstPost]);
 
   async function update_deletepublic_flg(
     fullid: string | undefined,
