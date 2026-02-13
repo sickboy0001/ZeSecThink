@@ -29,25 +29,43 @@
 - バックエンド：Vercel,Supabase
 - ホスティング：Vercel
 
-### 📅 開発の経緯（History）
-日付	コメント
-2024年6月	ゼロ秒思考通読、Notion で試用。ツール開発を決意。
-2024年7月	開発＆コーディング勉強中。プロトタイプ構築。
-2024年8月	おおむね完成予定。Kuromoji 使用見直し検討中。
-
 ### 👤 想定ユーザー
 - ゼロ秒思考に関心があり、継続的に記録したい人
 - 電車の中や仕事中など、すぐに書きたい瞬間がある人
 - 紙では続かないが、スマホやPCなら継続できそうという人
+
+
+###  `zst_post` (投稿メインテーブル)
+
+投稿に関する基本情報と、執筆時間や公開設定などのステータスを管理するテーブルです。
+
+| カラム物理名 | カラム論理名 | データ型 | 必須 | デフォルト値 | 備考 |
+| --- | --- | --- | --- | --- | --- |
+| **id** | 投稿ID | `serial` | ◯ |  | 主キー（自動採番） |
+| **user_id** | ユーザーID | `integer` | ◯ |  | 投稿者のID |
+| **current_at** | 基準日時 | `timestamp` | - | `CURRENT_TIMESTAMP` | 投稿に関連する基準時刻 |
+| **title** | タイトル | `text` | ◯ |  |  |
+| **content** | 本文 | `text` | ◯ |  |  |
+| **second** | 所要秒数 | `integer` | ◯ |  | 執筆にかかった秒数など |
+| **public_flg** | 公開フラグ | `boolean` | ◯ | `true` | 全体公開設定 |
+| **public_content_flg** | 内容公開フラグ | `boolean` | ◯ | `true` | コンテンツ部分の公開設定 |
+| **delete_flg** | 削除フラグ | `boolean` | ◯ | `false` | 論理削除用フラグ |
+| **write_start_at** | 執筆開始日時 | `timestamp` | - | `CURRENT_TIMESTAMP` |  |
+| **write_end_at** | 執筆終了日時 | `timestamp` | - | `CURRENT_TIMESTAMP` |  |
+| **create_at** | 作成日時 | `timestamp` | ◯ | `CURRENT_TIMESTAMP` | レコード作成日 |
+| **update_at** | 更新日時 | `timestamp` | ◯ | `CURRENT_TIMESTAMP` | レコード最終更新日 |
+
+
 
 ### 📝 ライセンス
 MIT License
 
 
 
+
 ## 履歴
 #### 2026/2/14
-- テスト
+- deploy test 
 #### 2025/5/3
 - 機能追加
   - タグ機能
@@ -76,3 +94,5 @@ MIT License
 - 未：優先度中タスク
   - 権限毎の View
   - サマリ画面
+
+
